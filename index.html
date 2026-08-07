@@ -4,51 +4,50 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>Bella Italia — Cooking Idle Tycoon</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+<link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+<link href="[https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Nunito:wght@400;600;800&display=swap](https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Nunito:wght@400;600;800&display=swap)" rel="stylesheet">
 <!-- Telegram WebApp SDK -->
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="[https://telegram.org/js/telegram-web-app.js](https://telegram.org/js/telegram-web-app.js)"></script>
 <!-- TON Connect UI SDK -->
-<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+<script src="[https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js](https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js)"></script>
 <style>
 :root{
-  --terracotta:#c1573a;
-  --terracotta-dark:#8f3a24;
-  --mahogany:#3b1f16;
-  --mahogany-2:#2a1510;
-  --cream:#f6e9d2;
-  --cream-2:#efdcbd;
-  --gold:#f3c85b;
-  --gold-2:#ffe9a8;
-  --green:#5fa855;
-  --shadow:0 10px 30px rgba(0,0,0,.45);
-  --radius:16px;
+--terracotta:#c1573a;
+--terracotta-dark:#8f3a24;
+--mahogany:#3b1f16;
+--mahogany-2:#2a1510;
+--cream:#f6e9d2;
+--cream-2:#efdcbd;
+--gold:#f3c85b;
+--gold-2:#ffe9a8;
+--green:#5fa855;
+--shadow:0 10px 30px rgba(0,0,0,.45);
+--radius:16px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;height:100%}
 body{
-  font-family:Nunito,system-ui,sans-serif;
-  background:
-    radial-gradient(1200px 700px at 50% -10%, #6b3524 0%, transparent 60%),
-    linear-gradient(160deg,#2a1510 0%,#1b0e0a 100%);
-  color:var(--cream);
-  overflow-x:hidden;
+font-family:Nunito,system-ui,sans-serif;
+background:
+radial-gradient(1200px 700px at 50% -10%, #6b3524 0%, transparent 60%),
+linear-gradient(160deg,#2a1510 0%,#1b0e0a 100%);
+color:var(--cream);
+overflow-x:hidden;
 }
 h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 .gold{color:var(--gold);text-shadow:0 0 12px rgba(243,200,91,.35)}
-
 /* ---------- WELCOME SLIDESHOW OVERLAY ---------- */
 #welcomeOverlay{
-  position:fixed;inset:0;z-index:10000;background:linear-gradient(160deg,#1b0e0a,#0a0503);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;
-  transition:opacity .6s ease;
+position:fixed;inset:0;z-index:10000;background:linear-gradient(160deg,#1b0e0a,#0a0503);
+display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;
+transition:opacity .6s ease;
 }
 #welcomeOverlay.hide{opacity:0;pointer-events:none}
 .slide-container{
-  max-width:420px;width:100%;background:linear-gradient(180deg,#3a1c13,#2a1510);
-  border:2px solid #52301f;border-radius:24px;padding:28px 20px;box-shadow:var(--shadow);
-  text-align:center;display:flex;flex-direction:column;align-items:center;position:relative;
+max-width:420px;width:100%;background:linear-gradient(180deg,#3a1c13,#2a1510);
+border:2px solid #52301f;border-radius:24px;padding:28px 20px;box-shadow:var(--shadow);
+text-align:center;display:flex;flex-direction:column;align-items:center;position:relative;
 }
 .slide-icon{font-size:64px;margin-bottom:16px;animation:pulse 2s infinite}
 .slide-title{font-family:Cinzel,serif;font-size:22px;color:var(--gold);margin-bottom:10px}
@@ -56,33 +55,31 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 .slide-dots{display:flex;gap:8px;margin-bottom:20px}
 .dot{width:10px;height:10px;border-radius:50%;background:#52301f;transition:background .3s}
 .dot.active{background:var(--gold);box-shadow:0 0 10px rgba(243,200,91,.6)}
-
 /* ---------- LOADING ---------- */
 #loader{
-  position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:26px;
-  background:linear-gradient(160deg,#150b08,#000);
-  transition:opacity .8s ease;
+position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;
+align-items:center;justify-content:center;gap:26px;
+background:linear-gradient(160deg,#150b08,#000);
+transition:opacity .8s ease;
 }
 #loader.hide{opacity:0;pointer-events:none}
 .brand{
-  font-family:Cinzel,serif;font-size:clamp(30px,8vw,58px);font-weight:700;
-  color:var(--gold);text-shadow:0 0 24px rgba(243,200,91,.55);
-  animation:pulse 1.6s ease-in-out infinite;text-align:center;padding:0 16px;
+font-family:Cinzel,serif;font-size:clamp(30px,8vw,58px);font-weight:700;
+color:var(--gold);text-shadow:0 0 24px rgba(243,200,91,.55);
+animation:pulse 1.6s ease-in-out infinite;text-align:center;padding:0 16px;
 }
 .brand small{display:block;font-family:Nunito;font-size:13px;letter-spacing:4px;color:#c9a76a;margin-top:10px;font-weight:600}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:.92}50%{transform:scale(1.05);opacity:1}}
 .bar{width:min(78vw,340px);height:12px;border-radius:99px;background:#2a1510;overflow:hidden;border:1px solid #4a2a1d}
 .bar i{display:block;height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--terracotta),var(--gold));box-shadow:0 0 16px rgba(243,200,91,.6);transition:width .18s linear}
 #loadTxt{font-size:12px;letter-spacing:2px;color:#a9855c}
-
 /* ---------- SHELL ---------- */
 #app{max-width:560px;margin:0 auto;padding:10px 12px 90px;opacity:0;transition:opacity .7s ease .2s}
 #app.show{opacity:1}
 .topbar{
-  position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(43,21,16,.98),rgba(43,21,16,.86));
-  backdrop-filter:blur(8px);border:1px solid #52301f;border-radius:var(--radius);
-  padding:10px 12px;box-shadow:var(--shadow);margin-bottom:10px;
+position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(43,21,16,.98),rgba(43,21,16,.86));
+backdrop-filter:blur(8px);border:1px solid #52301f;border-radius:var(--radius);
+padding:10px 12px;box-shadow:var(--shadow);margin-bottom:10px;
 }
 .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}
 .stats{display:flex;gap:12px;flex-wrap:wrap;min-width:0}
@@ -91,42 +88,38 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 .stat span{font-size:10px;letter-spacing:1.4px;color:#c39a6d;text-transform:uppercase}
 .user-badge{font-size:11px;color:var(--gold);margin-bottom:4px;font-weight:700;display:flex;align-items:center;gap:4px;justify-content:space-between;}
 .iconbtn{
-  flex:none;width:42px;height:42px;border-radius:12px;border:1px solid #6b402a;
-  background:linear-gradient(180deg,#542b1c,#3a1c13);color:var(--cream);font-size:18px;cursor:pointer;
+flex:none;width:42px;height:42px;border-radius:12px;border:1px solid #6b402a;
+background:linear-gradient(180deg,#542b1c,#3a1c13);color:var(--cream);font-size:18px;cursor:pointer;
 }
 .iconbtn:active{transform:scale(.94)}
 .lvlwrap{margin-top:8px}
 .lvlbar{height:9px;border-radius:99px;background:#1d0f0a;overflow:hidden;border:1px solid #52301f}
 .lvlbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--gold));transition:width .3s}
 .lvlmeta{display:flex;justify-content:space-between;font-size:11px;color:#c39a6d;margin-top:4px}
-
 .tabs{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:10px}
 .tab{
-  padding:8px 1px;border-radius:10px;border:1px solid #52301f;cursor:pointer;
-  background:linear-gradient(180deg,#3a1c13,#2a1510);color:#d8b98f;font-weight:800;font-size:8px;text-align:center;
+padding:8px 1px;border-radius:10px;border:1px solid #52301f;cursor:pointer;
+background:linear-gradient(180deg,#3a1c13,#2a1510);color:#d8b98f;font-weight:800;font-size:8px;text-align:center;
 }
 .tab.active{background:linear-gradient(180deg,var(--terracotta),var(--terracotta-dark));color:#fff5e0;border-color:var(--gold);box-shadow:0 0 14px rgba(243,200,91,.25)}
 .tab em{display:block;font-style:normal;font-size:12px;margin-bottom:2px}
-
 .panel{display:none;animation:fade .25s ease}
 .panel.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
 .card{
-  background:linear-gradient(180deg,var(--cream),var(--cream-2));color:#3b1f16;
-  border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:1px solid #d8bd92;margin-bottom:10px;
+background:linear-gradient(180deg,var(--cream),var(--cream-2));color:#3b1f16;
+border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:1px solid #d8bd92;margin-bottom:10px;
 }
 .card.dark{background:linear-gradient(180deg,#3a1c13,#2a1510);color:var(--cream);border-color:#52301f}
 .muted{color:#7a5b45;font-size:12px}
 .card.dark .muted{color:#c39a6d}
-
 /* ---------- KITCHEN ---------- */
 #station{
-  position:relative;overflow:hidden;user-select:none;cursor:pointer;
-  height:clamp(210px,44vw,260px);border-radius:20px;border:2px solid #6b402a;
-  background:radial-gradient(circle at 50% 35%,#7a3f27,#3a1c13 70%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
-  box-shadow:inset 0 0 60px rgba(0,0,0,.55),var(--shadow);margin-bottom:10px;
+position:relative;overflow:hidden;user-select:none;cursor:pointer;
+height:clamp(210px,44vw,260px);border-radius:20px;border:2px solid #6b402a;
+background:radial-gradient(circle at 50% 35%,#7a3f27,#3a1c13 70%);
+display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+box-shadow:inset 0 0 60px rgba(0,0,0,.55),var(--shadow);margin-bottom:10px;
 }
 #station:active{transform:scale(.985)}
 #station.cooking{animation:shake .12s}
@@ -138,21 +131,18 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 .hint{position:absolute;bottom:8px;font-size:10px;letter-spacing:2px;color:#c08a63;text-transform:uppercase}
 .float{position:absolute;pointer-events:none;font-weight:800;color:var(--gold);text-shadow:0 2px 6px #000;animation:up 1s ease-out forwards;font-size:18px}
 @keyframes up{0%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-90px) scale(1.25)}}
-
 .btn{
-  display:block;width:100%;padding:13px;border-radius:14px;border:none;cursor:pointer;
-  font-weight:800;font-size:14px;font-family:Nunito;
-  background:linear-gradient(180deg,var(--terracotta),var(--terracotta-dark));color:#fff6e6;
-  box-shadow:0 6px 0 #6d2b19,var(--shadow);transition:transform .08s,box-shadow .08s;
+display:block;width:100%;padding:13px;border-radius:14px;border:none;cursor:pointer;
+font-weight:800;font-size:14px;font-family:Nunito;
+background:linear-gradient(180deg,var(--terracotta),var(--terracotta-dark));color:#fff6e6;
+box-shadow:0 6px 0 #6d2b19,var(--shadow);transition:transform .08s,box-shadow .08s;
 }
 .btn:active{transform:translateY(4px);box-shadow:0 2px 0 #6d2b19}
 .btn.goldbtn{background:linear-gradient(180deg,#f3c85b,#c99425);color:#3b1f16;box-shadow:0 6px 0 #8d6412,var(--shadow)}
 .btn.goldbtn:active{box-shadow:0 2px 0 #8d6412}
 .btn:disabled{filter:grayscale(.7) brightness(.8);cursor:not-allowed;box-shadow:none;transform:none}
-
 .boostbar{margin-top:8px;text-align:center;font-weight:800;color:var(--gold);font-size:13px;display:none}
 .boostbar.on{display:block;animation:pulse 1s infinite}
-
 /* ---------- UPGRADES & SHOP ---------- */
 .upgrade-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 .up-card{background:rgba(59,31,22,.08);border:1px solid #dcc39b;border-radius:12px;padding:10px;text-align:center}
@@ -160,11 +150,10 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 .up-card b{display:block;font-size:13px;margin-bottom:4px}
 .up-card span{font-size:11px;color:#7a5b45;display:block;margin-bottom:8px}
 .card.dark .up-card span{color:#c39a6d}
-
 /* ---------- LISTS ---------- */
 .item{
-  display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;
-  padding:10px;border-radius:12px;background:rgba(59,31,22,.06);border:1px solid #dcc39b;margin-bottom:8px;
+display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;
+padding:10px;border-radius:12px;background:rgba(59,31,22,.06);border:1px solid #dcc39b;margin-bottom:8px;
 }
 .card.dark .item{background:rgba(255,255,255,.04);border-color:#52301f}
 .item .emo{font-size:26px;width:34px;text-align:center;flex:none}
@@ -172,8 +161,8 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 .item .t b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .item .t span{font-size:11px;opacity:.8}
 .buy{
-  flex:none;padding:9px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:800;font-size:12px;
-  background:linear-gradient(180deg,#5fa855,#3f7a38);color:#fff;box-shadow:0 4px 0 #2c5827;font-family:Nunito;
+flex:none;padding:9px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:800;font-size:12px;
+background:linear-gradient(180deg,#5fa855,#3f7a38);color:#fff;box-shadow:0 4px 0 #2c5827;font-family:Nunito;
 }
 .buy:active{transform:translateY(3px);box-shadow:0 1px 0 #2c5827}
 .buy:disabled{background:linear-gradient(180deg,#9c9c9c,#6f6f6f);box-shadow:0 4px 0 #4d4d4d;opacity:.75}
@@ -187,17 +176,15 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 .dish{padding:9px;border-radius:12px;border:1px solid #dcc39b;background:rgba(59,31,22,.05);display:flex;gap:8px;align-items:center;min-width:0}
 .dish b{font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dish span{font-size:10px;color:#7a5b45}
-
 /* Daily Login Modal Style */
 .daily-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
 .day-box{background:rgba(59,31,22,.1);border:1px solid #d8bd92;border-radius:10px;padding:8px 4px;text-align:center;font-size:11px}
 .day-box.claimed{opacity:0.5;background:#5fa855;color:#fff}
 .day-box b{display:block;font-size:13px;color:var(--gold)}
-
 #toast{
-  position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(120%);
-  background:linear-gradient(180deg,#f3c85b,#c99425);color:#3b1f16;font-weight:800;font-size:13px;
-  padding:12px 18px;border-radius:14px;box-shadow:var(--shadow);z-index:500;transition:transform .35s;max-width:90vw;text-align:center;
+position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(120%);
+background:linear-gradient(180deg,#f3c85b,#c99425);color:#3b1f16;font-weight:800;font-size:13px;
+padding:12px 18px;border-radius:14px;box-shadow:var(--shadow);z-index:500;transition:transform .35s;max-width:90vw;text-align:center;
 }
 #toast.show{transform:translateX(-50%) translateY(0)}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:600;padding:20px}
@@ -207,1034 +194,1044 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 </style>
 </head>
 <body>
-
 <!-- WELCOME SLIDESHOW OVERLAY FOR NEW USERS -->
 <div id="welcomeOverlay">
-  <div class="slide-container">
-    <div class="slide-icon" id="slideIcon">🇮🇹</div>
-    <div class="slide-title" id="slideTitle">Welcome to Bella Italia!</div>
-    <div class="slide-desc" id="slideDesc">Step into the finest Italian trattoria! Tap to cook delicious dishes, manage your kitchen brigade, and build your culinary empire.</div>
-    <div class="slide-dots" id="slideDots">
-      <div class="dot active"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-    <div style="display:flex;gap:10px;width:100%;">
-      <button class="btn" id="slideNextBtn" style="width:100%;">Next ➔</button>
-    </div>
-  </div>
+<div class="slide-container">
+<div class="slide-icon" id="slideIcon">🇮🇹</div>
+<div class="slide-title" id="slideTitle">Welcome to Bella Italia!</div>
+<div class="slide-desc" id="slideDesc">Step into the finest Italian trattoria! Tap to cook delicious dishes, manage your kitchen brigade, and build your culinary empire.</div>
+<div class="slide-dots" id="slideDots">
+<div class="dot active"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
 </div>
-
+<div style="display:flex;gap:10px;width:100%;">
+<button class="btn" id="slideNextBtn" style="width:100%;">Next ➔</button>
+</div>
+</div>
+</div>
 <div id="loader">
-  <div class="brand">Agunnagreat©️<small>COOKING IDLE TYCOON</small></div>
-  <div class="bar"><i id="loadBar"></i></div>
-  <div id="loadTxt">HEATING THE OVENS…</div>
+<div class="brand">Agunnagreat©️<small>COOKING IDLE TYCOON</small></div>
+<div class="bar"><i id="loadBar"></i></div>
+<div id="loadTxt">HEATING THE OVENS…</div>
 </div>
-
 <div id="app">
-  <div class="topbar">
-    <div class="user-badge">
-      <span id="userBadge">👤 @ChefUser</span>
-      <select id="langSelect" style="background:#2a1510;color:var(--gold);border:1px solid #52301f;border-radius:6px;padding:2px 6px;font-size:11px;font-family:Nunito;cursor:pointer;">
-        <option value="en">🇬🇧 EN</option>
-        <option value="fr">🇫🇷 FR</option>
-        <option value="ru">🇷🇺 RU</option>
-        <option value="es">🇪🇸 ES</option>
-        <option value="zh">🇨🇳 ZH</option>
-      </select>
-    </div>
-    <div class="row">
-      <div class="stats">
-        <div class="stat"><b class="gold" id="gold">0</b><span data-i18n="goldLbl">Gold</span></div>
-        <div class="stat"><b id="gps">0/s</b><span data-i18n="perSecLbl">Per sec</span></div>
-        <div class="stat"><b id="perclick">1</b><span data-i18n="perTapLbl">Per tap</span></div>
-      </div>
-      <button class="iconbtn" id="muteBtn" title="Mute / Unmute">🔊</button>
-    </div>
-    <div class="lvlwrap">
-      <div class="lvlbar"><i id="lvlFill"></i></div>
-      <div class="lvlmeta"><span id="lvlLabel">Level 1 · Bella Italia</span><span id="lvlProg">0 / 100</span></div>
-    </div>
-    <!-- Energy Bar for Tap-to-Earn Mechanic -->
-    <div class="lvlwrap" style="margin-top:6px;">
-      <div class="lvlbar" style="background:#2a1510;border-color:#8f3a24;"><i id="energyFill" style="background:linear-gradient(90deg,#f3c85b,#c1573a);width:100%;"></i></div>
-      <div class="lvlmeta"><span style="color:var(--gold);" data-i18n="energyCapLbl">⚡ Energy Cap</span><span id="energyText">1000 / 1000</span></div>
-    </div>
-  </div>
-
-  <div class="tabs">
-    <div class="tab active" data-tab="kitchen"><em>🍳</em><span data-i18n="tabKitchen">Kitchen</span></div>
-    <div class="tab" data-tab="upgrades"><em>⚡</em><span data-i18n="tabBoosts">Boosts</span></div>
-    <div class="tab" data-tab="menu"><em>📜</em><span data-i18n="tabMenu">Menu</span></div>
-    <div class="tab" data-tab="staff"><em>👨‍🍳</em><span data-i18n="tabStaff">Staff</span></div>
-    <div class="tab" data-tab="tasks"><em>📋</em><span data-i18n="tabTasks">Tasks</span></div>
-    <div class="tab" data-tab="airdrop"><em>🪂</em><span data-i18n="tabAirdrop">Airdrop</span></div>
-    <div class="tab" data-tab="ach"><em>🏆</em><span data-i18n="tabAwards">Awards</span></div>
-  </div>
-
-  <!-- KITCHEN -->
-  <div class="panel active" id="tab-kitchen">
-    <div id="station">
-      <div id="pan">🍳</div>
-      <div id="dishName">Margherita Pizza</div>
-      <div id="dishVal">+1 gold per serve</div>
-      <div class="hint" data-i18n="tapToCook">Tap to cook</div>
-    </div>
-    <button class="btn goldbtn" id="adBtn">▶ Watch Ad for 2x Speed (MOCK)</button>
-    <div class="boostbar" id="boostBar">⚡ 2x BOOST ACTIVE — 30s</div>
-    <div class="card dark">
-      <h3 style="margin:0 0 6px" data-i18n="todaysService">Today's Service</h3>
-      <div class="muted" id="kitchenStats">—</div>
-    </div>
-    <div class="card dark">
-      <h3 style="margin:0 0 6px" data-i18n="levelGoal">Level Goal</h3>
-      <div class="muted" id="goalTxt">—</div>
-      <button class="btn" id="advBtn" style="margin-top:10px" disabled>Serve Next Level</button>
-    </div>
-  </div>
-
-  <!-- UPGRADES / BOOSTS PANEL -->
-  <div class="panel" id="tab-upgrades">
-    <div class="card dark">
-      <h3 style="margin:0 0 4px" data-i18n="kitchenEnhancements">Kitchen Enhancements</h3>
-      <div class="muted" style="margin-bottom:10px" data-i18n="enhancementsDesc">Increase your power and energy limits using your hard-earned coins!</div>
-      <div class="upgrade-grid">
-        <div class="up-card">
-          <b data-i18n="energyCapTitle">⚡ Energy Cap</b>
-          <span id="capLevel">Level 1 (Max: 1000)</span>
-          <button class="buy" id="buyCapBtn" style="width:100%">Upgrade</button>
-        </div>
-        <div class="up-card">
-          <b data-i18n="multiTapTitle">💪 Multi-Tap</b>
-          <span id="tapLevel">Level 1 (+1/tap)</span>
-          <button class="buy" id="buyTapBtn" style="width:100%">Upgrade</button>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <h3 style="margin:0 0 6px" data-i18n="dailyRewardsTitle">🎁 Daily Login Rewards</h3>
-      <div class="muted" style="margin-bottom:10px" data-i18n="dailyRewardsDesc">Claim free gold bonuses daily to scale your restaurant empire!</div>
-      <div class="daily-grid" id="dailyGrid"></div>
-      <button class="btn goldbtn" id="claimDailyBtn">Claim Today's Reward</button>
-    </div>
-  </div>
-
-  <!-- MENU -->
-  <div class="panel" id="tab-menu">
-    <div class="card dark">
-      <h3 style="margin:0 0 4px" data-i18n="restaurantSeasons">Restaurant Seasons</h3>
-      <div class="muted" style="margin-bottom:10px">100 levels · 4 restaurants</div>
-      <div class="seasons" id="seasonChips"></div>
-      <div id="seasonInfo" class="muted"></div>
-    </div>
-    <div class="card">
-      <h3 style="margin:0 0 8px">Menu Sheet <span class="badge" id="dishCount">0</span></h3>
-      <div class="grid2" id="dishList"></div>
-    </div>
-  </div>
-
-  <!-- STAFF -->
-  <div class="panel" id="tab-staff">
-    <div class="card">
-      <h3 style="margin:0 0 4px" data-i18n="staffBrigadeTitle">Kitchen Brigade & Profit Per Hour</h3>
-      <div class="muted" style="margin-bottom:10px" data-i18n="staffBrigadeDesc">Staff generate passive profit per hour even when you're offline. Each hire raises price by 15%.</div>
-      <div id="staffList"></div>
-    </div>
-  </div>
-
-  <!-- TASKS & REFERRALS -->
-  <div class="panel" id="tab-tasks">
-    <div class="card dark">
-      <h3 style="margin:0 0 4px" data-i18n="referralTitle">👥 Referral System</h3>
-      <div class="muted" style="margin-bottom:10px" data-i18n="referralDesc">Invite fellow chefs! Earn 5,000 🪙 for every friend who joins your kitchen brigade.</div>
-      <div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:10px;font-size:12px;word-break:break-all;margin-bottom:10px;color:var(--gold);" id="refLinkText">Generating link...</div>
-      <button class="btn goldbtn" id="copyRefBtn">📋 Copy Invite Link</button>
-    </div>
-    <div class="card">
-      <h3 style="margin:0 0 8px" data-i18n="specialTasksTitle">📋 Special Kitchen Tasks</h3>
-      <div class="muted" style="margin-bottom:10px" data-i18n="specialTasksDesc">Complete tasks to earn huge bonuses and upgrade capital!</div>
-      <div id="tasksList"></div>
-    </div>
-  </div>
-
-  <!-- AIRDROP & ROADMAP -->
-  <div class="panel" id="tab-airdrop">
-    <!-- TON Wallet & Telegram Stars Section -->
-    <div class="card dark" style="text-align:center; margin-bottom: 10px;">
-      <h3 style="margin:0 0 8px" data-i18n="monetizationTitle">TON & Telegram Monetization</h3>
-      <div class="muted" style="margin-bottom:12px" data-i18n="monetizationDesc">Connect your TON wallet and integrate Telegram Stars to secure your token airdrops and monetization rewards.</div>
-      <div id="ton-connect-button" style="display:flex;justify-content:center;margin-bottom:10px;"></div>
-      <button class="btn goldbtn" id="telegramStarsBtn" style="margin-top:6px;" data-i18n="tgStarsBtn">⭐ Buy Energy Refill with Telegram Stars (⭐ 15)</button>
-    </div>
-
-    <!-- Stars Customization & Booster Store Section -->
-    <div class="card dark" style="text-align:center; margin-bottom: 10px;">
-      <h3>⭐ Telegram Stars Premium Store</h3>
-      <div class="muted" style="margin-bottom:12px">Unlock custom cosmetic themes, instant profit packages, and prestige badges!</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
-          <div class="emo">🌙</div>
-          <div class="t" style="text-align:left;"><b>Midnight Trattoria Theme</b><span>Dark velvet cosmetic skin</span></div>
-          <button class="buy" onclick="buyStarsItem('midnight', 50)">⭐ 50</button>
-        </div>
-        <div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
-          <div class="emo">⏱️</div>
-          <div class="t" style="text-align:left;"><b>Instant 2-Hour Profit</b><span>Instant offline cash injection</span></div>
-          <button class="buy" onclick="buyStarsItem('profit2h', 75)">⭐ 75</button>
-        </div>
-        <div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
-          <div class="emo">👑</div>
-          <div class="t" style="text-align:left;"><b>Golden Michelin Badge</b><span>Exclusive profile flair</span></div>
-          <button class="buy" onclick="buyStarsItem('michelin', 150)">⭐ 150</button>
-        </div>
-        <div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
-          <div class="emo">🚀</div>
-          <div class="t" style="text-align:left;"><b>Mega Tycoon Starter Pack</b><span>1hr 5x Speed + 1 Industrial Oven</span></div>
-          <button class="buy" onclick="buyStarsItem('megapack', 350)">⭐ 350</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card dark">
-      <h3 style="margin:0 0 6px">🪂 Project Airdrop & Roadmap</h3>
-      <div class="muted" style="margin-bottom:12px">Track our progress toward token launch, exchange listings, and ecosystem expansion.</div>
-      
-      <div style="display:flex;flex-direction:column;gap:10px;font-size:12px;">
-        <div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:10px;border-left:4px solid var(--green)">
-          <b>Phase 1: Foundation (Completed)</b>
-          <div class="muted">Telegram Mini App release, core idle mechanics, and first 4 restaurant seasons.</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:10px;border-left:4px solid var(--gold)">
-          <b>Phase 2: Community & Economy (Current)</b>
-          <div class="muted">Referral system, daily login rewards, multi-language support, and strict anti-bot protection.</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:10px;border-left:4px solid var(--terracotta)">
-          <b>Phase 3: TON TGE & Airdrop (Q3 2026)</b>
-          <div class="muted">Token Generation Event (TGE) on TON blockchain, wallet snapshot, and community reward distribution.</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:10px;border-left:4px solid #8f3a24">
-          <b>Phase 4: CEX Listings & Marketplace (Q4 2026)</b>
-          <div class="muted">Major exchange listings, NFT kitchen equipment marketplace, and guild championships.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ACHIEVEMENTS -->
-  <div class="panel" id="tab-ach">
-    <!-- Leaderboard Section -->
-    <div class="card dark" style="margin-bottom:10px;">
-      <h3 style="margin:0 0 6px">🏆 Global Chef Leaderboard</h3>
-      <div class="muted" style="margin-bottom:10px">Top performing chefs worldwide ranked by lifetime gold earnings.</div>
-      <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;" id="leaderboardList">
-        <div style="display:flex;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px;"><span>1. 🥇 @Chef_Luigi</span><span class="gold">24.5B 🪙</span></div>
-        <div style="display:flex;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px;"><span>2. 🥈 @PastaMaster</span><span class="gold">18.2B 🪙</span></div>
-        <div style="display:flex;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px;"><span>3. 🥉 @TrattoriaKing</span><span class="gold">9.8B 🪙</span></div>
-        <div style="display:flex;justify-content:space-between;padding:8px;background:rgba(243,200,91,0.15);border-radius:8px;border:1px solid var(--gold);" id="userLeaderboardRank"><span>124. 👤 @ChefUser</span><span class="gold" id="userRankGold">0 🪙</span></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3 style="margin:0 0 8px">Achievements <span class="badge" id="achCount">0</span></h3>
-      <div id="achList"></div>
-    </div>
-    <div class="card dark">
-      <button class="btn" id="resetBtn" data-i18n="resetBtn">Reset Save</button>
-    </div>
-  </div>
+<div class="topbar">
+<div class="user-badge">
+<span id="userBadge">👤 @ChefUser</span>
+<select id="langSelect" style="background:#2a1510;color:var(--gold);border:1px solid #52301f;border-radius:6px;padding:2px 6px;font-size:11px;font-family:Nunito;cursor:pointer;">
+<option value="en">🇬🇧 EN</option>
+<option value="fr">🇫🇷 FR</option>
+<option value="ru">🇷🇺 RU</option>
+<option value="es">🇪🇸 ES</option>
+<option value="zh">🇨🇳 ZH</option>
+</select>
 </div>
-
+<div class="row">
+<div class="stats">
+<div class="stat"><b class="gold" id="gold">0</b><span data-i18n="goldLbl">Gold</span></div>
+<div class="stat"><b id="gps">0/s</b><span data-i18n="perSecLbl">Per sec</span></div>
+<div class="stat"><b id="perclick">1</b><span data-i18n="perTapLbl">Per tap</span></div>
+</div>
+<button class="iconbtn" id="muteBtn" title="Mute / Unmute">🔊</button>
+</div>
+<div class="lvlwrap">
+<div class="lvlbar"><i id="lvlFill"></i></div>
+<div class="lvlmeta"><span id="lvlLabel">Level 1 · Bella Italia</span><span id="lvlProg">0 / 100</span></div>
+</div>
+<!-- Energy Bar for Tap-to-Earn Mechanic -->
+<div class="lvlwrap" style="margin-top:6px;">
+<div class="lvlbar" style="background:#2a1510;border-color:#8f3a24;"><i id="energyFill" style="background:linear-gradient(90deg,#f3c85b,#c1573a);width:100%;"></i></div>
+<div class="lvlmeta"><span style="color:var(--gold);" data-i18n="energyCapLbl">⚡ Energy Cap</span><span id="energyText">1000 / 1000</span></div>
+</div>
+</div>
+<div class="tabs">
+<div class="tab active" data-tab="kitchen"><em>🍳</em><span data-i18n="tabKitchen">Kitchen</span></div>
+<div class="tab" data-tab="upgrades"><em>⚡</em><span data-i18n="tabBoosts">Boosts</span></div>
+<div class="tab" data-tab="menu"><em>📜</em><span data-i18n="tabMenu">Menu</span></div>
+<div class="tab" data-tab="staff"><em>👨‍🍳</em><span data-i18n="tabStaff">Staff</span></div>
+<div class="tab" data-tab="tasks"><em>📋</em><span data-i18n="tabTasks">Tasks</span></div>
+<div class="tab" data-tab="airdrop"><em>🪂</em><span data-i18n="tabAirdrop">Airdrop</span></div>
+<div class="tab" data-tab="ach"><em>🏆</em><span data-i18n="tabAwards">Awards</span></div>
+</div>
+<!-- KITCHEN -->
+<div class="panel active" id="tab-kitchen">
+<div id="station">
+<div id="pan">🍳</div>
+<div id="dishName">Margherita Pizza</div>
+<div id="dishVal">+1 gold per serve</div>
+<div class="hint" data-i18n="tapToCook">Tap to cook</div>
+</div>
+<button class="btn goldbtn" id="adBtn">▶ Watch Ad for 2x Speed (MOCK)</button>
+<div class="boostbar" id="boostBar">⚡ 2x BOOST ACTIVE — 30s</div>
+<div class="card dark">
+<h3 style="margin:0 0 6px" data-i18n="todaysService">Today's Service</h3>
+<div class="muted" id="kitchenStats">—</div>
+</div>
+<div class="card dark">
+<h3 style="margin:0 0 6px" data-i18n="levelGoal">Level Goal</h3>
+<div class="muted" id="goalTxt">—</div>
+<button class="btn" id="advBtn" style="margin-top:10px" disabled>Serve Next Level</button>
+</div>
+</div>
+<!-- UPGRADES / BOOSTS PANEL -->
+<div class="panel" id="tab-upgrades">
+<div class="card dark">
+<h3 style="margin:0 0 4px" data-i18n="kitchenEnhancements">Kitchen Enhancements</h3>
+<div class="muted" style="margin-bottom:10px" data-i18n="enhancementsDesc">Increase your power and energy limits using your hard-earned coins!</div>
+<div class="upgrade-grid">
+<div class="up-card">
+<b data-i18n="energyCapTitle">⚡ Energy Cap</b>
+<span id="capLevel">Level 1 (Max: 1000)</span>
+<button class="buy" id="buyCapBtn" style="width:100%">Upgrade</button>
+</div>
+<div class="up-card">
+<b data-i18n="multiTapTitle">💪 Multi-Tap</b>
+<span id="tapLevel">Level 1 (+1/tap)</span>
+<button class="buy" id="buyTapBtn" style="width:100%">Upgrade</button>
+</div>
+</div>
+</div>
+<div class="card">
+<h3 style="margin:0 0 6px" data-i18n="dailyRewardsTitle">🎁 Daily Login Rewards</h3>
+<div class="muted" style="margin-bottom:10px" data-i18n="dailyRewardsDesc">Claim free gold bonuses daily to scale your restaurant empire!</div>
+<div class="daily-grid" id="dailyGrid"></div>
+<button class="btn goldbtn" id="claimDailyBtn">Claim Today's Reward</button>
+</div>
+</div>
+<!-- MENU -->
+<div class="panel" id="tab-menu">
+<div class="card dark">
+<h3 style="margin:0 0 4px" data-i18n="restaurantSeasons">Restaurant Seasons</h3>
+<div class="muted" style="margin-bottom:10px">100 levels · 4 restaurants</div>
+<div class="seasons" id="seasonChips"></div>
+<div id="seasonInfo" class="muted"></div>
+</div>
+<div class="card">
+<h3 style="margin:0 0 8px">Menu Sheet <span class="badge" id="dishCount">0</span></h3>
+<div class="grid2" id="dishList"></div>
+</div>
+</div>
+<!-- STAFF -->
+<div class="panel" id="tab-staff">
+<div class="card">
+<h3 style="margin:0 0 4px" data-i18n="staffBrigadeTitle">Kitchen Brigade & Profit Per Hour</h3>
+<div class="muted" style="margin-bottom:10px" data-i18n="staffBrigadeDesc">Staff generate passive profit per hour even when you're offline. Each hire raises price by 15%.</div>
+<div id="staffList"></div>
+</div>
+</div>
+<!-- TASKS & REFERRALS -->
+<div class="panel" id="tab-tasks">
+<div class="card dark">
+<h3 style="margin:0 0 4px" data-i18n="referralTitle">👥 Referral System</h3>
+<div class="muted" style="margin-bottom:10px" data-i18n="referralDesc">Invite fellow chefs! Earn 5,000 🪙 for every friend who joins your kitchen brigade.</div>
+<div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:10px;font-size:12px;word-break:break-all;margin-bottom:10px;color:var(--gold);" id="refLinkText">Generating link...</div>
+<button class="btn goldbtn" id="copyRefBtn">📋 Copy Invite Link</button>
+</div>
+<div class="card">
+<h3 style="margin:0 0 8px" data-i18n="specialTasksTitle">📋 Special Kitchen Tasks</h3>
+<div class="muted" style="margin-bottom:10px" data-i18n="specialTasksDesc">Complete tasks to earn huge bonuses and upgrade capital!</div>
+<div id="tasksList"></div>
+</div>
+</div>
+<!-- AIRDROP & ROADMAP -->
+<div class="panel" id="tab-airdrop">
+<!-- TON Wallet & Telegram Stars Section -->
+<div class="card dark" style="text-align:center; margin-bottom: 10px;">
+<h3 style="margin:0 0 8px" data-i18n="monetizationTitle">TON & Telegram Monetization</h3>
+<div class="muted" style="margin-bottom:12px" data-i18n="monetizationDesc">Connect your TON wallet and integrate Telegram Stars to secure your token airdrops and monetization rewards.</div>
+<div id="ton-connect-button" style="display:flex;justify-content:center;margin-bottom:10px;"></div>
+<button class="btn goldbtn" id="telegramStarsBtn" style="margin-top:6px;" data-i18n="tgStarsBtn">⭐ Buy Energy Refill with Telegram Stars (⭐ 15)</button>
+</div>
+<!-- Stars Customization & Festive Themes -->
+<div class="card dark" style="text-align:center; margin-bottom: 10px;">
+<h3>🎄 Festive & Seasonal Telegram Themes</h3>
+<div class="muted" style="margin-bottom:12px">Use Telegram Stars to unlock limited-edition atmospheric themes!</div>
+<div style="display:flex;flex-direction:column;gap:8px;">
+<div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
+<div class="emo">❄️</div>
+<div class="t" style="text-align:left;"><b>Christmas Snowy Trattoria</b><span>Festive winter wonderland skin</span></div>
+<button class="buy" onclick="buyStarsItem('christmas', 75)">⭐ 75</button>
+</div>
+<div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
+<div class="emo">🎃</div>
+<div class="t" style="text-align:left;"><b>Halloween Spooky Kitchen</b><span>Spooky candlelit ambiance</span></div>
+<button class="buy" onclick="buyStarsItem('halloween', 75)">⭐ 75</button>
+</div>
+<div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
+<div class="emo">🌙</div>
+<div class="t" style="text-align:left;"><b>Midnight Trattoria Theme</b><span>Dark velvet cosmetic skin</span></div>
+<button class="buy" onclick="buyStarsItem('midnight', 50)">⭐ 50</button>
+</div>
+<div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
+<div class="emo">⏱️</div>
+<div class="t" style="text-align:left;"><b>Instant 2-Hour Profit</b><span>Instant offline cash injection</span></div>
+<button class="buy" onclick="buyStarsItem('profit2h', 75)">⭐ 75</button>
+</div>
+<div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
+<div class="emo">👑</div>
+<div class="t" style="text-align:left;"><b>Golden Michelin Badge</b><span>Exclusive profile flair</span></div>
+<button class="buy" onclick="buyStarsItem('michelin', 150)">⭐ 150</button>
+</div>
+<div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
+<div class="emo">🚀</div>
+<div class="t" style="text-align:left;"><b>Mega Tycoon Starter Pack</b><span>1hr 5x Speed + 1 Industrial Oven</span></div>
+<button class="buy" onclick="buyStarsItem('megapack', 350)">⭐ 350</button>
+</div>
+</div>
+</div>
+<!-- NFT Kitchen Equipment Marketplace (20 Items) -->
+<div class="card dark" style="text-align:center; margin-bottom: 10px;">
+<h3>🪙 NFT Kitchen Equipment Marketplace</h3>
+<div class="muted" style="margin-bottom:12px">Collect rare on-chain NFT kitchen gear to permanently boost your profit per hour!</div>
+<div style="display:grid;grid-template-columns:1fr;gap:6px;max-height:220px;overflow-y:auto;text-align:left;" id="nftMarketplaceList"></div>
+</div>
+<div class="card dark">
+<h3 style="margin:0 0 6px">🪂 Project Airdrop & Roadmap</h3>
+<div class="muted" style="margin-bottom:12px">Track our progress toward token launch, exchange listings, and ecosystem expansion.</div>
+<div style="display:flex;flex-direction:column;gap:10px;font-size:12px;">
+<div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:10px;border-left:4px solid var(--green)">
+<b>Phase 1: Foundation (Completed)</b>
+<div class="muted">Telegram Mini App release, core idle mechanics, and first 4 restaurant seasons.</div>
+</div>
+<div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:10px;border-left:4px solid var(--gold)">
+<b>Phase 2: Community & Economy (Current)</b>
+<div class="muted">Referral system, daily login rewards, multi-language support, and strict anti-bot protection.</div>
+</div>
+<div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:10px;border-left:4px solid var(--terracotta)">
+<b>Phase 3: TON TGE & Airdrop (Q3 2026)</b>
+<div class="muted">Token Generation Event (TGE) on TON blockchain, wallet snapshot, and community reward distribution.</div>
+</div>
+<div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:10px;border-left:4px solid #8f3a24">
+<b>Phase 4: CEX Listings & Marketplace (Q4 2026)</b>
+<div class="muted">Major exchange listings, NFT kitchen equipment marketplace, and guild championships.</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ACHIEVEMENTS -->
+<div class="panel" id="tab-ach">
+<!-- Leaderboard Section -->
+<div class="card dark" style="margin-bottom:10px;">
+<h3 style="margin:0 0 6px">🏆 Global Chef Leaderboard</h3>
+<div class="muted" style="margin-bottom:10px">Top performing chefs worldwide ranked by lifetime gold earnings.</div>
+<div style="display:flex;flex-direction:column;gap:6px;font-size:12px;" id="leaderboardList">
+<div style="display:flex;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px;"><span>1. 🥇 @Chef_Luigi</span><span class="gold">24.5B 🪙</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px;"><span>2. 🥈 @PastaMaster</span><span class="gold">18.2B 🪙</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px;"><span>3. 🥉 @TrattoriaKing</span><span class="gold">9.8B 🪙</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px;background:rgba(243,200,91,0.15);border-radius:8px;border:1px solid var(--gold);" id="userLeaderboardRank"><span>124. 👤 @ChefUser</span><span class="gold" id="userRankGold">0 🪙</span></div>
+</div>
+</div>
+<div class="card">
+<h3 style="margin:0 0 8px">Achievements <span class="badge" id="achCount">0</span></h3>
+<div id="achList"></div>
+</div>
+<div class="card dark">
+<button class="btn" id="resetBtn" data-i18n="resetBtn">Reset Save</button>
+</div>
+</div>
+</div>
 <div id="toast"></div>
 <div class="modal" id="awayModal">
-  <div class="card">
-    <h2 style="margin:0 0 6px" data-i18n="awayTitle">Welcome back, Chef!</h2>
-    <div class="muted" id="awayTxt"></div>
-    <button class="btn goldbtn" style="margin-top:14px" onclick="document.getElementById('awayModal').classList.remove('show')" data-i18n="collectBtn">Collect</button>
-  </div>
+<div class="card">
+<h2 style="margin:0 0 6px" data-i18n="awayTitle">Welcome back, Chef!</h2>
+<div class="muted" id="awayTxt"></div>
+<button class="btn goldbtn" style="margin-top:14px" onclick="document.getElementById('awayModal').classList.remove('show')" data-i18n="collectBtn">Collect</button>
 </div>
-
+</div>
 <script>
 "use strict";
 /* ============================================================
-   TRANSLATION DICTIONARIES (Multi-Language Support)
-   ============================================================ */
+TRANSLATION DICTIONARIES (Multi-Language Support)
+============================================================ */
 const I18N = {
-  en: {
-    goldLbl: "Gold", perSecLbl: "Per sec", perTapLbl: "Per tap", energyCapLbl: "⚡ Energy Cap",
-    tabKitchen: "Kitchen", tabBoosts: "Boosts", tabMenu: "Menu", tabStaff: "Staff", tabTasks: "Tasks", tabAirdrop: "Airdrop", tabAwards: "Awards",
-    tapToCook: "Tap to cook", todaysService: "Today's Service", levelGoal: "Level Goal",
-    kitchenEnhancements: "Kitchen Enhancements", enhancementsDesc: "Increase your power and energy limits using your hard-earned coins!",
-    energyCapTitle: "⚡ Energy Cap", multiTapTitle: "💪 Multi-Tap",
-    dailyRewardsTitle: "🎁 Daily Login Rewards", dailyRewardsDesc: "Claim free gold bonuses daily to scale your restaurant empire!",
-    restaurantSeasons: "Restaurant Seasons", staffBrigadeTitle: "Kitchen Brigade & Profit Per Hour",
-    staffBrigadeDesc: "Staff generate passive profit per hour even when you're offline. Each hire raises price by 15%.",
-    referralTitle: "👥 Referral System", referralDesc: "Invite fellow chefs! Earn 5,000 🪙 for every friend who joins your kitchen brigade.",
-    specialTasksTitle: "📋 Special Kitchen Tasks", specialTasksDesc: "Complete tasks to earn huge bonuses and upgrade capital!",
-    monetizationTitle: "TON & Telegram Monetization", monetizationDesc: "Connect your TON wallet and integrate Telegram Stars to secure your token airdrops and monetization rewards.",
-    tgStarsBtn: "⭐ Buy Energy Refill with Telegram Stars (⭐ 15)", resetBtn: "Reset Save", awayTitle: "Welcome back, Chef!", collectBtn: "Collect"
-  },
-  fr: {
-    goldLbl: "Or", perSecLbl: "Par sec", perTapLbl: "Par clic", energyCapLbl: "⚡ Énergie Max",
-    tabKitchen: "Cuisine", tabBoosts: "Boosts", tabMenu: "Menu", tabStaff: "Équipe", tabTasks: "Tâches", tabAirdrop: "Airdrop", tabAwards: "Prix",
-    tapToCook: "Touchez pour cuisiner", todaysService: "Service du jour", levelGoal: "Objectif de niveau",
-    kitchenEnhancements: "Améliorations de Cuisine", enhancementsDesc: "Augmentez votre puissance et votre énergie avec vos pièces !",
-    energyCapTitle: "⚡ Énergie Max", multiTapTitle: "💪 Multi-Clic",
-    dailyRewardsTitle: "🎁 Récompenses Quotidiennes", dailyRewardsDesc: "Récupérez des bonus d'or chaque jour !",
-    restaurantSeasons: "Saisons de Restaurant", staffBrigadeTitle: "Brigade & Profit par Heure",
-    staffBrigadeDesc: "Le personnel génère des profits passifs même hors ligne.",
-    referralTitle: "👥 Système de Parrainage", referralDesc: "Invitez vos amis ! Gagnez 5 000 🪙 par ami.",
-    specialTasksTitle: "📋 Tâches Spéciales", specialTasksDesc: "Complétez des tâches pour gagner des bonus !",
-    monetizationTitle: "Monétisation TON & Telegram", monetizationDesc: "Connectez votre portefeuille TON et Telegram Stars.",
-    tgStarsBtn: "⭐ Recharge d'énergie (⭐ 15)", resetBtn: "Réinitialiser", awayTitle: "Bon retour, Chef !", collectBtn: "Récupérer"
-  },
-  ru: {
-    goldLbl: "Золото", perSecLbl: "В сек", perTapLbl: "За тап", energyCapLbl: "⚡ Энергия",
-    tabKitchen: "Кухня", tabBoosts: "Бусты", tabMenu: "Меню", tabStaff: "Штат", tabTasks: "Задачи", tabAirdrop: "Аирдроп", tabAwards: "Награды",
-    tapToCook: "Нажмите для готовки", todaysService: "Сегодняшний сервис", levelGoal: "Цель уровня",
-    kitchenEnhancements: "Улучшения кухни", enhancementsDesc: "Увеличивайте мощность и лимиты энергии за монеты!",
-    energyCapTitle: "⚡ Макс. Энергия", multiTapTitle: "💪 Мульти-тап",
-    dailyRewardsTitle: "🎁 Ежедневные награды", dailyRewardsDesc: "Получайте золотые бонусы каждый день!",
-    restaurantSeasons: "Сезоны ресторанов", staffBrigadeTitle: "Бригада и прибыль в час",
-    staffBrigadeDesc: "Персонал приносит пассивный доход даже офлайн.",
-    referralTitle: "👥 Реферальная система", referralDesc: "Приглашайте друзей! Получайте 5,000 🪙.",
-    specialTasksTitle: "📋 Специальные задачи", specialTasksDesc: "Выполняйте задания для получения бонусов!",
-    monetizationTitle: "TON и Telegram Монетизация", monetizationDesc: "Подключите TON кошелек для аирдропов.",
-    tgStarsBtn: "⭐ Пополнить энергию (⭐ 15)", resetBtn: "Сбросить прогресс", awayTitle: "С возвращением, Шеф!", collectBtn: "Забрать"
-  },
-  es: {
-    goldLbl: "Oro", perSecLbl: "Por seg", perTapLbl: "Por toque", energyCapLbl: "⚡ Energía Máx",
-    tabKitchen: "Cocina", tabBoosts: "Mejoras", tabMenu: "Menú", tabStaff: "Personal", tabTasks: "Tareas", tabAirdrop: "Airdrop", tabAwards: "Premios",
-    tapToCook: "Toca para cocinar", todaysService: "Servicio de hoy", levelGoal: "Meta de nivel",
-    kitchenEnhancements: "Mejoras de Cocina", enhancementsDesc: "¡Aumenta tu poder y límites de energía con monedas!",
-    energyCapTitle: "⚡ Energía Máx", multiTapTitle: "💪 Multi-Toque",
-    dailyRewardsTitle: "🎁 Recompensas Diarias", dailyRewardsDesc: "¡Reclama bonos de oro diarios!",
-    restaurantSeasons: "Temporadas", staffBrigadeTitle: "Brigada y Ganancia por Hora",
-    staffBrigadeDesc: "El personal genera ganancias pasivas.",
-    referralTitle: "👥 Sistema de Referidos", referralDesc: "¡Invita amigos y gana 5,000 🪙!",
-    specialTasksTitle: "📋 Tareas Especiales", specialTasksDesc: "¡Completa tareas para grandes bonos!",
-    monetizationTitle: "Monetización TON", monetizationDesc: "Conecta tu billetera TON y Telegram Stars.",
-    tgStarsBtn: "⭐ Recargar energía (⭐ 15)", resetBtn: "Reiniciar", awayTitle: "¡Bienvenido, Chef!", collectBtn: "Recoger"
-  },
-  zh: {
-    goldLbl: "金币", perSecLbl: "每秒", perTapLbl: "每次点击", energyCapLbl: "⚡ 能量上限",
-    tabKitchen: "厨房", tabBoosts: "加速", tabMenu: "菜单", tabStaff: "员工", tabTasks: "任务", tabAirdrop: "空投", tabAwards: "成就",
-    tapToCook: "点击烹饪", todaysService: "今日服务", levelGoal: "关卡目标",
-    kitchenEnhancements: "厨房强化", enhancementsDesc: "使用金币提升您的能量和产出！",
-    energyCapTitle: "⚡ 能量上限", multiTapTitle: "💪 多重点击",
-    dailyRewardsTitle: "🎁 每日登录奖励", dailyRewardsDesc: "每日领取免费金币奖励！",
-    restaurantSeasons: "餐厅赛季", staffBrigadeTitle: "厨师团队与每小时收益",
-    staffBrigadeDesc: "离线时员工也会自动产生收益。",
-    referralTitle: "👥 邀请系统", referralDesc: "邀请好友加入，每位可获得 5,000 🪙！",
-    specialTasksTitle: "📋 特殊厨房任务", specialTasksDesc: "完成任务赚取丰厚奖励！",
-    monetizationTitle: "TON 与 Telegram 变现", monetizationDesc: "连接 TON 钱包以保障代币空投奖励。",
-    tgStarsBtn: "⭐ 补充能量 (⭐ 15)", resetBtn: "重置进度", awayTitle: "欢迎回来，主厨！", collectBtn: "领取"
-  }
+en: {
+goldLbl: "Gold", perSecLbl: "Per sec", perTapLbl: "Per tap", energyCapLbl: "⚡ Energy Cap",
+tabKitchen: "Kitchen", tabBoosts: "Boosts", tabMenu: "Menu", tabStaff: "Staff", tabTasks: "Tasks", tabAirdrop: "Airdrop", tabAwards: "Awards",
+tapToCook: "Tap to cook", todaysService: "Today's Service", levelGoal: "Level Goal",
+kitchenEnhancements: "Kitchen Enhancements", enhancementsDesc: "Increase your power and energy limits using your hard-earned coins!",
+energyCapTitle: "⚡ Energy Cap", multiTapTitle: "💪 Multi-Tap",
+dailyRewardsTitle: "🎁 Daily Login Rewards", dailyRewardsDesc: "Claim free gold bonuses daily to scale your restaurant empire!",
+restaurantSeasons: "Restaurant Seasons", staffBrigadeTitle: "Kitchen Brigade & Profit Per Hour",
+staffBrigadeDesc: "Staff generate passive profit per hour even when you're offline. Each hire raises price by 15%.",
+referralTitle: "👥 Referral System", referralDesc: "Invite fellow chefs! Earn 5,000 🪙 for every friend who joins your kitchen brigade.",
+specialTasksTitle: "📋 Special Kitchen Tasks", specialTasksDesc: "Complete tasks to earn huge bonuses and upgrade capital!",
+monetizationTitle: "TON & Telegram Monetization", monetizationDesc: "Connect your TON wallet and integrate Telegram Stars to secure your token airdrops and monetization rewards.",
+tgStarsBtn: "⭐ Buy Energy Refill with Telegram Stars (⭐ 15)", resetBtn: "Reset Save", awayTitle: "Welcome back, Chef!", collectBtn: "Collect"
+},
+fr: {
+goldLbl: "Or", perSecLbl: "Par sec", perTapLbl: "Par clic", energyCapLbl: "⚡ Énergie Max",
+tabKitchen: "Cuisine", tabBoosts: "Boosts", tabMenu: "Menu", tabStaff: "Équipe", tabTasks: "Tâches", tabAirdrop: "Airdrop", tabAwards: "Prix",
+tapToCook: "Touchez pour cuisiner", todaysService: "Service du jour", levelGoal: "Objectif de niveau",
+kitchenEnhancements: "Améliorations de Cuisine", enhancementsDesc: "Augmentez votre puissance et votre énergie avec vos pièces !",
+energyCapTitle: "⚡ Énergie Max", multiTapTitle: "💪 Multi-Clic",
+dailyRewardsTitle: "🎁 Récompenses Quotidiennes", dailyRewardsDesc: "Récupérez des bonus d'or chaque jour !",
+restaurantSeasons: "Saisons de Restaurant", staffBrigadeTitle: "Brigade & Profit par Heure",
+staffBrigadeDesc: "Le personnel génère des profits passifs même hors ligne.",
+referralTitle: "👥 Système de Parrainage", referralDesc: "Invitez vos amis ! Gagnez 5 000 🪙 par ami.",
+specialTasksTitle: "📋 Tâches Spéciales", specialTasksDesc: "Complétez des tâches pour gagner des bonus !",
+monetizationTitle: "Monétisation TON & Telegram", monetizationDesc: "Connectez votre portefeuille TON et Telegram Stars.",
+tgStarsBtn: "⭐ Recharge d'énergie (⭐ 15)", resetBtn: "Réinitialiser", awayTitle: "Bon retour, Chef !", collectBtn: "Récupérer"
+},
+ru: {
+goldLbl: "Золото", perSecLbl: "В сек", perTapLbl: "За тап", energyCapLbl: "⚡ Энергия",
+tabKitchen: "Кухня", tabBoosts: "Бусты", tabMenu: "Меню", tabStaff: "Штат", tabTasks: "Задачи", tabAirdrop: "Аирдроп", tabAwards: "Награды",
+tapToCook: "Нажмите для готовки", todaysService: "Сегодняшний сервис", levelGoal: "Цель уровня",
+kitchenEnhancements: "Улучшения кухни", enhancementsDesc: "Увеличивайте мощность и лимиты энергии за монеты!",
+energyCapTitle: "⚡ Макс. Энергия", multiTapTitle: "💪 Мульти-тап",
+dailyRewardsTitle: "🎁 Ежедневные награды", dailyRewardsDesc: "Получайте золотые бонусы каждый день!",
+restaurantSeasons: "Сезоны ресторанов", staffBrigadeTitle: "Бригада и прибыль в час",
+staffBrigadeDesc: "Персонал приносит пассивный доход даже офлайн.",
+referralTitle: "👥 Реферальная система", referralDesc: "Приглашайте друзей! Получайте 5,000 🪙.",
+specialTasksTitle: "📋 Специальные задачи", specialTasksDesc: "Выполняйте задания для получения бонусов!",
+monetizationTitle: "TON и Telegram Монетизация", monetizationDesc: "Подключите TON кошелек для аирдропов.",
+tgStarsBtn: "⭐ Пополнить энергию (⭐ 15)", resetBtn: "Сбросить прогресс", awayTitle: "С возвращением, Шеф!", collectBtn: "Забрать"
+},
+es: {
+goldLbl: "Oro", perSecLbl: "Por seg", perTapLbl: "Por toque", energyCapLbl: "⚡ Energía Máx",
+tabKitchen: "Cocina", tabBoosts: "Mejoras", tabMenu: "Menú", tabStaff: "Personal", tabTasks: "Tareas", tabAirdrop: "Airdrop", tabAwards: "Premios",
+tapToCook: "Toca para cocinar", todaysService: "Servicio de hoy", levelGoal: "Meta de nivel",
+kitchenEnhancements: "Mejoras de Cocina", enhancementsDesc: "¡Aumenta tu poder y límites de energía con monedas!",
+energyCapTitle: "⚡ Energía Máx", multiTapTitle: "💪 Multi-Toque",
+dailyRewardsTitle: "🎁 Recompensas Diarias", dailyRewardsDesc: "¡Reclama bonos de oro diarios!",
+restaurantSeasons: "Temporadas", staffBrigadeTitle: "Brigada y Ganancia por Hora",
+staffBrigadeDesc: "El personal genera ganancias pasivas.",
+referralTitle: "👥 Sistema de Referidos", referralDesc: "¡Invita amigos y gana 5,000 🪙!",
+specialTasksTitle: "📋 Tareas Especiales", specialTasksDesc: "¡Completa tareas para grandes bonos!",
+monetizationTitle: "Monetización TON", monetizationDesc: "Conecta tu billetera TON y Telegram Stars.",
+tgStarsBtn: "⭐ Recargar energía (⭐ 15)", resetBtn: "Reiniciar", awayTitle: "¡Bienvenido, Chef!", collectBtn: "Recoger"
+},
+zh: {
+goldLbl: "金币", perSecLbl: "每秒", perTapLbl: "每次点击", energyCapLbl: "⚡ 能量上限",
+tabKitchen: "厨房", tabBoosts: "加速", tabMenu: "菜单", tabStaff: "员工", tabTasks: "任务", tabAirdrop: "空投", tabAwards: "成就",
+tapToCook: "点击烹饪", todaysService: "今日服务", levelGoal: "关卡目标",
+kitchenEnhancements: "厨房强化", enhancementsDesc: "使用金币提升您的能量和产出！",
+energyCapTitle: "⚡ 能量上限", multiTapTitle: "💪 多重点击",
+dailyRewardsTitle: "🎁 每日登录奖励", dailyRewardsDesc: "每日领取免费金币奖励！",
+restaurantSeasons: "餐厅赛季", staffBrigadeTitle: "厨师团队与每小时收益",
+staffBrigadeDesc: "离线时员工也会自动产生收益。",
+referralTitle: "👥 邀请系统", referralDesc: "邀请好友加入，每位可获得 5,000 🪙！",
+specialTasksTitle: "📋 特殊厨房任务", specialTasksDesc: "完成任务赚取丰厚奖励！",
+monetizationTitle: "TON 与 Telegram 变现", monetizationDesc: "连接 TON 钱包以保障代币空投奖励。",
+tgStarsBtn: "⭐ 补充能量 (⭐ 15)", resetBtn: "重置进度", awayTitle: "欢迎回来，主厨！", collectBtn: "领取"
+}
 };
 let currentLang = "en";
 function setLanguage(lang){
-  currentLang = lang;
-  const dict = I18N[lang] || I18N.en;
-  document.querySelectorAll("[data-i18n]").forEach(el=>{
-    const k = el.getAttribute("data-i18n");
-    if(dict[k]) el.textContent = dict[k];
-  });
+currentLang = lang;
+const dict = I18N[lang] || I18N.en;
+document.querySelectorAll("[data-i18n]").forEach(el=>{
+const k = el.getAttribute("data-i18n");
+if(dict[k]) el.textContent = dict[k];
+});
 }
-
 /* ============================================================
-   WELCOME SLIDESHOW LOGIC
-   ============================================================ */
+WELCOME SLIDESHOW LOGIC
+============================================================ */
 const welcomeSlides = [
-  {
-    icon: "🇮🇹",
-    title: "Welcome to Bella Italia",
-    desc: "Step into the finest Italian trattoria! Tap to cook delicious dishes, unlock world-class recipes, and build your culinary empire."
-  },
-  {
-    icon: "👨‍🍳",
-    title: "Build Your Brigade",
-    desc: "Hire expert prep cooks, sous chefs, and industrial ovens to generate passive profit per hour even when you're offline!"
-  },
-  {
-    icon: "🛡️",
-    title: "Fair Play & Anti-Bot Policy",
-    desc: "We believe in a fair community! Auto-clickers and bots are strictly forbidden to ensure fair competition and equal airdrop rewards for all genuine chefs."
-  },
-  {
-    icon: "🚀",
-    title: "TON Blockchain & Airdrops",
-    desc: "Connect your TON wallet, complete daily tasks, and prepare for our upcoming token generation event (TGE) and community airdrop rewards!"
-  }
+{
+icon: "🇮🇹",
+title: "Welcome to Bella Italia",
+desc: "Step into the finest Italian trattoria! Tap to cook delicious dishes, unlock world-class recipes, and build your culinary empire."
+},
+{
+icon: "👨‍🍳",
+title: "Build Your Brigade",
+desc: "Hire expert prep cooks, sous chefs, and industrial ovens to generate passive profit per hour even when you're offline!"
+},
+{
+icon: "🛡️",
+title: "Fair Play & Anti-Bot Policy",
+desc: "We believe in a fair community! Auto-clickers and bots are strictly forbidden to ensure fair competition and equal airdrop rewards for all genuine chefs."
+},
+{
+icon: "🚀",
+title: "TON Blockchain & Airdrops",
+desc: "Connect your TON wallet, complete daily tasks, and prepare for our upcoming token generation event (TGE) and community airdrop rewards!"
+}
 ];
 let currentSlide = 0;
 function renderSlide(){
-  const s = welcomeSlides[currentSlide];
-  document.getElementById("slideIcon").textContent = s.icon;
-  document.getElementById("slideTitle").textContent = s.title;
-  document.getElementById("slideDesc").textContent = s.desc;
-  
-  const dots = document.querySelectorAll(".dot");
-  dots.forEach((d, i) => {
-    d.classList.toggle("active", i === currentSlide);
-  });
-  
-  const nextBtn = document.getElementById("slideNextBtn");
-  if(currentSlide === welcomeSlides.length - 1){
-    nextBtn.textContent = "Get Started 🚀";
-  } else {
-    nextBtn.textContent = "Next ➔";
-  }
-}
-
-document.getElementById("slideNextBtn").addEventListener("click", ()=>{
-  currentSlide++;
-  if(currentSlide >= welcomeSlides.length){
-    document.getElementById("welcomeOverlay").classList.add("hide");
-    setTimeout(()=>document.getElementById("welcomeOverlay").remove(), 600);
-  } else {
-    renderSlide();
-  }
+const s = welcomeSlides[currentSlide];
+document.getElementById("slideIcon").textContent = s.icon;
+document.getElementById("slideTitle").textContent = s.title;
+document.getElementById("slideDesc").textContent = s.desc;
+const dots = document.querySelectorAll(".dot");
+dots.forEach((d, i) => {
+d.classList.toggle("active", i === currentSlide);
 });
-
+const nextBtn = document.getElementById("slideNextBtn");
+if(currentSlide === welcomeSlides.length - 1){
+nextBtn.textContent = "Get Started 🚀";
+} else {
+nextBtn.textContent = "Next ➔";
+}
+}
+document.getElementById("slideNextBtn").addEventListener("click", ()=>{
+currentSlide++;
+if(currentSlide >= welcomeSlides.length){
+document.getElementById("welcomeOverlay").classList.add("hide");
+setTimeout(()=>document.getElementById("welcomeOverlay").remove(), 600);
+} else {
+renderSlide();
+}
+});
 /* ============================================================
-   TELEGRAM & TON INITIALIZATION
-   ============================================================ */
+TELEGRAM & TON INITIALIZATION
+============================================================ */
 const tg = window.Telegram?.WebApp;
 let tgUser = { id: 'guest', username: 'ChefUser', first_name: 'Chef' };
-
 if (tg) {
-  tg.expand();
-  if (tg.backgroundColor) {
-    document.documentElement.style.setProperty('--tg-bg-color', tg.backgroundColor);
-  }
-  if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-    tgUser = tg.initDataUnsafe.user;
-  }
+tg.expand();
+if (tg.backgroundColor) {
+document.documentElement.style.setProperty('--tg-bg-color', tg.backgroundColor);
 }
-
-const usernameDisplay = tgUser.username ? `@${tgUser.username}` : (tgUser.first_name || 'ChefUser');
-document.getElementById('userBadge').textContent = `👤 ${usernameDisplay}`;
-
+if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+tgUser = tg.initDataUnsafe.user;
+}
+}
+const usernameDisplay = tgUser.username ? @${tgUser.username} : (tgUser.first_name || 'ChefUser');
+document.getElementById('userBadge').textContent = 👤 ${usernameDisplay};
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-  manifestUrl: window.location.origin + '/tonconnect-manifest.json',
-  buttonRootId: 'ton-connect-button'
+manifestUrl: window.location.origin + '/tonconnect-manifest.json',
+buttonRootId: 'ton-connect-button'
 });
-
 /* ============================================================
-   AUDIO ENGINE — Web Audio API
-   ============================================================ */
+AUDIO ENGINE — Web Audio API (Italian Romantic Piano)
+============================================================ */
 const Audio8 = (() => {
-  let ctx=null, master=null, musicGain=null, muted=false, loopTimer=null, playing=false, step=0;
-  function init(){
-    if(ctx) return;
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if(!AC) return;
-    ctx = new AC();
-    master = ctx.createGain(); master.gain.value = 0.5; master.connect(ctx.destination);
-    musicGain = ctx.createGain(); musicGain.gain.value = 0.2; musicGain.connect(master);
-  }
-  function resume(){ init(); if(ctx && ctx.state==="suspended") ctx.resume(); }
-  function beep(freq,dur,type,gain,dest){
-    if(!ctx||muted) return;
-    const o=ctx.createOscillator(), g=ctx.createGain();
-    o.type=type||"triangle"; o.frequency.value=freq;
-    g.gain.setValueAtTime(0.0001,ctx.currentTime);
-    g.gain.exponentialRampToValueAtTime(gain||0.25,ctx.currentTime+0.02);
-    g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+dur);
-    o.connect(g); g.connect(dest||master); o.start(); o.stop(ctx.currentTime+dur+0.02);
-  }
-  function sizzle(){
-    if(!ctx||muted) return;
-    const len=Math.floor(ctx.sampleRate*0.12);
-    const buf=ctx.createBuffer(1,len,ctx.sampleRate), d=buf.getChannelData(0);
-    for(let i=0;i<len;i++){ d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2); }
-    const src=ctx.createBufferSource(); src.buffer=buf;
-    const f=ctx.createBiquadFilter(); f.type="highpass"; f.frequency.value=1800;
-    const g=ctx.createGain(); g.gain.value=0.22;
-    src.connect(f); f.connect(g); g.connect(master); src.start();
-    beep(180,0.07,"triangle",0.18);
-  }
-  function chime(){
-    if(!ctx||muted) return;
-    [523.25, 659.25, 783.99].forEach((f,i)=>setTimeout(()=>beep(f,0.25,"triangle",0.22),i*60));
-  }
-  function fanfare(){
-    if(!ctx||muted) return;
-    [523.25,659.25,783.99,1046.5].forEach((f,i)=>setTimeout(()=>beep(f,0.3,"triangle",0.25),i*90));
-  }
-  
-  const ITALIAN_MELODY = [
-    523.25, 587.33, 659.25, 698.46, 783.99, 659.25, 587.33, 523.25,
-    440.00, 493.88, 523.25, 587.33, 659.25, 523.25, 493.88, 440.00,
-    523.25, 659.25, 783.99, 1046.50, 783.99, 659.25, 587.33, 659.25,
-    523.25, 392.00, 523.25, 587.33, 659.25, 587.33, 523.25, 523.25
-  ];
-  const ITALIAN_BASS = [
-    261.63, 0, 196.00, 0, 220.00, 0, 164.81, 0,
-    261.63, 0, 196.00, 0, 174.61, 0, 130.81, 0
-  ];
-
-  function tick(){
-    if(!playing) return;
-    const m = ITALIAN_MELODY[step % ITALIAN_MELODY.length];
-    if(m) beep(m, 0.16, "triangle", 0.28, musicGain);
-    if(step % 2 === 0){
-      const b = ITALIAN_BASS[(step/2) % ITALIAN_BASS.length];
-      if(b) beep(b, 0.22, "sawtooth", 0.2, musicGain);
-    }
-    step++;
-  }
-  function startMusic(){ resume(); if(playing||!ctx) return; playing=true; loopTimer=setInterval(tick, 150); }
-  function stopMusic(){ playing=false; clearInterval(loopTimer); }
-  return {
-    resume, sizzle, chime, fanfare, startMusic, stopMusic,
-    setMuted(v){ muted=v; if(master) master.gain.value = v?0:0.5; if(v) stopMusic(); else startMusic(); },
-    isMuted(){ return muted; }
-  };
+let ctx=null, master=null, musicGain=null, muted=false, loopTimer=null, playing=false, step=0;
+function init(){
+if(ctx) return;
+const AC = window.AudioContext || window.webkitAudioContext;
+if(!AC) return;
+ctx = new AC();
+master = ctx.createGain(); master.gain.value = 0.5; master.connect(ctx.destination);
+musicGain = ctx.createGain(); musicGain.gain.value = 0.25; musicGain.connect(master);
+}
+function resume(){ init(); if(ctx && ctx.state==="suspended") ctx.resume(); }
+function playPiano(freq, dur, gain=0.3){
+if(!ctx || muted) return;
+const o = ctx.createOscillator(), g = ctx.createGain();
+o.type = "sine"; o.frequency.value = freq;
+g.gain.setValueAtTime(0.0001, ctx.currentTime);
+g.gain.exponentialRampToValueAtTime(gain, ctx.currentTime + 0.04);
+g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + dur);
+o.connect(g); g.connect(musicGain);
+o.start(); o.stop(ctx.currentTime + dur + 0.05);
+const o2 = ctx.createOscillator(), g2 = ctx.createGain();
+o2.type = "triangle"; o2.frequency.value = freq * 2;
+g2.gain.setValueAtTime(0.0001, ctx.currentTime);
+g2.gain.exponentialRampToValueAtTime(gain * 0.3, ctx.currentTime + 0.03);
+g2.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + dur * 0.7);
+o2.connect(g2); g2.connect(musicGain);
+o2.start(); o2.stop(ctx.currentTime + dur + 0.05);
+}
+function beep(freq,dur,type,gain,dest){
+if(!ctx||muted) return;
+const o=ctx.createOscillator(), g=ctx.createGain();
+o.type=type||"triangle"; o.frequency.value=freq;
+g.gain.setValueAtTime(0.0001,ctx.currentTime);
+g.gain.exponentialRampToValueAtTime(gain||0.25,ctx.currentTime+0.02);
+g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+dur);
+o.connect(g); g.connect(dest||master); o.start(); o.stop(ctx.currentTime+dur+0.02);
+}
+function sizzle(){
+if(!ctx||muted) return;
+const len=Math.floor(ctx.sampleRate*0.12);
+const buf=ctx.createBuffer(1,len,ctx.sampleRate), d=buf.getChannelData(0);
+for(let i=0;i<len;i++){ d[i]=(Math.random()2-1)Math.pow(1-i/len,2); }
+const src=ctx.createBufferSource(); src.buffer=buf;
+const f=ctx.createBiquadFilter(); f.type="highpass"; f.frequency.value=1800;
+const g=ctx.createGain(); g.gain.value=0.22;
+src.connect(f); f.connect(g); g.connect(master); src.start();
+beep(180,0.07,"triangle",0.18);
+}
+function chime(){
+if(!ctx||muted) return;
+[523.25, 659.25, 783.99].forEach((f,i)=>setTimeout(()=>playPiano(f,0.4,0.2),i80));
+}
+function fanfare(){
+if(!ctx||muted) return;
+[523.25,659.25,783.99,1046.5].forEach((f,i)=>setTimeout(()=>playPiano(f,0.5,0.25),i100));
+}
+const PIANO_CHORDS = [
+[261.63, 329.63, 392.00], // C Major
+[220.00, 261.63, 329.63], // A Minor
+[174.61, 220.00, 261.63], // F Major
+[196.00, 246.94, 293.66]  // G Major
+];
+const PIANO_MELODY = [
+523.25, 587.33, 659.25, 783.99, 880.00, 783.99, 659.25, 587.33,
+440.00, 493.88, 523.25, 659.25, 587.33, 523.25, 493.88, 440.00,
+392.00, 440.00, 523.25, 587.33, 659.25, 587.33, 523.25, 392.00,
+523.25, 659.25, 783.99, 1046.50, 783.99, 659.25, 587.33, 523.25
+];
+function tick(){
+if(!playing) return;
+const chord = PIANO_CHORDS[Math.floor(step / 8) % PIANO_CHORDS.length];
+if(step % 4 === 0){
+chord.forEach(f => playPiano(f, 0.8, 0.12));
+}
+const m = PIANO_MELODY[step % PIANO_MELODY.length];
+if(m) playPiano(m, 0.4, 0.22);
+step++;
+}
+function startMusic(){ resume(); if(playing||!ctx) return; playing=true; loopTimer=setInterval(tick, 350); }
+function stopMusic(){ playing=false; clearInterval(loopTimer); }
+return {
+resume, sizzle, chime, fanfare, startMusic, stopMusic,
+setMuted(v){ muted=v; if(master) master.gain.value = v?0:0.5; if(v) stopMusic(); else startMusic(); },
+isMuted(){ return muted; }
+};
 })();
-
 /* ============================================================
-   CONTENT — 4 seasons, 100 levels
-   ============================================================ */
+CONTENT — 4 seasons, 100 levels
+============================================================ */
 const ITALIAN_DISHES=[
-  ["Bruschetta al Pomodoro","🍅",1],["Focaccia Genovese","🫓",3],["Margherita Pizza","🍕",5],
-  ["Arancini Siciliani","🧆",8],["Caprese Salad","🥗",11],["Minestrone Soup","🍲",15],
-  ["Spaghetti Aglio e Olio","🍝",20],["Penne Arrabbiata","🌶️",26],["Garlic Ciabatta","🥖",33],
-  ["Prosciutto e Melone","🍈",41],["Calzone Napoletano","🥟",50],["Fettuccine Alfredo","🍜",61],
-  ["Spaghetti Carbonara","🥓",74],["Gnocchi al Pesto","🥔",89],["Ravioli di Ricotta","🥧",107],
-  ["Lasagna alla Bolognese","🍱",128],["Risotto ai Funghi","🍚",153],["Melanzane Parmigiana","🍆",182],
-  ["Pollo alla Cacciatora","🍗",216],["Saltimbocca alla Romana","🥩",256],["Vitello Tonnato","🍖",303],
-  ["Frutti di Mare Linguine","🦐",358],["Cacio e Pepe","🧀",423],["Orecchiette Pugliesi","🌿",499],
-  ["Tortellini in Brodo","🥣",588],["Panzanella Toscana","🥬",692],["Polpette al Sugo","🍡",813],
-  ["Pizza Quattro Formaggi","🧈",954],["Pizza Diavola","🔥",1118],["Osso Buco Milanese","🦴",1308],
-  ["Bistecca alla Fiorentina","🥩",1528],["Risotto alla Milanese","🌼",1782],["Truffle Risotto","🍄",2075],
-  ["Branzino al Forno","🐟",2413],["Cozze alla Marinara","🦪",2803],["Fritto Misto","🍤",3252],
-  ["Pappardelle al Cinghiale","🍛",3769],["Agnolotti del Plin","🥟",4364],["Carpaccio di Manzo","🥓",5048],
-  ["Burrata con Tartufo","🧀",5834],["Tagliatelle al Tartufo","🍝",6736],["Cannoli Siciliani","🥐",7773],
-  ["Panna Cotta","🍮",8966],["Tiramisu","☕",10338],["Gelato Artigianale","🍨",11913],
-  ["Affogato al Caffè","🍦",13717],["Zabaglione","🥂",15785],["Sfogliatella","🥧",18153],
-  ["Torta Caprese","🍫",20861],["Panettone Milanese","🎂",23956],["Amaretti di Saronno","🍪",27503],
-  ["Espresso Romano","☕",31568],["Limoncello Spritz","🍋",36228],["Chef's Tasting Menu","👑",41570]
+["Bruschetta al Pomodoro","🍅",1],["Focaccia Genovese","🫓",3],["Margherita Pizza","🍕",5],
+["Arancini Siciliani","🧆",8],["Caprese Salad","🥗",11],["Minestrone Soup","🍲",15],
+["Spaghetti Aglio e Olio","🍝",20],["Penne Arrabbiata","🌶️",26],["Garlic Ciabatta","🥖",33],
+["Prosciutto e Melone","🍈",41],["Calzone Napoletano","🥟",50],["Fettuccine Alfredo","🍜",61],
+["Spaghetti Carbonara","🥓",74],["Gnocchi al Pesto","🥔",89],["Ravioli di Ricotta","🥧",107],
+["Lasagna alla Bolognese","🍱",128],["Risotto ai Funghi","🍚",153],["Melanzane Parmigiana","🍆",182],
+["Pollo alla Cacciatora","🍗",216],["Saltimbocca alla Romana","🥩",256],["Vitello Tonnato","🍖",303],
+["Frutti di Mare Linguine","🦐",358],["Cacio e Pepe","🧀",423],["Orecchiette Pugliesi","🌿",499],
+["Tortellini in Brodo","🥣",588],["Panzanella Toscana","🥬",692],["Polpette al Sugo","🍡",813],
+["Pizza Quattro Formaggi","🧈",954],["Pizza Diavola","🔥",1118],["Osso Buco Milanese","🦴",1308],
+["Bistecca alla Fiorentina","🥩",1528],["Risotto alla Milanese","🌼",1782],["Truffle Risotto","🍄",2075],
+["Branzino al Forno","🐟",2413],["Cozze alla Marinara","🦪",2803],["Fritto Misto","🍤",3252],
+["Pappardelle al Cinghiale","🍛",3769],["Agnolotti del Plin","🥟",4364],["Carpaccio di Manzo","🥓",5048],
+["Burrata con Tartufo","🧀",5834],["Tagliatelle al Tartufo","🍝",6736],["Cannoli Siciliani","🥐",7773],
+["Panna Cotta","🍮",8966],["Tiramisu","☕",10338],["Gelato Artigianale","🍨",11913],
+["Affogato al Caffè","🍦",13717],["Zabaglione","🥂",15785],["Sfogliatella","🥧",18153],
+["Torta Caprese","🍫",20861],["Panettone Milanese","🎂",23956],["Amaretti di Saronno","🍪",27503],
+["Espresso Romano","☕",31568],["Limoncello Spritz","🍋",36228],["Chef's Tasting Menu","👑",41570]
 ];
 const SEASONS=[
-  {name:"Bella Italia",emoji:"🇮🇹",desc:"A cozy trattoria in Trastevere. Wood-fired ovens, red checkered linen.",dishes:ITALIAN_DISHES},
-  {name:"Sakura Sushi-Ya",emoji:"🇯🇵",desc:"An eight-seat counter in Ginza. Precision, silence, perfect rice.",
-   dishes:[["Edamame","🫛",48000],["Miso Soup","🍜",55000],["Salmon Nigiri","🍣",63000],["Tuna Sashimi","🐟",72000],["California Roll","🍥",82000],["Tempura Ebi","🍤",94000],["Chicken Katsu","🍗",108000],["Tonkotsu Ramen","🍲",124000],["Unagi Don","🍱",142000],["Wagyu Tataki","🥩",163000],["Uni Gunkan","🦪",187000],["Omakase Set","👑",215000],["Matcha Mochi","🍡",247000],["Dorayaki","🥞",284000],["Sake Flight","🍶",327000]]},
-  {name:"Le Petit Paris",emoji:"🇫🇷",desc:"A Michelin bistro on Rue Cler. Butter, patience, and copper pans.",
-   dishes:[["Croissant Beurre","🥐",375000],["French Onion Soup","🧅",430000],["Escargots","🐌",494000],["Quiche Lorraine","🥧",568000],["Coq au Vin","🍗",653000],["Bouillabaisse","🐟",751000],["Duck Confit","🦆",864000],["Beef Bourguignon","🍲",994000],["Foie Gras Terrine","🍽️",1143000],["Soufflé au Fromage","🧀",1314000],["Crème Brûlée","🍮",1511000],["Macarons","🍬",1738000],["Tarte Tatin","🥮",1999000],["Éclair au Chocolat","🍫",2300000],["Grand Dégustation","👑",2645000]]},
-  {name:"Nova Skyline",emoji:"🌆",desc:"Rooftop molecular fine dining. Liquid nitrogen and city lights.",
-   dishes:[["Nitro Olive Sphere","⚪",3040000],["Smoke Bubble Broth","💨",3500000],["Caviar Pearls","⚫",4025000],["Gold Leaf Scallop","🥇",4630000],["Levitation Toast","🥪",5325000],["Aurora Consommé","🌈",6125000],["Lobster Cloud","🦞",7045000],["Wagyu A5 Ember","🔥",8100000],["Truffle Snowfall","❄️",9315000],["Edible Glass Garden","🪟",10715000],["Deconstructed Tiramisu","🌀",12325000],["Zero-G Sorbet","🍧",14175000],["Solar Flare Dessert","☀️",16300000],["Skyline Signature","🌃",18750000],["The Nova Experience","👑",21565000]]}
+{name:"Bella Italia",emoji:"🇮🇹",desc:"A cozy trattoria in Trastevere. Wood-fired ovens, red checkered linen.",dishes:ITALIAN_DISHES},
+{name:"Sakura Sushi-Ya",emoji:"🇯🇵",desc:"An eight-seat counter in Ginza. Precision, silence, perfect rice.",
+dishes:[["Edamame","🫛",48000],["Miso Soup","🍜",55000],["Salmon Nigiri","🍣",63000],["Tuna Sashimi","🐟",72000],["California Roll","🍥",82000],["Tempura Ebi","🍤",94000],["Chicken Katsu","🍗",108000],["Tonkotsu Ramen","🍲",124000],["Unagi Don","🍱",142000],["Wagyu Tataki","🥩",163000],["Uni Gunkan","🦪",187000],["Omakase Set","👑",215000],["Matcha Mochi","🍡",247000],["Dorayaki","🥞",284000],["Sake Flight","🍶",327000]]},
+{name:"Le Petit Paris",emoji:"🇫🇷",desc:"A Michelin bistro on Rue Cler. Butter, patience, and copper pans.",
+dishes:[["Croissant Beurre","🥐",375000],["French Onion Soup","🧅",430000],["Escargots","🐌",494000],["Quiche Lorraine","🥧",568000],["Coq au Vin","🍗",653000],["Bouillabaisse","🐟",751000],["Duck Confit","🦆",864000],["Beef Bourguignon","🍲",994000],["Foie Gras Terrine","🍽️",1143000],["Soufflé au Fromage","🧀",1314000],["Crème Brûlée","🍮",1511000],["Macarons","🍬",1738000],["Tarte Tatin","🥮",1999000],["Éclair au Chocolat","🍫",2300000],["Grand Dégustation","👑",2645000]]},
+{name:"Nova Skyline",emoji:"🌆",desc:"Rooftop molecular fine dining. Liquid nitrogen and city lights.",
+dishes:[["Nitro Olive Sphere","⚪",3040000],["Smoke Bubble Broth","💨",3500000],["Caviar Pearls","⚫",4025000],["Gold Leaf Scallop","🥇",4630000],["Levitation Toast","🥪",5325000],["Aurora Consommé","🌈",6125000],["Lobster Cloud","🦞",7045000],["Wagyu A5 Ember","🔥",8100000],["Truffle Snowfall","❄️",9315000],["Edible Glass Garden","🪟",10715000],["Deconstructed Tiramisu","🌀",12325000],["Zero-G Sorbet","🍧",14175000],["Solar Flare Dessert","☀️",16300000],["Skyline Signature","🌃",18750000],["The Nova Experience","👑",21565000]]}
 ];
 const STAFF=[
-  {id:"prep",name:"Prep Cook",emo:"🔪",gps:2,base:60},
-  {id:"sous",name:"Sous Chef",emo:"👨‍🍳",gps:15,base:700},
-  {id:"exec",name:"Executive Chef",emo:"🧑‍🍳",gps:80,base:6500},
-  {id:"oven",name:"Industrial Oven",emo:"🔥",gps:500,base:52000}
+{id:"prep",name:"Prep Cook",emo:"🔪",gps:2,base:60},
+{id:"sous",name:"Sous Chef",emo:"👨‍🍳",gps:15,base:700},
+{id:"exec",name:"Executive Chef",emo:"🧑‍🍳",gps:80,base:6500},
+{id:"oven",name:"Industrial Oven",emo:"🔥",gps:500,base:52000}
+];
+const NFT_EQUIPMENT = [
+{id:"nft1", name:"Bronze Rolling Pin #1", bonus:"+5% GPS", cost:10000, gpsMult:1.05},
+{id:"nft2", name:"Silver Pizza Peel #2", bonus:"+10% GPS", cost:50000, gpsMult:1.10},
+{id:"nft3", name:"Gold Espresso Machine #3", bonus:"+18% GPS", cost:250000, gpsMult:1.18},
+{id:"nft4", name:"Diamond Chef Knife #4", bonus:"+28% GPS", cost:1200000, gpsMult:1.28},
+{id:"nft5", name:"Truffle Hunter Dog #5", bonus:"+40% GPS", cost:6000000, gpsMult:1.40},
+{id:"nft6", name:"Vintage Chianti Barrel #6", bonus:"+55% GPS", cost:25000000, gpsMult:1.55},
+{id:"nft7", name:"Neapolitan Stone Oven #7", bonus:"+75% GPS", cost:100000000, gpsMult:1.75},
+{id:"nft8", name:"Michelin Star Plaque #8", bonus:"+100% GPS", cost:450000000, gpsMult:2.00},
+{id:"nft9", name:"Ancient Roman Amphora #9", bonus:"+130% GPS", cost:2e9, gpsMult:2.30},
+{id:"nft10", name:"Royal Venetian Gondola #10", bonus:"+170% GPS", cost:10e9, gpsMult:2.70},
+{id:"nft11", name:"Vatican Golden Ladle #11", bonus:"+220% GPS", cost:45e9, gpsMult:3.20},
+{id:"nft12", name:"Colosseum Wood-Fire Grill #12", bonus:"+280% GPS", cost:200e9, gpsMult:3.80},
+{id:"nft13", name:"Renaissance Pasta Extruder #13", bonus:"+350% GPS", cost:900e9, gpsMult:4.50},
+{id:"nft14", name:"Alps Crystal Ice Maker #14", bonus:"+440% GPS", cost:4e12, gpsMult:5.40},
+{id:"nft15", name:"Sicily Volcano Stone #15", bonus:"+550% GPS", cost:18e12, gpsMult:6.50},
+{id:"nft16", name:"Florence Gold Whisk #16", bonus:"+680% GPS", cost:80e12, gpsMult:7.80},
+{id:"nft17", name:"Milan Fashion Apron #17", bonus:"+850% GPS", cost:350e12, gpsMult:9.50},
+{id:"nft18", name:"Capri Sun-Drenched Grill #18", bonus:"+1050% GPS", cost:1.5e15, gpsMult:11.5},
+{id:"nft19", name:"Titanium Pizza Cutter #19", bonus:"+1300% GPS", cost:7e15, gpsMult:14.0},
+{id:"nft20", name:"Celestial Trattoria Crown #20", bonus:"+2000% GPS", cost:30e15, gpsMult:21.0}
 ];
 const TASKS_DATA=[
-  {id:"join_channel",name:"Join Community Channel",desc:"Join our official Telegram channel",reward:2500,link:"https://t.me/"},
-  {id:"join_chat",name:"Join Chat Group",desc:"Chat with fellow Italian Chefs",reward:2500,link:"https://t.me/"},
-  {id:"daily_tap",name:"Active Kitchen Hand",desc:"Tap the cooking station 50 times",reward:1500,check:s=>s.clicks>=50},
-  {id:"hire_staff",name:"Build a Brigade",desc:"Hire at least 3 Kitchen Staff members",reward:3000,check:s=>totalStaff(s)>=3}
+{id:"join_channel",name:"Join Community Channel",desc:"Join our official Telegram channel",reward:2500,link:"https://t.me/"},
+{id:"join_chat",name:"Join Chat Group",desc:"Chat with fellow Italian Chefs",reward:2500,link:"https://t.me/"},
+{id:"daily_tap",name:"Active Kitchen Hand",desc:"Tap the cooking station 50 times",reward:1500,check:s=>s.clicks>=50},
+{id:"hire_staff",name:"Build a Brigade",desc:"Hire at least 3 Kitchen Staff members",reward:3000,check:s=>totalStaff(s)>=3}
 ];
 const ACHIEVEMENTS=[
-  {id:"c100",name:"Line Cook Hands",desc:"Click the station 100 times",reward:500,check:s=>s.clicks>=100,prog:s=>[s.clicks,100]},
-  {id:"c1000",name:"Iron Wrists",desc:"Click the station 1,000 times",reward:8000,check:s=>s.clicks>=1000,prog:s=>[s.clicks,1000]},
-  {id:"g5k",name:"First Register",desc:"Earn 5,000 total gold",reward:1500,check:s=>s.totalGold>=5000,prog:s=>[s.totalGold,5000]},
-  {id:"g1m",name:"Trattoria Mogul",desc:"Earn 1,000,000 total gold",reward:250000,check:s=>s.totalGold>=1e6,prog:s=>[s.totalGold,1e6]},
-  {id:"d10",name:"Buon Appetito",desc:"Unlock 10 Italian dishes",reward:2500,check:s=>s.level>=10,prog:s=>[Math.min(s.level,10),10]},
-  {id:"d25",name:"Bella Italia Master",desc:"Unlock all 25 Season 1 levels",reward:60000,check:s=>s.level>=25,prog:s=>[Math.min(s.level,25),25]},
-  {id:"s10",name:"Small Brigade",desc:"Hire 10 total staff units",reward:4000,check:s=>totalStaff(s)>=10,prog:s=>[totalStaff(s),10]},
-  {id:"s50",name:"Full Kitchen",desc:"Hire 50 total staff units",reward:120000,check:s=>totalStaff(s)>=50,prog:s=>[totalStaff(s),50]},
-  {id:"oven1",name:"Fire It Up",desc:"Buy your first Industrial Oven",reward:30000,check:s=>(s.staff.oven||0)>=1,prog:s=>[Math.min(s.staff.oven||0,1),1]},
-  {id:"boost5",name:"Need For Speed",desc:"Use the 2x speed boost 5 times",reward:15000,check:s=>s.boosts>=5,prog:s=>[s.boosts,5]},
-  {id:"lvl50",name:"Two Restaurants Deep",desc:"Reach Level 50",reward:2e6,check:s=>s.level>=50,prog:s=>[Math.min(s.level,50),50]},
-  {id:"lvl100",name:"Tycoon Legend",desc:"Complete all 100 levels",reward:5e8,check:s=>s.level>=100,prog:s=>[Math.min(s.level,100),100]}
+{id:"c100",name:"Line Cook Hands",desc:"Click the station 100 times",reward:500,check:s=>s.clicks>=100,prog:s=>[s.clicks,100]},
+{id:"c1000",name:"Iron Wrists",desc:"Click the station 1,000 times",reward:8000,check:s=>s.clicks>=1000,prog:s=>[s.clicks,1000]},
+{id:"g5k",name:"First Register",desc:"Earn 5,000 total gold",reward:1500,check:s=>s.totalGold>=5000,prog:s=>[s.totalGold,5000]},
+{id:"g1m",name:"Trattoria Mogul",desc:"Earn 1,000,000 total gold",reward:250000,check:s=>s.totalGold>=1e6,prog:s=>[s.totalGold,1e6]},
+{id:"d10",name:"Buon Appetito",desc:"Unlock 10 Italian dishes",reward:2500,check:s=>s.level>=10,prog:s=>[Math.min(s.level,10),10]},
+{id:"d25",name:"Bella Italia Master",desc:"Unlock all 25 Season 1 levels",reward:60000,check:s=>s.level>=25,prog:s=>[Math.min(s.level,25),25]},
+{id:"s10",name:"Small Brigade",desc:"Hire 10 total staff units",reward:4000,check:s=>totalStaff(s)>=10,prog:s=>[totalStaff(s),10]},
+{id:"s50",name:"Full Kitchen",desc:"Hire 50 total staff units",reward:120000,check:s=>totalStaff(s)>=50,prog:s=>[totalStaff(s),50]},
+{id:"oven1",name:"Fire It Up",desc:"Buy your first Industrial Oven",reward:30000,check:s=>(s.staff.oven||0)>=1,prog:s=>[Math.min(s.staff.oven||0,1),1]},
+{id:"boost5",name:"Need For Speed",desc:"Use the 2x speed boost 5 times",reward:15000,check:s=>s.boosts>=5,prog:s=>[s.boosts,5]},
+{id:"lvl50",name:"Two Restaurants Deep",desc:"Reach Level 50",reward:2e6,check:s=>s.level>=50,prog:s=>[Math.min(s.level,50),50]},
+{id:"lvl100",name:"Tycoon Legend",desc:"Complete all 100 levels",reward:5e8,check:s=>s.level>=100,prog:s=>[Math.min(s.level,100),100]}
 ];
 function totalStaff(s){ return STAFF.reduce((a,x)=>a+(s.staff[x.id]||0),0); }
-
 /* ============================================================
-   STATE
-   ============================================================ */
-const SAVE_KEY="agunnagreat_cooking_tycoon_v6";
+STATE
+============================================================ */
+const SAVE_KEY="agunnagreat_cooking_tycoon_v7";
 const defaultState=()=>({
-  gold:0,totalGold:0,clicks:0,level:1,levelGold:0,
-  energy:1000,maxEnergy:1000,energyLevel:1,tapLevel:1,
-  lastDailyClaim:0,dailyStreak:0,lang:"en",
-  staff:{},tasks:{},ach:[],muted:false,boosts:0,boostUntil:0,themes:[],last:Date.now()
+gold:0,totalGold:0,clicks:0,level:1,levelGold:0,
+energy:1000,maxEnergy:1000,energyLevel:1,tapLevel:1,
+lastDailyClaim:0,dailyStreak:0,lang:"en",
+staff:{},tasks:{},ach:[],nfts:[],muted:false,boosts:0,boostUntil:0,themes:[],last:Date.now()
 });
 let S = defaultState();
-
-function levelTarget(l){ return Math.floor(1200 * Math.pow(2.2, l-1)); }
+function levelTarget(l){ return Math.floor(1500 * Math.pow(3.1, l-1)); }
 function seasonIndex(l){ return Math.min(3, Math.floor((l-1)/25)); }
 function seasonLevel(l){ return ((l-1)%25)+1; }
 function dishesForSeason(si){ return SEASONS[si].dishes; }
 function unlockedCount(si){
-  const cur=seasonIndex(S.level);
-  if(si<cur) return dishesForSeason(si).length;
-  if(si>cur) return 0;
-  const total=dishesForSeason(si).length;
-  return Math.max(1, Math.min(total, Math.ceil(seasonLevel(S.level)/25*total)));
+const cur=seasonIndex(S.level);
+if(si<cur) return dishesForSeason(si).length;
+if(si>cur) return 0;
+const total=dishesForSeason(si).length;
+return Math.max(1, Math.min(total, Math.ceil(seasonLevel(S.level)/25*total)));
 }
 function topDish(){
-  const si=seasonIndex(S.level);
-  const list=dishesForSeason(si);
-  return list[Math.min(list.length-1, unlockedCount(si)-1)];
+const si=seasonIndex(S.level);
+const list=dishesForSeason(si);
+return list[Math.min(list.length-1, unlockedCount(si)-1)];
 }
 function levelMultiplier(){ return 1 + (S.level-1)*0.35; }
 function boostActive(){ return Date.now() < S.boostUntil; }
 function perClick(){ return Math.max(1, Math.floor(topDish()[2] * levelMultiplier() * S.tapLevel * (boostActive()?2:1))); }
+function nftMultiplier(){
+let m = 1;
+S.nfts.forEach(id => {
+const item = NFT_EQUIPMENT.find(n => n.id === id);
+if(item) m *= item.gpsMult;
+});
+return m;
+}
 function gps(){
-  let g=STAFF.reduce((a,x)=>a+(S.staff[x.id]||0)*x.gps,0);
-  return g * levelMultiplier() * (boostActive()?2:1);
+let g = STAFF.reduce((a,x)=>a+(S.staff[x.id]||0)*x.gps,0) * nftMultiplier();
+return g * levelMultiplier() * (boostActive()?2:1);
 }
 function staffCost(x){ return Math.ceil(x.base * Math.pow(1.18, S.staff[x.id]||0)); }
 function energyCapCost(){ return 800 * Math.pow(1.9, S.energyLevel - 1); }
 function tapUpgradeCost(){ return 500 * Math.pow(2.2, S.tapLevel - 1); }
-
 function fmt(n){
-  n=Math.floor(n);
-  if(n<1000) return String(n);
-  const u=["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc"];
-  let i=0; while(n>=1000 && i<u.length-1){ n/=1000; i++; }
-  return (n<10?n.toFixed(2):n<100?n.toFixed(1):Math.floor(n)) + u[i];
+n=Math.floor(n);
+if(n<1000) return String(n);
+const u=["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc"];
+let i=0; while(n>=1000 && i<u.length-1){ n/=1000; i++; }
+return (n<10?n.toFixed(2):n<100?n.toFixed(1):Math.floor(n)) + u[i];
 }
-
 /* ============================================================
-   SAVE / LOAD / OFFLINE
-   ============================================================ */
+SAVE / LOAD / OFFLINE
+============================================================ /
 function save(){ S.last=Date.now(); try{ localStorage.setItem(SAVE_KEY,JSON.stringify(S)); }catch(e){} }
 function load(){
-  try{
-    const raw=localStorage.getItem(SAVE_KEY);
-    if(!raw) return false;
-    const d=JSON.parse(raw);
-    S=Object.assign(defaultState(),d);
-    S.staff=S.staff||{}; S.tasks=S.tasks||{}; S.ach=S.ach||[]; S.themes=S.themes||[];
-    if(S.energy === undefined) { S.energy = 1000; S.maxEnergy = 1000; }
-    if(S.energyLevel === undefined) S.energyLevel = 1;
-    if(S.tapLevel === undefined) S.tapLevel = 1;
-    if(S.lang) { setLanguage(S.lang); $("langSelect").value = S.lang; }
-    return true;
-  }catch(e){ return false; }
+try{
+const raw=localStorage.getItem(SAVE_KEY);
+if(!raw) return false;
+const d=JSON.parse(raw);
+S=Object.assign(defaultState(),d);
+S.staff=S.staff||{}; S.tasks=S.tasks||{}; S.ach=S.ach||[]; S.themes=S.themes||[]; S.nfts=S.nfts||[];
+if(S.energy === undefined) { S.energy = 1000; S.maxEnergy = 1000; }
+if(S.energyLevel === undefined) S.energyLevel = 1;
+if(S.tapLevel === undefined) S.tapLevel = 1;
+if(S.lang) { setLanguage(S.lang); $("langSelect").value = S.lang; }
+return true;
+}catch(e){ return false; }
 }
 function offlineProfit(){
-  const away=Math.max(0,(Date.now()-(S.last||Date.now()))/1000);
-  if(away<60) return;
-  const capped=Math.min(away, 8*3600);
-  const raw=STAFF.reduce((a,x)=>a+(S.staff[x.id]||0)*x.gps,0)*levelMultiplier();
-  const earned=Math.floor(raw*capped*0.5);
-  if(earned<=0) return;
-  S.gold+=earned; S.totalGold+=earned; S.levelGold+=earned;
-  const h=Math.floor(capped/3600), m=Math.floor((capped%3600)/60);
-  document.getElementById("awayTxt").innerHTML =
-    `You were away for <b>${h}h ${m}m</b>.<br>Your brigade kept cooking and earned profit per hour<br><span style="font-size:26px" class="gold">${fmt(earned)} gold</span>`;
-  document.getElementById("awayModal").classList.add("show");
+const away=Math.max(0,(Date.now()-(S.last||Date.now()))/1000);
+if(away<60) return;
+const capped=Math.min(away, 83600);
+const raw=STAFF.reduce((a,x)=>a+(S.staff[x.id]||0)*x.gps,0)nftMultiplier()levelMultiplier();
+const earned=Math.floor(rawcapped0.5);
+if(earned<=0) return;
+S.gold+=earned; S.totalGold+=earned; S.levelGold+=earned;
+const h=Math.floor(capped/3600), m=Math.floor((capped%3600)/60);
+document.getElementById("awayTxt").innerHTML =
+You were away for <b>${h}h ${m}m</b>.<br>Your brigade kept cooking and earned profit per hour<br><span style="font-size:26px" class="gold">${fmt(earned)} gold</span>;
+document.getElementById("awayModal").classList.add("show");
 }
-
 /* ============================================================
-   RENDER
-   ============================================================ */
+RENDER
+============================================================ /
 const $=id=>document.getElementById(id);
 function renderTop(){
-  $("gold").textContent=fmt(S.gold);
-  $("gps").textContent=fmt(gps())+"/s";
-  $("perclick").textContent=fmt(perClick());
-  const t=levelTarget(S.level), si=seasonIndex(S.level);
-  $("lvlLabel").textContent=`Level ${S.level} · ${SEASONS[si].name}`;
-  $("lvlProg").textContent=`${fmt(S.levelGold)} / ${fmt(t)}`;
-  $("lvlFill").style.width=Math.min(100,S.levelGold/t*100)+"%";
-  
-  $("energyFill").style.width = Math.min(100, (S.energy / S.maxEnergy) * 100) + "%";
-  $("energyText").textContent = `${Math.floor(S.energy)} / ${S.maxEnergy}`;
-
-  const d=topDish();
-  $("dishName").textContent=d[0];
-  $("pan").textContent=d[1];
-  $("dishVal").textContent=`+${fmt(perClick())} gold per serve`;
-  $("goalTxt").innerHTML=`Reach <b>${fmt(t)}</b> gold this level to open the next service.<br>Progress: <b>${fmt(S.levelGold)}</b>`;
-  const ready=S.levelGold>=t && S.level<100;
-  $("advBtn").disabled=!ready;
-  $("advBtn").textContent = S.level>=100 ? "All 100 Levels Complete 👑" : (ready?"Serve Next Level ▶":"Keep Cooking…");
-  $("kitchenStats").innerHTML=
-    `Taps: ${S.clicks} · Lifetime gold: ${fmt(S.totalGold)}<br>
-     Staff hired: ${totalStaff(S)} · Profit/Hr: ${fmt(gps()*3600)}`;
-
-  $("capLevel").textContent = `Level ${S.energyLevel} (Max: ${S.maxEnergy})`;
-  $("buyCapBtn").textContent = `Upgrade: ${fmt(energyCapCost())} 🪙`;
-  $("buyCapBtn").disabled = S.gold < energyCapCost();
-
-  $("tapLevel").textContent = `Level ${S.tapLevel} (+${S.tapLevel}/tap)`;
-  $("buyTapBtn").textContent = `Upgrade: ${fmt(tapUpgradeCost())} 🪙`;
-  $("buyTapBtn").disabled = S.gold < tapUpgradeCost();
-
-  $("userRankGold").textContent = fmt(S.totalGold) + " 🪙";
-  renderDaily();
+$("gold").textContent=fmt(S.gold);
+$("gps").textContent=fmt(gps())+"/s";
+$("perclick").textContent=fmt(perClick());
+const t=levelTarget(S.level), si=seasonIndex(S.level);
+$("lvlLabel").textContent=Level ${S.level} · ${SEASONS[si].name};
+$("lvlProg").textContent=${fmt(S.levelGold)} / ${fmt(t)};
+$("lvlFill").style.width=Math.min(100,S.levelGold/t100)+"%";
+$("energyFill").style.width = Math.min(100, (S.energy / S.maxEnergy) * 100) + "%";
+$("energyText").textContent = ${Math.floor(S.energy)} / ${S.maxEnergy};
+const d=topDish();
+$("dishName").textContent=d[0];
+$("pan").textContent=d[1];
+$("dishVal").textContent=+${fmt(perClick())} gold per serve;
+$("goalTxt").innerHTML=Reach <b>${fmt(t)}</b> gold this level to open the next service.<br>Progress: <b>${fmt(S.levelGold)}</b>;
+const ready=S.levelGold>=t && S.level<100;
+$("advBtn").disabled=!ready;
+$("advBtn").textContent = S.level>=100 ? "All 100 Levels Complete 👑" : (ready?"Serve Next Level ▶":"Keep Cooking…");
+$("kitchenStats").innerHTML=
+Taps: ${S.clicks} · Lifetime gold: ${fmt(S.totalGold)}<br> Staff hired: ${totalStaff(S)} · Profit/Hr: ${fmt(gps()*3600)};
+$("capLevel").textContent = Level ${S.energyLevel} (Max: ${S.maxEnergy});
+$("buyCapBtn").textContent = Upgrade: ${fmt(energyCapCost())} 🪙;
+$("buyCapBtn").disabled = S.gold < energyCapCost();
+$("tapLevel").textContent = Level ${S.tapLevel} (+${S.tapLevel}/tap);
+$("buyTapBtn").textContent = Upgrade: ${fmt(tapUpgradeCost())} 🪙;
+$("buyTapBtn").disabled = S.gold < tapUpgradeCost();
+$("userRankGold").textContent = fmt(S.totalGold) + " 🪙";
+renderDaily();
+renderNFTs();
 }
 function renderStaff(){
-  $("staffList").innerHTML = STAFF.map(x=>{
-    const owned=S.staff[x.id]||0, cost=staffCost(x), can=S.gold>=cost;
-    const profitHour = owned * x.gps * levelMultiplier() * 3600;
-    return `<div class="item">
-      <div class="emo">${x.emo}</div>
-      <div class="t"><b>${x.name} ${owned?`<span class="badge">x${owned}</span>`:""}</b>
-      <span>Profit/Hr: ${fmt(profitHour)} (${x.gps} GPS each)</span></div>
-      <button class="buy" data-staff="${x.id}" ${can?"":"disabled"}>${fmt(cost)}</button>
-    </div>`;
-  }).join("");
+("staffList").innerHTML = STAFF.map(x=>{
+const owned=S.staff[x.id]||0, cost=staffCost(x), can=S.gold>=cost;
+const profitHour = owned * x.gps * nftMultiplier() * levelMultiplier() * 3600;
+return `<div class="item">
+<div class="emo">${x.emo}</div>
+<div class="t"><b>${x.name} ${owned?`<span class="badge">x{owned}</span>:""}</b> <span>Profit/Hr: ${fmt(profitHour)} (${x.gps} GPS each)</span></div> <button class="buy" data-staff="${x.id}" ${can?"":"disabled"}>${fmt(cost)}</button> </div>;
+}).join("");
+}
+function renderNFTs(){
+const list = $("nftMarketplaceList");
+if(!list) return;
+list.innerHTML = NFT_EQUIPMENT.map(nft => {
+const owned = S.nfts.includes(nft.id);
+const canBuy = S.gold >= nft.cost && !owned;
+return <div class="item" style="margin:0;padding:6px 10px;"> <div class="emo">🖼️</div> <div class="t"><b>${nft.name}</b><span>${nft.bonus} · ${fmt(nft.cost)} 🪙</span></div> <button class="buy" onclick="buyNFT('${nft.id}')" ${owned?'disabled':(canBuy?'':'disabled')} style="${owned?'background:#5fa855;':''}">${owned?'OWNED':'BUY'}</button> </div>;
+}).join("");
+}
+function buyNFT(id){
+const nft = NFT_EQUIPMENT.find(n => n.id === id);
+if(!nft || S.nfts.includes(id) || S.gold < nft.cost) return;
+S.gold -= nft.cost;
+S.nfts.push(id);
+Audio8.fanfare();
+toast(🖼️ Purchased NFT: ${nft.name}!);
+renderAll(); save();
 }
 function renderTasks(){
-  const refCode = tgUser.id || 'chef123';
-  $("refLinkText").textContent = `t.me/idle_cooking_tycoon_bot?start=${refCode}`;
-
-  $("tasksList").innerHTML = TASKS_DATA.map(task => {
-    const done = S.tasks[task.id];
-    const canClaim = !done && (task.check ? task.check(S) : true);
-    return `<div class="item">
-      <div class="emo">📋</div>
-      <div class="t">
-        <b>${task.name}</b>
-        <span>Reward: +${fmt(task.reward)} 🪙</span>
-      </div>
-      <button class="buy" data-task="${task.id}" ${done ? 'disabled' : ''} style="${done ? 'background:#5fa855;' : ''}">
-        ${done ? 'DONE' : (task.check && !canClaim ? 'PROGRESS' : 'CLAIM')}
-      </button>
-    </div>`;
-  }).join("");
+const refCode = tgUser.id || 'chef123';
+$("refLinkText").textContent = t.me/idle_cooking_tycoon_bot?start=${refCode};
+$("tasksList").innerHTML = TASKS_DATA.map(task => {
+const done = S.tasks[task.id];
+const canClaim = !done && (task.check ? task.check(S) : true);
+return <div class="item"> <div class="emo">📋</div> <div class="t"> <b>${task.name}</b> <span>Reward: +${fmt(task.reward)} 🪙</span> </div> <button class="buy" data-task="${task.id}" ${done ? 'disabled' : ''} style="${done ? 'background:#5fa855;' : ''}"> ${done ? 'DONE' : (task.check && !canClaim ? 'PROGRESS' : 'CLAIM')} </button> </div>;
+}).join("");
 }
 function renderDaily(){
-  const now = Date.now();
-  const oneDay = 86400000;
-  const canClaim = (now - S.lastDailyClaim) >= oneDay;
-  $("claimDailyBtn").disabled = !canClaim;
-  $("claimDailyBtn").textContent = canClaim ? "Claim Today's Reward" : "Reward Claimed (Come back tomorrow)";
-
-  const rewards = [500, 1500, 4000, 10000];
-  $("dailyGrid").innerHTML = rewards.map((r, i)=>{
-    const claimed = i < (S.dailyStreak % 4) && !canClaim;
-    return `<div class="day-box ${claimed?'claimed':''}">
-      <span>Day ${i+1}</span>
-      <b>+${fmt(r)}</b>
-    </div>`;
-  }).join("");
+const now = Date.now();
+const oneDay = 86400000;
+const canClaim = (now - S.lastDailyClaim) >= oneDay;
+$("claimDailyBtn").disabled = !canClaim;
+$("claimDailyBtn").textContent = canClaim ? "Claim Today's Reward" : "Reward Claimed (Come back tomorrow)";
+const rewards = [500, 1500, 4000, 10000];
+$("dailyGrid").innerHTML = rewards.map((r, i)=>{
+const claimed = i < (S.dailyStreak % 4) && !canClaim;
+return <div class="day-box ${claimed?'claimed':''}"> <span>Day ${i+1}</span> <b>+${fmt(r)}</b> </div>;
+}).join("");
 }
 let viewSeason=0;
 function renderMenu(){
-  $("seasonChips").innerHTML=SEASONS.map((s,i)=>{
-    const locked = i>seasonIndex(S.level);
-    return `<div class="chip ${i===viewSeason?"active":""}" data-season="${i}">${s.emoji} ${locked?"🔒 ":""}${s.name}</div>`;
-  }).join("");
-  const s=SEASONS[viewSeason];
-  $("seasonInfo").innerHTML=`<b>${s.emoji} ${s.name}</b> — Levels ${viewSeason*25+1}–${viewSeason*25+25}. ${s.desc}`;
-  const un=unlockedCount(viewSeason);
-  $("dishCount").textContent=`${un}/${s.dishes.length}`;
-  $("dishList").innerHTML=s.dishes.map((d,i)=>{
-    const lock=i>=un;
-    return `<div class="dish ${lock?"locked":""}">
-      <div style="font-size:22px">${lock?"🔒":d[1]}</div>
-      <div style="min-width:0"><b>${d[0]}</b><span>${lock?"Locked":fmt(d[2])+" base gold"}</span></div>
-    </div>`;
-  }).join("");
+$("seasonChips").innerHTML=SEASONS.map((s,i)=>{
+const locked = i>seasonIndex(S.level);
+return <div class="chip ${i===viewSeason?"active":""}" data-season="${i}">${s.emoji} ${locked?"🔒 ":""}${s.name}</div>;
+}).join("");
+const s=SEASONS[viewSeason];
+$("seasonInfo").innerHTML=<b>${s.emoji} ${s.name}</b> — Levels ${viewSeason*25+1}–${viewSeason*25+25}. ${s.desc};
+const un=unlockedCount(viewSeason);
+$("dishCount").textContent=${un}/${s.dishes.length};
+$("dishList").innerHTML=s.dishes.map((d,i)=>{
+const lock=i>=un;
+return <div class="dish ${lock?"locked":""}"> <div style="font-size:22px">${lock?"🔒":d[1]}</div> <div style="min-width:0"><b>${d[0]}</b><span>${lock?"Locked":fmt(d[2])+" base gold"}</span></div> </div>;
+}).join("");
 }
 function renderAch(){
-  const done=S.ach.length;
-  $("achCount").textContent=`${done}/${ACHIEVEMENTS.length}`;
-  $("achList").innerHTML=ACHIEVEMENTS.map(a=>{
-    const has=S.ach.includes(a.id);
-    const [c,t]=a.prog(S);
-    const pct=Math.min(100,c/t*100);
-    return `<div class="item">
-      <div class="emo">${has?"🏆":"🎯"}</div>
-      <div class="t"><b>${a.name}</b><span>${a.desc} · reward ${fmt(a.reward)}</span>
-        <div style="height:6px;border-radius:99px;background:#e0cba6;margin-top:6px;overflow:hidden">
-          <div style="height:100%;width:${pct}%;background:${has?"#5fa855":"#c1573a"}"></div></div>
-      </div>
-      <span class="badge ${has?"done":""}">${has?"DONE":Math.floor(pct)+"%"}</span>
-    </div>`;
-  }).join("");
+const done=S.ach.length;
+$("achCount").textContent=${done}/${ACHIEVEMENTS.length};
+$("achList").innerHTML=ACHIEVEMENTS.map(a=>{
+const has=S.ach.includes(a.id);
+const [c,t]=a.prog(S);
+const pct=Math.min(100,c/t*100);
+return <div class="item"> <div class="emo">${has?"🏆":"🎯"}</div> <div class="t"><b>${a.name}</b><span>${a.desc} · reward ${fmt(a.reward)}</span> <div style="height:6px;border-radius:99px;background:#e0cba6;margin-top:6px;overflow:hidden"> <div style="height:100%;width:${pct}%;background:${has?"#5fa855":"#c1573a"}"></div></div> </div> <span class="badge ${has?"done":""}">${has?"DONE":Math.floor(pct)+"%"}</span> </div>;
+}).join("");
 }
 function renderAll(){ renderTop(); renderStaff(); renderTasks(); renderMenu(); renderAch(); }
-
 function toast(msg){
-  const t=$("toast"); t.innerHTML=msg; t.classList.add("show");
-  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2400);
+const t=$("toast"); t.innerHTML=msg; t.classList.add("show");
+clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2400);
 }
-
 /* ============================================================
-   STARS STORE & TELEGRAM STARS IN-APP PURCHASES
-   ============================================================ */
+STARS STORE & TELEGRAM STARS IN-APP PURCHASES
+============================================================ */
 function buyStarsItem(itemId, starsCost){
-  if(itemId === 'midnight' && S.themes.includes('midnight')){
-    toast("You already own the Midnight Trattoria theme!");
-    return;
-  }
-  if(itemId === 'michelin' && S.themes.includes('michelin')){
-    toast("You already own the Michelin Chef badge!");
-    return;
-  }
-
-  Audio8.fanfare();
-  if(itemId === 'midnight'){
-    S.themes.push('midnight');
-    document.documentElement.style.setProperty('--cream', '#2c3e50');
-    document.documentElement.style.setProperty('--cream-2', '#1a252f');
-    toast(`⭐ Unlocked Midnight Trattoria Theme for ⭐ ${starsCost}!`);
-  } else if(itemId === 'profit2h'){
-    const earned = Math.floor(gps() * 7200 * 0.8);
-    addGold(earned);
-    toast(`⭐ Purchased 2-Hour Instant Profit! +${fmt(earned)} 🪙`);
-  } else if(itemId === 'michelin'){
-    S.themes.push('michelin');
-    toast(`⭐ Unlocked Golden Michelin Chef Badge for ⭐ ${starsCost}!`);
-  } else if(itemId === 'megapack'){
-    S.boostUntil = Date.now() + 3600000;
-    S.staff['oven'] = (S.staff['oven'] || 0) + 1;
-    toast(`⭐ Mega Tycoon Pack Activated! 1hr 5x speed + 1 Industrial Oven!`);
-  }
-  renderTop(); renderStaff(); save();
+Audio8.fanfare();
+if(itemId === 'christmas'){
+S.themes.push('christmas');
+document.documentElement.style.setProperty('--cream', '#e8f4f8');
+document.documentElement.style.setProperty('--cream-2', '#c9e4ec');
+document.documentElement.style.setProperty('--terracotta', '#27ae60');
+document.documentElement.style.setProperty('--terracotta-dark', '#1e8449');
+toast(🎄 Unlocked Christmas Snowy Theme!);
+} else if(itemId === 'halloween'){
+S.themes.push('halloween');
+document.documentElement.style.setProperty('--cream', '#f39c12');
+document.documentElement.style.setProperty('--cream-2', '#d35400');
+document.documentElement.style.setProperty('--terracotta', '#8e44ad');
+document.documentElement.style.setProperty('--terracotta-dark', '#512e5f');
+toast(🎃 Unlocked Halloween Spooky Theme!);
+} else if(itemId === 'midnight'){
+S.themes.push('midnight');
+document.documentElement.style.setProperty('--cream', '#2c3e50');
+document.documentElement.style.setProperty('--cream-2', '#1a252f');
+toast(⭐ Unlocked Midnight Trattoria Theme for ⭐ ${starsCost}!);
+} else if(itemId === 'profit2h'){
+const earned = Math.floor(gps() * 7200 * 0.8);
+addGold(earned);
+toast(⭐ Purchased 2-Hour Instant Profit! +${fmt(earned)} 🪙);
+} else if(itemId === 'michelin'){
+S.themes.push('michelin');
+toast(⭐ Unlocked Golden Michelin Chef Badge for ⭐ ${starsCost}!);
+} else if(itemId === 'megapack'){
+S.boostUntil = Date.now() + 3600000;
+S.staff['oven'] = (S.staff['oven'] || 0) + 1;
+toast(⭐ Mega Tycoon Pack Activated! 1hr 5x speed + 1 Industrial Oven!);
 }
-
+renderTop(); renderStaff(); save();
+}
 /* ============================================================
-   ANTI-AUTO-CLICKER & GAME ACTIONS
-   ============================================================ */
+ANTI-AUTO-CLICKER & GAME ACTIONS
+============================================================ */
 let tapHistory = [];
 function cook(ev){
-  const now = Date.now();
-  tapHistory.push(now);
-  tapHistory = tapHistory.filter(t => now - t < 1000);
-  
-  if(tapHistory.length > 25){
-    toast("⚠️ Auto-clicker or bot activity detected! Please tap normally.");
-    return;
-  }
-
-  if(S.energy < 1){
-    toast("Out of energy! Wait for natural recharge or upgrade cap.");
-    return;
-  }
-  S.energy -= 1;
-
-  if(window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback){
-    window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-  }
-
-  Audio8.resume();
-  const v=perClick(); addGold(v); S.clicks++;
-  const st=$("station"); st.classList.add("cooking"); setTimeout(()=>st.classList.remove("cooking"),120);
-  const r=st.getBoundingClientRect();
-  const px = ev && ev.clientX ? ev.clientX : r.left+r.width/2;
-  const py = ev && ev.clientY ? ev.clientY : r.top+r.height/2;
-  floatText(px,py,"+"+fmt(v)+" 🪙");
-  Audio8.sizzle();
-  if(S.clicks%10===0) Audio8.chime();
-  checkAch(); renderTop();
+const now = Date.now();
+tapHistory.push(now);
+tapHistory = tapHistory.filter(t => now - t < 1000);
+if(tapHistory.length > 25){
+toast("⚠️ Auto-clicker or bot activity detected! Please tap normally.");
+return;
 }
-
+if(S.energy < 1){
+toast("Out of energy! Wait for natural recharge or upgrade cap.");
+return;
+}
+S.energy -= 1;
+if(window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback){
+window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
+}
+Audio8.resume();
+const v=perClick(); addGold(v); S.clicks++;
+const st=$("station"); st.classList.add("cooking"); setTimeout(()=>st.classList.remove("cooking"),120);
+const r=st.getBoundingClientRect();
+const px = ev && ev.clientX ? ev.clientX : r.left+r.width/2;
+const py = ev && ev.clientY ? ev.clientY : r.top+r.height/2;
+floatText(px,py,"+"+fmt(v)+" 🪙");
+Audio8.sizzle();
+if(S.clicks%10===0) Audio8.chime();
+checkAch(); renderTop();
+}
 function addGold(n){ S.gold+=n; S.totalGold+=n; S.levelGold+=n; }
 function floatText(x,y,txt){
-  const st=$("station"), r=st.getBoundingClientRect();
-  const e=document.createElement("div");
-  e.className="float"; e.textContent=txt;
-  e.style.left=(x-r.left)+"px"; e.style.top=(y-r.top-10)+"px";
-  st.appendChild(e); setTimeout(()=>e.remove(),1000);
+const st=("station"), r=st.getBoundingClientRect();
+const e=document.createElement("div");
+e.className="float"; e.textContent=txt;
+e.style.left=(x-r.left)+"px"; e.style.top=(y-r.top-10)+"px";
+st.appendChild(e); setTimeout(()=>e.remove(),1000);
 }
 function buyStaff(id){
-  const x=STAFF.find(s=>s.id===id); if(!x) return;
-  const c=staffCost(x);
-  if(S.gold<c){ toast("Not enough gold, chef!"); return; }
-  S.gold-=c; S.staff[id]=(S.staff[id]||0)+1;
-  Audio8.chime(); toast(`Hired ${x.name} (x${S.staff[id]})`);
-  checkAch(); renderTop(); renderStaff(); save();
+const x=STAFF.find(s=>s.id===id); if(!x) return;
+const c=staffCost(x);
+if(S.gold<c){ toast("Not enough gold, chef!"); return; }
+S.gold-=c; S.staff[id]=(S.staff[id]||0)+1;
+Audio8.chime(); toast(`Hired ${x.name} (x${S.staff[id]})`);
+checkAch(); renderTop(); renderStaff(); save();
 }
 function claimTask(id){
-  const task = TASKS_DATA.find(t => t.id === id);
-  if(!task || S.tasks[id]) return;
-  if(task.check && !task.check(S)){ toast("Task requirements not met yet!"); return; }
-  S.tasks[id] = true;
-  addGold(task.reward);
-  Audio8.fanfare();
-  toast(`🎁 Completed task! +${fmt(task.reward)} gold`);
-  renderTasks(); renderTop(); save();
+const task = TASKS_DATA.find(t => t.id === id);
+if(!task || S.tasks[id]) return;
+if(task.check && !task.check(S)){ toast("Task requirements not met yet!"); return; }
+S.tasks[id] = true;
+addGold(task.reward);
+Audio8.fanfare();
+toast(`🎁 Completed task! +${fmt(task.reward)} gold`);
+renderTasks(); renderTop(); save();
 }
 function upgradeEnergyCap(){
-  const cost = energyCapCost();
-  if(S.gold < cost){ toast("Not enough gold for energy upgrade!"); return; }
-  S.gold -= cost;
-  S.energyLevel++;
-  S.maxEnergy += 250;
-  S.energy = S.maxEnergy;
-  Audio8.chime();
-  toast(`⚡ Energy Cap Increased to ${S.maxEnergy}!`);
-  renderTop(); save();
+const cost = energyCapCost();
+if(S.gold < cost){ toast("Not enough gold for energy upgrade!"); return; }
+S.gold -= cost;
+S.energyLevel++;
+S.maxEnergy += 250;
+S.energy = S.maxEnergy;
+Audio8.chime();
+toast(`⚡ Energy Cap Increased to ${S.maxEnergy}!`);
+renderTop(); save();
 }
 function upgradeTapPower(){
-  const cost = tapUpgradeCost();
-  if(S.gold < cost){ toast("Not enough gold for tap upgrade!"); return; }
-  S.gold -= cost;
-  S.tapLevel++;
-  Audio8.chime();
-  toast(`💪 Multi-Tap Upgraded to Level ${S.tapLevel}!`);
-  renderTop(); save();
+const cost = tapUpgradeCost();
+if(S.gold < cost){ toast("Not enough gold for tap upgrade!"); return; }
+S.gold -= cost;
+S.tapLevel++;
+Audio8.chime();
+toast(`💪 Multi-Tap Upgraded to Level ${S.tapLevel}!`);
+renderTop(); save();
 }
 function claimDaily(){
-  const now = Date.now();
-  const oneDay = 86400000;
-  if((now - S.lastDailyClaim) < oneDay){
-    toast("Already claimed today! Come back tomorrow.");
-    return;
-  }
-  const rewards = [500, 1500, 4000, 10000];
-  const reward = rewards[S.dailyStreak % rewards.length];
-  S.gold += reward;
-  S.totalGold += reward;
-  S.levelGold += reward;
-  S.lastDailyClaim = now;
-  S.dailyStreak++;
-  Audio8.fanfare();
-  toast(`🎁 Claimed daily reward: +${fmt(reward)} gold!`);
-  renderTop(); save();
+const now = Date.now();
+const oneDay = 86400000;
+if((now - S.lastDailyClaim) < oneDay){
+toast("Already claimed today! Come back tomorrow.");
+return;
+}
+const rewards = [500, 1500, 4000, 10000];
+const reward = rewards[S.dailyStreak % rewards.length];
+S.gold += reward;
+S.totalGold += reward;
+S.levelGold += reward;
+S.lastDailyClaim = now;
+S.dailyStreak++;
+Audio8.fanfare();
+toast(`🎁 Claimed daily reward: +${fmt(reward)} gold!`);
+renderTop(); save();
 }
 function advance(){
-  if(S.levelGold<levelTarget(S.level)||S.level>=100) return;
-  const prevSeason=seasonIndex(S.level);
-  S.level++; S.levelGold=0;
-  Audio8.fanfare();
-  const si=seasonIndex(S.level);
-  if(si!==prevSeason){ viewSeason=si; toast(`🎉 New Restaurant: ${SEASONS[si].emoji} ${SEASONS[si].name}!`); }
-  else toast(`⭐ Level ${S.level} — new dish unlocked: ${topDish()[0]}`);
-  checkAch(); renderAll(); save();
+if(S.levelGold<levelTarget(S.level)||S.level>=100) return;
+const prevSeason=seasonIndex(S.level);
+S.level++; S.levelGold=0;
+Audio8.fanfare();
+const si=seasonIndex(S.level);
+if(si!==prevSeason){ viewSeason=si; toast(`🎉 New Restaurant: ${SEASONS[si].emoji} ${SEASONS[si].name}!`); }
+else toast(`⭐ Level ${S.level} — new dish unlocked: ${topDish()[0]}`);
+checkAch(); renderAll(); save();
 }
 function checkAch(){
-  ACHIEVEMENTS.forEach(a=>{
-    if(!S.ach.includes(a.id) && a.check(S)){
-      S.ach.push(a.id); S.gold+=a.reward; S.totalGold+=a.reward;
-      Audio8.fanfare(); toast(`🏆 ${a.name} — +${fmt(a.reward)} gold!`);
-      renderAch();
-    }
-  });
+ACHIEVEMENTS.forEach(a=>{
+if(!S.ach.includes(a.id) && a.check(S)){
+S.ach.push(a.id); S.gold+=a.reward; S.totalGold+=a.reward;
+Audio8.fanfare(); toast(`🏆 ${a.name} — +${fmt(a.reward)} gold!`);
+renderAch();
+}
+});
 }
 function startBoost(){
-  if(boostActive()){ toast("Boost already running!"); return; }
-  Audio8.resume();
-  const btn=$("adBtn"); btn.disabled=true; btn.textContent="📺 Ad playing…";
-  setTimeout(()=>{
-    S.boostUntil=Date.now()+30000; S.boosts++;
-    Audio8.fanfare(); toast("⚡ 2x Speed activated for 30 seconds!");
-    checkAch(); renderTop(); save();
-  },1200);
+if(boostActive()){ toast("Boost already running!"); return; }
+Audio8.resume();
+const btn=("adBtn"); btn.disabled=true; btn.textContent="📺 Ad playing…";
+setTimeout(()=>{
+S.boostUntil=Date.now()+30000; S.boosts++;
+Audio8.fanfare(); toast("⚡ 2x Speed activated for 30 seconds!");
+checkAch(); renderTop(); save();
+},1200);
 }
 function tickBoostUI(){
-  const bb=$("boostBar"), btn=$("adBtn");
-  if(boostActive()){
-    bb.classList.add("on");
-    bb.textContent=`⚡ 2x BOOST ACTIVE — ${Math.ceil((S.boostUntil-Date.now())/1000)}s`;
-    btn.disabled=true; btn.textContent="⚡ Boost running…";
-  }else{
-    bb.classList.remove("on");
-    btn.disabled=false; btn.textContent="▶ Watch Ad for 2x Speed (MOCK)";
-  }
+const bb=("boostBar"), btn=("adBtn");
+if(boostActive()){
+bb.classList.add("on");
+bb.textContent=⚡ 2x BOOST ACTIVE — ${Math.ceil((S.boostUntil-Date.now())/1000)}s;
+btn.disabled=true; btn.textContent="⚡ Boost running…";
+}else{
+bb.classList.remove("on");
+btn.disabled=false; btn.textContent="▶ Watch Ad for 2x Speed (MOCK)";
 }
-
+}
 /* ============================================================
-   LOOPS & EVENTS
-   ============================================================ */
+LOOPS & EVENTS
+============================================================ */
 let lastTick=Date.now();
 function loop(){
-  const now=Date.now(), dt=(now-lastTick)/1000; lastTick=now;
-  const g=gps()*dt;
-  if(g>0){ addGold(g); }
-  
-  if(S.energy < S.maxEnergy){
-    S.energy = Math.min(S.maxEnergy, S.energy + 4.8 * dt);
-  }
-
-  tickBoostUI(); renderTop(); checkAch();
+const now=Date.now(), dt=(now-lastTick)/1000; lastTick=now;
+const g=gps()*dt;
+if(g>0){ addGold(g); }
+if(S.energy < S.maxEnergy){
+S.energy = Math.min(S.maxEnergy, S.energy + 0.5 * dt);
+}
+tickBoostUI(); renderTop(); checkAch();
 }
 document.querySelectorAll(".tab").forEach(t=>{
-  t.addEventListener("click",()=>{
-    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
-    document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
-    t.classList.add("active");
-    $("tab-"+t.dataset.tab).classList.add("active");
-    Audio8.resume(); renderAll();
-  });
+t.addEventListener("click",()=>{
+document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+t.classList.add("active");
+$("tab-"+t.dataset.tab).classList.add("active");
+Audio8.resume(); renderAll();
+});
 });
 $("station").addEventListener("pointerdown",cook);
 $("buyCapBtn").addEventListener("click", upgradeEnergyCap);
 $("buyTapBtn").addEventListener("click", upgradeTapPower);
 $("claimDailyBtn").addEventListener("click", claimDaily);
 $("langSelect").addEventListener("change", e => {
-  S.lang = e.target.value;
-  setLanguage(S.lang);
-  save();
+S.lang = e.target.value;
+setLanguage(S.lang);
+save();
 });
 $("telegramStarsBtn").addEventListener("click", ()=>{
-  S.energy = S.maxEnergy;
-  Audio8.fanfare();
-  toast("⭐ Telegram Stars (⭐ 15) spent! Energy fully refilled instantly!");
-  renderTop();
+S.energy = S.maxEnergy;
+Audio8.fanfare();
+toast("⭐ Telegram Stars (⭐ 15) spent! Energy fully refilled instantly!");
+renderTop();
 });
 $("copyRefBtn").addEventListener("click", ()=>{
-  const refCode = tgUser.id || 'chef123';
-  const refUrl = `https://t.me/share/url?url=${encodeURIComponent('https://t.me/idle_cooking_tycoon_bot?start=' + refCode)}&text=${encodeURIComponent('Join my kitchen brigade in Idle Cooking Tycoon and get bonus coins!')}`;
-  if(window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink){
-    window.Telegram.WebApp.openTelegramLink(refUrl);
-  } else {
-    navigator.clipboard.writeText(`https://t.me/idle_cooking_tycoon_bot?start=${refCode}`);
-    toast("📋 Invite link copied to clipboard!");
-  }
+const refCode = tgUser.id || 'chef123';
+const refUrl = [https://t.me/share/url?url=$](https://t.me/share/url?url=$){encodeURIComponent('[https://t.me/idle_cooking_tycoon_bot?start=](https://t.me/idle_cooking_tycoon_bot?start=)' + refCode)}&text=${encodeURIComponent('Join my kitchen brigade in Idle Cooking Tycoon and get bonus coins!')};
+if(window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink){
+window.Telegram.WebApp.openTelegramLink(refUrl);
+} else {
+navigator.clipboard.writeText([https://t.me/idle_cooking_tycoon_bot?start=$](https://t.me/idle_cooking_tycoon_bot?start=$){refCode});
+toast("📋 Invite link copied to clipboard!");
+}
 });
 $("staffList").addEventListener("click",e=>{
-  const b=e.target.closest("[data-staff]"); if(b) buyStaff(b.dataset.staff);
+const b=e.target.closest("[data-staff]"); if(b) buyStaff(b.dataset.staff);
 });
 $("tasksList").addEventListener("click",e=>{
-  const b=e.target.closest("[data-task]"); if(b) claimTask(b.dataset.task);
+const b=e.target.closest("[data-task]"); if(b) claimTask(b.dataset.task);
 });
 $("seasonChips").addEventListener("click",e=>{
-  const c=e.target.closest("[data-season]"); if(c){ viewSeason=+c.dataset.season; renderMenu(); }
+const c=e.target.closest("[data-season]"); if(c){ viewSeason=+c.dataset.season; renderMenu(); }
 });
 $("adBtn").addEventListener("click",startBoost);
 $("advBtn").addEventListener("click",advance);
 $("muteBtn").addEventListener("click",()=>{
-  S.muted=!S.muted; Audio8.setMuted(S.muted);
-  $("muteBtn").textContent=S.muted?"🔇":"🔊"; save();
+S.muted=!S.muted; Audio8.setMuted(S.muted);
+$("muteBtn").textContent=S.muted?"🔇":"🔊"; save();
 });
 $("resetBtn").addEventListener("click",()=>{
-  if(confirm("Reset all progress?")){ localStorage.removeItem(SAVE_KEY); location.reload(); }
+if(confirm("Reset all progress?")){ localStorage.removeItem(SAVE_KEY); location.reload(); }
 });
 ["pointerdown","keydown","touchstart"].forEach(ev=>
-  window.addEventListener(ev,()=>{ Audio8.resume(); if(!S.muted) Audio8.startMusic(); },{once:true}));
+window.addEventListener(ev,()=>{ Audio8.resume(); if(!S.muted) Audio8.startMusic(); },{once:true}));
 window.addEventListener("beforeunload",save);
 document.addEventListener("visibilitychange",()=>{ if(document.hidden) save(); });
-
 /* ============================================================
-   BOOT
-   ============================================================ */
+BOOT
+============================================================ */
 (function boot(){
-  renderSlide();
-  const bar=$("loadBar"), txt=$("loadTxt");
-  const msgs=["HEATING THE OVENS…","KNEADING THE DOUGH…","GRATING PARMIGIANO…","POLISHING THE SILVER…","OPENING THE DOORS…"];
-  let p=0;
-  const iv=setInterval(()=>{
-    p=Math.min(100,p+100/30);
-    bar.style.width=p+"%";
-    txt.textContent=msgs[Math.min(msgs.length-1,Math.floor(p/20))];
-    if(p>=100) clearInterval(iv);
-  },100);
-  setTimeout(()=>{
-    load();
-    viewSeason=seasonIndex(S.level);
-    $("muteBtn").textContent=S.muted?"🔇":"🔊";
-    Audio8.setMuted(!!S.muted);
-    offlineProfit();
-    renderAll();
-    $("loader").classList.add("hide");
-    $("app").classList.add("show");
-    setTimeout(()=>$("loader").remove(),900);
-    lastTick=Date.now();
-    setInterval(loop,100);
-    setInterval(save,5000);
-  },3000);
+renderSlide();
+const bar=("loadBar"), txt=("loadTxt");
+const msgs=["HEATING THE OVENS…","KNEADING THE DOUGH…","GRATING PARMIGIANO…","POLISHING THE SILVER…","OPENING THE DOORS…"];
+let p=0;
+const iv=setInterval(()=>{
+p=Math.min(100,p+100/30);
+bar.style.width=p+"%";
+txt.textContent=msgs[Math.min(msgs.length-1,Math.floor(p/20))];
+if(p>=100) clearInterval(iv);
+},100);
+setTimeout(()=>{
+load();
+viewSeason=seasonIndex(S.level);
+$("muteBtn").textContent=S.muted?"🔇":"🔊";
+Audio8.setMuted(!!S.muted);
+offlineProfit();
+renderAll();
+$("loader").classList.add("hide");
+("app").classList.add("show");
+setTimeout(()=>("loader").remove(),900);
+lastTick=Date.now();
+setInterval(loop,100);
+setInterval(save,5000);
+},3000);
 })();
 </script>
 </body>
