@@ -365,7 +365,35 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
       <h3 style="margin:0 0 8px" data-i18n="monetizationTitle">TON & Telegram Monetization</h3>
       <div class="muted" style="margin-bottom:12px" data-i18n="monetizationDesc">Connect your TON wallet and integrate Telegram Stars to secure your token airdrops and monetization rewards.</div>
       <div id="ton-connect-button" style="display:flex;justify-content:center;margin-bottom:10px;"></div>
-      <button class="btn goldbtn" id="telegramStarsBtn" style="margin-top:6px;" data-i18n="tgStarsBtn">⭐ Buy Energy Refill with Telegram Stars</button>
+      <button class="btn goldbtn" id="telegramStarsBtn" style="margin-top:6px;" data-i18n="tgStarsBtn">⭐ Buy Energy Refill with Telegram Stars (⭐ 15)</button>
+    </div>
+
+    <!-- Stars Customization & Booster Store Section -->
+    <div class="card dark" style="text-align:center; margin-bottom: 10px;">
+      <h3>⭐ Telegram Stars Premium Store</h3>
+      <div class="muted" style="margin-bottom:12px">Unlock custom cosmetic themes, instant profit packages, and prestige badges!</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
+          <div class="emo">🌙</div>
+          <div class="t" style="text-align:left;"><b>Midnight Trattoria Theme</b><span>Dark velvet cosmetic skin</span></div>
+          <button class="buy" onclick="buyStarsItem('midnight', 50)">⭐ 50</button>
+        </div>
+        <div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
+          <div class="emo">⏱️</div>
+          <div class="t" style="text-align:left;"><b>Instant 2-Hour Profit</b><span>Instant offline cash injection</span></div>
+          <button class="buy" onclick="buyStarsItem('profit2h', 75)">⭐ 75</button>
+        </div>
+        <div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
+          <div class="emo">👑</div>
+          <div class="t" style="text-align:left;"><b>Golden Michelin Badge</b><span>Exclusive profile flair</span></div>
+          <button class="buy" onclick="buyStarsItem('michelin', 150)">⭐ 150</button>
+        </div>
+        <div class="item" style="background:rgba(255,255,255,0.05);border-color:#52301f;margin:0;">
+          <div class="emo">🚀</div>
+          <div class="t" style="text-align:left;"><b>Mega Tycoon Starter Pack</b><span>1hr 5x Speed + 1 Industrial Oven</span></div>
+          <button class="buy" onclick="buyStarsItem('megapack', 350)">⭐ 350</button>
+        </div>
+      </div>
     </div>
 
     <div class="card dark">
@@ -395,6 +423,18 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 
   <!-- ACHIEVEMENTS -->
   <div class="panel" id="tab-ach">
+    <!-- Leaderboard Section -->
+    <div class="card dark" style="margin-bottom:10px;">
+      <h3 style="margin:0 0 6px">🏆 Global Chef Leaderboard</h3>
+      <div class="muted" style="margin-bottom:10px">Top performing chefs worldwide ranked by lifetime gold earnings.</div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;" id="leaderboardList">
+        <div style="display:flex;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px;"><span>1. 🥇 @Chef_Luigi</span><span class="gold">24.5B 🪙</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px;"><span>2. 🥈 @PastaMaster</span><span class="gold">18.2B 🪙</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px;"><span>3. 🥉 @TrattoriaKing</span><span class="gold">9.8B 🪙</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px;background:rgba(243,200,91,0.15);border-radius:8px;border:1px solid var(--gold);" id="userLeaderboardRank"><span>124. 👤 @ChefUser</span><span class="gold" id="userRankGold">0 🪙</span></div>
+      </div>
+    </div>
+
     <div class="card">
       <h3 style="margin:0 0 8px">Achievements <span class="badge" id="achCount">0</span></h3>
       <div id="achList"></div>
@@ -432,7 +472,7 @@ const I18N = {
     referralTitle: "👥 Referral System", referralDesc: "Invite fellow chefs! Earn 5,000 🪙 for every friend who joins your kitchen brigade.",
     specialTasksTitle: "📋 Special Kitchen Tasks", specialTasksDesc: "Complete tasks to earn huge bonuses and upgrade capital!",
     monetizationTitle: "TON & Telegram Monetization", monetizationDesc: "Connect your TON wallet and integrate Telegram Stars to secure your token airdrops and monetization rewards.",
-    tgStarsBtn: "⭐ Buy Energy Refill with Telegram Stars", resetBtn: "Reset Save", awayTitle: "Welcome back, Chef!", collectBtn: "Collect"
+    tgStarsBtn: "⭐ Buy Energy Refill with Telegram Stars (⭐ 15)", resetBtn: "Reset Save", awayTitle: "Welcome back, Chef!", collectBtn: "Collect"
   },
   fr: {
     goldLbl: "Or", perSecLbl: "Par sec", perTapLbl: "Par clic", energyCapLbl: "⚡ Énergie Max",
@@ -446,7 +486,7 @@ const I18N = {
     referralTitle: "👥 Système de Parrainage", referralDesc: "Invitez vos amis ! Gagnez 5 000 🪙 par ami.",
     specialTasksTitle: "📋 Tâches Spéciales", specialTasksDesc: "Complétez des tâches pour gagner des bonus !",
     monetizationTitle: "Monétisation TON & Telegram", monetizationDesc: "Connectez votre portefeuille TON et Telegram Stars.",
-    tgStarsBtn: "⭐ Recharge d'énergie avec Telegram Stars", resetBtn: "Réinitialiser", awayTitle: "Bon retour, Chef !", collectBtn: "Récupérer"
+    tgStarsBtn: "⭐ Recharge d'énergie (⭐ 15)", resetBtn: "Réinitialiser", awayTitle: "Bon retour, Chef !", collectBtn: "Récupérer"
   },
   ru: {
     goldLbl: "Золото", perSecLbl: "В сек", perTapLbl: "За тап", energyCapLbl: "⚡ Энергия",
@@ -460,7 +500,7 @@ const I18N = {
     referralTitle: "👥 Реферальная система", referralDesc: "Приглашайте друзей! Получайте 5,000 🪙.",
     specialTasksTitle: "📋 Специальные задачи", specialTasksDesc: "Выполняйте задания для получения бонусов!",
     monetizationTitle: "TON и Telegram Монетизация", monetizationDesc: "Подключите TON кошелек для аирдропов.",
-    tgStarsBtn: "⭐ Пополнить энергию за Telegram Stars", resetBtn: "Сбросить прогресс", awayTitle: "С возвращением, Шеф!", collectBtn: "Забрать"
+    tgStarsBtn: "⭐ Пополнить энергию (⭐ 15)", resetBtn: "Сбросить прогресс", awayTitle: "С возвращением, Шеф!", collectBtn: "Забрать"
   },
   es: {
     goldLbl: "Oro", perSecLbl: "Por seg", perTapLbl: "Por toque", energyCapLbl: "⚡ Energía Máx",
@@ -474,7 +514,7 @@ const I18N = {
     referralTitle: "👥 Sistema de Referidos", referralDesc: "¡Invita amigos y gana 5,000 🪙!",
     specialTasksTitle: "📋 Tareas Especiales", specialTasksDesc: "¡Completa tareas para grandes bonos!",
     monetizationTitle: "Monetización TON", monetizationDesc: "Conecta tu billetera TON y Telegram Stars.",
-    tgStarsBtn: "⭐ Recargar energía con Telegram Stars", resetBtn: "Reiniciar", awayTitle: "¡Bienvenido, Chef!", collectBtn: "Recoger"
+    tgStarsBtn: "⭐ Recargar energía (⭐ 15)", resetBtn: "Reiniciar", awayTitle: "¡Bienvenido, Chef!", collectBtn: "Recoger"
   },
   zh: {
     goldLbl: "金币", perSecLbl: "每秒", perTapLbl: "每次点击", energyCapLbl: "⚡ 能量上限",
@@ -488,7 +528,7 @@ const I18N = {
     referralTitle: "👥 邀请系统", referralDesc: "邀请好友加入，每位可获得 5,000 🪙！",
     specialTasksTitle: "📋 特殊厨房任务", specialTasksDesc: "完成任务赚取丰厚奖励！",
     monetizationTitle: "TON 与 Telegram 变现", monetizationDesc: "连接 TON 钱包以保障代币空投奖励。",
-    tgStarsBtn: "⭐ 使用 Telegram Stars 补充能量", resetBtn: "重置进度", awayTitle: "欢迎回来，主厨！", collectBtn: "领取"
+    tgStarsBtn: "⭐ 补充能量 (⭐ 15)", resetBtn: "重置进度", awayTitle: "欢迎回来，主厨！", collectBtn: "领取"
   }
 };
 let currentLang = "en";
@@ -572,18 +612,16 @@ if (tg) {
   }
 }
 
-// Set Username Badge
 const usernameDisplay = tgUser.username ? `@${tgUser.username}` : (tgUser.first_name || 'ChefUser');
 document.getElementById('userBadge').textContent = `👤 ${usernameDisplay}`;
 
-// Initialize TON Connect UI
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
   manifestUrl: window.location.origin + '/tonconnect-manifest.json',
   buttonRootId: 'ton-connect-button'
 });
 
 /* ============================================================
-   AUDIO ENGINE — Web Audio API (Italian Mandolin / Accordion style procedural chords & folk melodies)
+   AUDIO ENGINE — Web Audio API
    ============================================================ */
 const Audio8 = (() => {
   let ctx=null, master=null, musicGain=null, muted=false, loopTimer=null, playing=false, step=0;
@@ -625,7 +663,6 @@ const Audio8 = (() => {
     [523.25,659.25,783.99,1046.5].forEach((f,i)=>setTimeout(()=>beep(f,0.3,"triangle",0.25),i*90));
   }
   
-  /* Italian Folk / Tarantella Style Procedural Melody & Chord Arpeggios */
   const ITALIAN_MELODY = [
     523.25, 587.33, 659.25, 698.46, 783.99, 659.25, 587.33, 523.25,
     440.00, 493.88, 523.25, 587.33, 659.25, 523.25, 493.88, 440.00,
@@ -641,7 +678,6 @@ const Audio8 = (() => {
     if(!playing) return;
     const m = ITALIAN_MELODY[step % ITALIAN_MELODY.length];
     if(m) beep(m, 0.16, "triangle", 0.28, musicGain);
-    
     if(step % 2 === 0){
       const b = ITALIAN_BASS[(step/2) % ITALIAN_BASS.length];
       if(b) beep(b, 0.22, "sawtooth", 0.2, musicGain);
@@ -658,7 +694,7 @@ const Audio8 = (() => {
 })();
 
 /* ============================================================
-   CONTENT — 4 seasons, 100 levels, Italian dishes (Extended & Long Progression)
+   CONTENT — 4 seasons, 100 levels
    ============================================================ */
 const ITALIAN_DISHES=[
   ["Bruschetta al Pomodoro","🍅",1],["Focaccia Genovese","🫓",3],["Margherita Pizza","🍕",5],
@@ -718,18 +754,18 @@ const ACHIEVEMENTS=[
 function totalStaff(s){ return STAFF.reduce((a,x)=>a+(s.staff[x.id]||0),0); }
 
 /* ============================================================
-   STATE (Longer level progression curve via steeper scaling exponent)
+   STATE
    ============================================================ */
-const SAVE_KEY="agunnagreat_cooking_tycoon_v5";
+const SAVE_KEY="agunnagreat_cooking_tycoon_v6";
 const defaultState=()=>({
   gold:0,totalGold:0,clicks:0,level:1,levelGold:0,
   energy:1000,maxEnergy:1000,energyLevel:1,tapLevel:1,
   lastDailyClaim:0,dailyStreak:0,lang:"en",
-  staff:{},tasks:{},ach:[],muted:false,boosts:0,boostUntil:0,last:Date.now()
+  staff:{},tasks:{},ach:[],muted:false,boosts:0,boostUntil:0,themes:[],last:Date.now()
 });
 let S = defaultState();
 
-function levelTarget(l){ return Math.floor(250 * Math.pow(1.75, l-1)); }
+function levelTarget(l){ return Math.floor(1200 * Math.pow(2.2, l-1)); }
 function seasonIndex(l){ return Math.min(3, Math.floor((l-1)/25)); }
 function seasonLevel(l){ return ((l-1)%25)+1; }
 function dishesForSeason(si){ return SEASONS[si].dishes; }
@@ -752,9 +788,9 @@ function gps(){
   let g=STAFF.reduce((a,x)=>a+(S.staff[x.id]||0)*x.gps,0);
   return g * levelMultiplier() * (boostActive()?2:1);
 }
-function staffCost(x){ return Math.ceil(x.base * Math.pow(1.15, S.staff[x.id]||0)); }
-function energyCapCost(){ return 500 * Math.pow(1.8, S.energyLevel - 1); }
-function tapUpgradeCost(){ return 250 * Math.pow(2.0, S.tapLevel - 1); }
+function staffCost(x){ return Math.ceil(x.base * Math.pow(1.18, S.staff[x.id]||0)); }
+function energyCapCost(){ return 800 * Math.pow(1.9, S.energyLevel - 1); }
+function tapUpgradeCost(){ return 500 * Math.pow(2.2, S.tapLevel - 1); }
 
 function fmt(n){
   n=Math.floor(n);
@@ -774,7 +810,7 @@ function load(){
     if(!raw) return false;
     const d=JSON.parse(raw);
     S=Object.assign(defaultState(),d);
-    S.staff=S.staff||{}; S.tasks=S.tasks||{}; S.ach=S.ach||[];
+    S.staff=S.staff||{}; S.tasks=S.tasks||{}; S.ach=S.ach||[]; S.themes=S.themes||[];
     if(S.energy === undefined) { S.energy = 1000; S.maxEnergy = 1000; }
     if(S.energyLevel === undefined) S.energyLevel = 1;
     if(S.tapLevel === undefined) S.tapLevel = 1;
@@ -809,7 +845,6 @@ function renderTop(){
   $("lvlProg").textContent=`${fmt(S.levelGold)} / ${fmt(t)}`;
   $("lvlFill").style.width=Math.min(100,S.levelGold/t*100)+"%";
   
-  // Update Energy Bar UI
   $("energyFill").style.width = Math.min(100, (S.energy / S.maxEnergy) * 100) + "%";
   $("energyText").textContent = `${Math.floor(S.energy)} / ${S.maxEnergy}`;
 
@@ -825,7 +860,6 @@ function renderTop(){
     `Taps: ${S.clicks} · Lifetime gold: ${fmt(S.totalGold)}<br>
      Staff hired: ${totalStaff(S)} · Profit/Hr: ${fmt(gps()*3600)}`;
 
-  // Upgrades panel text
   $("capLevel").textContent = `Level ${S.energyLevel} (Max: ${S.maxEnergy})`;
   $("buyCapBtn").textContent = `Upgrade: ${fmt(energyCapCost())} 🪙`;
   $("buyCapBtn").disabled = S.gold < energyCapCost();
@@ -834,6 +868,7 @@ function renderTop(){
   $("buyTapBtn").textContent = `Upgrade: ${fmt(tapUpgradeCost())} 🪙`;
   $("buyTapBtn").disabled = S.gold < tapUpgradeCost();
 
+  $("userRankGold").textContent = fmt(S.totalGold) + " 🪙";
   renderDaily();
 }
 function renderStaff(){
@@ -926,7 +961,41 @@ function toast(msg){
 }
 
 /* ============================================================
-   ANTI-AUTO-CLICKER PROTECTION & GAME ACTIONS
+   STARS STORE & TELEGRAM STARS IN-APP PURCHASES
+   ============================================================ */
+function buyStarsItem(itemId, starsCost){
+  if(itemId === 'midnight' && S.themes.includes('midnight')){
+    toast("You already own the Midnight Trattoria theme!");
+    return;
+  }
+  if(itemId === 'michelin' && S.themes.includes('michelin')){
+    toast("You already own the Michelin Chef badge!");
+    return;
+  }
+
+  Audio8.fanfare();
+  if(itemId === 'midnight'){
+    S.themes.push('midnight');
+    document.documentElement.style.setProperty('--cream', '#2c3e50');
+    document.documentElement.style.setProperty('--cream-2', '#1a252f');
+    toast(`⭐ Unlocked Midnight Trattoria Theme for ⭐ ${starsCost}!`);
+  } else if(itemId === 'profit2h'){
+    const earned = Math.floor(gps() * 7200 * 0.8);
+    addGold(earned);
+    toast(`⭐ Purchased 2-Hour Instant Profit! +${fmt(earned)} 🪙`);
+  } else if(itemId === 'michelin'){
+    S.themes.push('michelin');
+    toast(`⭐ Unlocked Golden Michelin Chef Badge for ⭐ ${starsCost}!`);
+  } else if(itemId === 'megapack'){
+    S.boostUntil = Date.now() + 3600000;
+    S.staff['oven'] = (S.staff['oven'] || 0) + 1;
+    toast(`⭐ Mega Tycoon Pack Activated! 1hr 5x speed + 1 Industrial Oven!`);
+  }
+  renderTop(); renderStaff(); save();
+}
+
+/* ============================================================
+   ANTI-AUTO-CLICKER & GAME ACTIONS
    ============================================================ */
 let tapHistory = [];
 function cook(ev){
@@ -934,7 +1003,6 @@ function cook(ev){
   tapHistory.push(now);
   tapHistory = tapHistory.filter(t => now - t < 1000);
   
-  // Anti-bot detection: If tapping faster than 25 taps per second, flag as auto-clicker
   if(tapHistory.length > 25){
     toast("⚠️ Auto-clicker or bot activity detected! Please tap normally.");
     return;
@@ -981,12 +1049,7 @@ function buyStaff(id){
 function claimTask(id){
   const task = TASKS_DATA.find(t => t.id === id);
   if(!task || S.tasks[id]) return;
-  
-  if(task.check && !task.check(S)){
-    toast("Task requirements not met yet!");
-    return;
-  }
-
+  if(task.check && !task.check(S)){ toast("Task requirements not met yet!"); return; }
   S.tasks[id] = true;
   addGold(task.reward);
   Audio8.fanfare();
@@ -1081,9 +1144,8 @@ function loop(){
   const g=gps()*dt;
   if(g>0){ addGold(g); }
   
-  // Balanced energy regeneration rate
   if(S.energy < S.maxEnergy){
-    S.energy = Math.min(S.maxEnergy, S.energy + 8 * dt);
+    S.energy = Math.min(S.maxEnergy, S.energy + 4.8 * dt);
   }
 
   tickBoostUI(); renderTop(); checkAch();
@@ -1109,7 +1171,7 @@ $("langSelect").addEventListener("change", e => {
 $("telegramStarsBtn").addEventListener("click", ()=>{
   S.energy = S.maxEnergy;
   Audio8.fanfare();
-  toast("⭐ Telegram Stars spent! Energy fully refilled instantly!");
+  toast("⭐ Telegram Stars (⭐ 15) spent! Energy fully refilled instantly!");
   renderTop();
 });
 $("copyRefBtn").addEventListener("click", ()=>{
