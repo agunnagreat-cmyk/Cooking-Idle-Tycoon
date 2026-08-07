@@ -269,7 +269,7 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
     <div class="tab" data-tab="menu"><em>📜</em><span data-i18n="tabMenu">Menu</span></div>
     <div class="tab" data-tab="staff"><em>👨‍🍳</em><span data-i18n="tabStaff">Staff</span></div>
     <div class="tab" data-tab="tasks"><em>📋</em><span data-i18n="tabTasks">Tasks</span></div>
-    <div class="tab" data-tab="roadmap"><em>🚀</em><span data-i18n="tabRoadmap">Roadmap</span></div>
+    <div class="tab" data-tab="airdrop"><em>🪂</em><span data-i18n="tabAirdrop">Airdrop</span></div>
     <div class="tab" data-tab="ach"><em>🏆</em><span data-i18n="tabAwards">Awards</span></div>
   </div>
 
@@ -358,10 +358,18 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
     </div>
   </div>
 
-  <!-- ROADMAP & WHITEPAPER -->
-  <div class="panel" id="tab-roadmap">
+  <!-- AIRDROP & ROADMAP -->
+  <div class="panel" id="tab-airdrop">
+    <!-- TON Wallet & Telegram Stars Section -->
+    <div class="card dark" style="text-align:center; margin-bottom: 10px;">
+      <h3 style="margin:0 0 8px" data-i18n="monetizationTitle">TON & Telegram Monetization</h3>
+      <div class="muted" style="margin-bottom:12px" data-i18n="monetizationDesc">Connect your TON wallet and integrate Telegram Stars to secure your token airdrops and monetization rewards.</div>
+      <div id="ton-connect-button" style="display:flex;justify-content:center;margin-bottom:10px;"></div>
+      <button class="btn goldbtn" id="telegramStarsBtn" style="margin-top:6px;" data-i18n="tgStarsBtn">⭐ Buy Energy Refill with Telegram Stars</button>
+    </div>
+
     <div class="card dark">
-      <h3 style="margin:0 0 6px">🚀 Project Roadmap & Whitepaper</h3>
+      <h3 style="margin:0 0 6px">🪂 Project Airdrop & Roadmap</h3>
       <div class="muted" style="margin-bottom:12px">Track our progress toward token launch, exchange listings, and ecosystem expansion.</div>
       
       <div style="display:flex;flex-direction:column;gap:10px;font-size:12px;">
@@ -387,13 +395,6 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 
   <!-- ACHIEVEMENTS -->
   <div class="panel" id="tab-ach">
-    <!-- TON Wallet & Telegram Stars Section -->
-    <div class="card dark" style="text-align:center;">
-      <h3 style="margin:0 0 8px" data-i18n="monetizationTitle">TON & Telegram Monetization</h3>
-      <div class="muted" style="margin-bottom:12px" data-i18n="monetizationDesc">Connect your TON wallet and integrate Telegram Stars to secure your token airdrops and monetization rewards.</div>
-      <div id="ton-connect-button" style="display:flex;justify-content:center;margin-bottom:10px;"></div>
-      <button class="btn goldbtn" id="telegramStarsBtn" style="margin-top:6px;" data-i18n="tgStarsBtn">⭐ Buy Energy Refill with Telegram Stars</button>
-    </div>
     <div class="card">
       <h3 style="margin:0 0 8px">Achievements <span class="badge" id="achCount">0</span></h3>
       <div id="achList"></div>
@@ -421,7 +422,7 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 const I18N = {
   en: {
     goldLbl: "Gold", perSecLbl: "Per sec", perTapLbl: "Per tap", energyCapLbl: "⚡ Energy Cap",
-    tabKitchen: "Kitchen", tabBoosts: "Boosts", tabMenu: "Menu", tabStaff: "Staff", tabTasks: "Tasks", tabRoadmap: "Roadmap", tabAwards: "Awards",
+    tabKitchen: "Kitchen", tabBoosts: "Boosts", tabMenu: "Menu", tabStaff: "Staff", tabTasks: "Tasks", tabAirdrop: "Airdrop", tabAwards: "Awards",
     tapToCook: "Tap to cook", todaysService: "Today's Service", levelGoal: "Level Goal",
     kitchenEnhancements: "Kitchen Enhancements", enhancementsDesc: "Increase your power and energy limits using your hard-earned coins!",
     energyCapTitle: "⚡ Energy Cap", multiTapTitle: "💪 Multi-Tap",
@@ -435,7 +436,7 @@ const I18N = {
   },
   fr: {
     goldLbl: "Or", perSecLbl: "Par sec", perTapLbl: "Par clic", energyCapLbl: "⚡ Énergie Max",
-    tabKitchen: "Cuisine", tabBoosts: "Boosts", tabMenu: "Menu", tabStaff: "Équipe", tabTasks: "Tâches", tabRoadmap: "Feuille", tabAwards: "Prix",
+    tabKitchen: "Cuisine", tabBoosts: "Boosts", tabMenu: "Menu", tabStaff: "Équipe", tabTasks: "Tâches", tabAirdrop: "Airdrop", tabAwards: "Prix",
     tapToCook: "Touchez pour cuisiner", todaysService: "Service du jour", levelGoal: "Objectif de niveau",
     kitchenEnhancements: "Améliorations de Cuisine", enhancementsDesc: "Augmentez votre puissance et votre énergie avec vos pièces !",
     energyCapTitle: "⚡ Énergie Max", multiTapTitle: "💪 Multi-Clic",
@@ -449,7 +450,7 @@ const I18N = {
   },
   ru: {
     goldLbl: "Золото", perSecLbl: "В сек", perTapLbl: "За тап", energyCapLbl: "⚡ Энергия",
-    tabKitchen: "Кухня", tabBoosts: "Бусты", tabMenu: "Меню", tabStaff: "Штат", tabTasks: "Задачи", tabRoadmap: "План", tabAwards: "Награды",
+    tabKitchen: "Кухня", tabBoosts: "Бусты", tabMenu: "Меню", tabStaff: "Штат", tabTasks: "Задачи", tabAirdrop: "Аирдроп", tabAwards: "Награды",
     tapToCook: "Нажмите для готовки", todaysService: "Сегодняшний сервис", levelGoal: "Цель уровня",
     kitchenEnhancements: "Улучшения кухни", enhancementsDesc: "Увеличивайте мощность и лимиты энергии за монеты!",
     energyCapTitle: "⚡ Макс. Энергия", multiTapTitle: "💪 Мульти-тап",
@@ -463,7 +464,7 @@ const I18N = {
   },
   es: {
     goldLbl: "Oro", perSecLbl: "Por seg", perTapLbl: "Por toque", energyCapLbl: "⚡ Energía Máx",
-    tabKitchen: "Cocina", tabBoosts: "Mejoras", tabMenu: "Menú", tabStaff: "Personal", tabTasks: "Tareas", tabRoadmap: "Ruta", tabAwards: "Premios",
+    tabKitchen: "Cocina", tabBoosts: "Mejoras", tabMenu: "Menú", tabStaff: "Personal", tabTasks: "Tareas", tabAirdrop: "Airdrop", tabAwards: "Premios",
     tapToCook: "Toca para cocinar", todaysService: "Servicio de hoy", levelGoal: "Meta de nivel",
     kitchenEnhancements: "Mejoras de Cocina", enhancementsDesc: "¡Aumenta tu poder y límites de energía con monedas!",
     energyCapTitle: "⚡ Energía Máx", multiTapTitle: "💪 Multi-Toque",
@@ -477,7 +478,7 @@ const I18N = {
   },
   zh: {
     goldLbl: "金币", perSecLbl: "每秒", perTapLbl: "每次点击", energyCapLbl: "⚡ 能量上限",
-    tabKitchen: "厨房", tabBoosts: "加速", tabMenu: "菜单", tabStaff: "员工", tabTasks: "任务", tabRoadmap: "路线图", tabAwards: "成就",
+    tabKitchen: "厨房", tabBoosts: "加速", tabMenu: "菜单", tabStaff: "员工", tabTasks: "任务", tabAirdrop: "空投", tabAwards: "成就",
     tapToCook: "点击烹饪", todaysService: "今日服务", levelGoal: "关卡目标",
     kitchenEnhancements: "厨房强化", enhancementsDesc: "使用金币提升您的能量和产出！",
     energyCapTitle: "⚡ 能量上限", multiTapTitle: "💪 多重点击",
@@ -582,7 +583,7 @@ const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
 });
 
 /* ============================================================
-   AUDIO ENGINE — Web Audio API
+   AUDIO ENGINE — Web Audio API (Italian Mandolin / Accordion style procedural chords & folk melodies)
    ============================================================ */
 const Audio8 = (() => {
   let ctx=null, master=null, musicGain=null, muted=false, loopTimer=null, playing=false, step=0;
@@ -592,15 +593,15 @@ const Audio8 = (() => {
     if(!AC) return;
     ctx = new AC();
     master = ctx.createGain(); master.gain.value = 0.5; master.connect(ctx.destination);
-    musicGain = ctx.createGain(); musicGain.gain.value = 0.16; musicGain.connect(master);
+    musicGain = ctx.createGain(); musicGain.gain.value = 0.2; musicGain.connect(master);
   }
   function resume(){ init(); if(ctx && ctx.state==="suspended") ctx.resume(); }
   function beep(freq,dur,type,gain,dest){
     if(!ctx||muted) return;
     const o=ctx.createOscillator(), g=ctx.createGain();
-    o.type=type||"square"; o.frequency.value=freq;
+    o.type=type||"triangle"; o.frequency.value=freq;
     g.gain.setValueAtTime(0.0001,ctx.currentTime);
-    g.gain.exponentialRampToValueAtTime(gain||0.25,ctx.currentTime+0.01);
+    g.gain.exponentialRampToValueAtTime(gain||0.25,ctx.currentTime+0.02);
     g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+dur);
     o.connect(g); g.connect(dest||master); o.start(); o.stop(ctx.currentTime+dur+0.02);
   }
@@ -617,23 +618,37 @@ const Audio8 = (() => {
   }
   function chime(){
     if(!ctx||muted) return;
-    [880,1174.7,1568].forEach((f,i)=>setTimeout(()=>beep(f,0.22,"sine",0.22),i*70));
+    [523.25, 659.25, 783.99].forEach((f,i)=>setTimeout(()=>beep(f,0.25,"triangle",0.22),i*60));
   }
   function fanfare(){
     if(!ctx||muted) return;
-    [523,659,784,1046,1318].forEach((f,i)=>setTimeout(()=>beep(f,0.28,"square",0.2),i*95));
+    [523.25,659.25,783.99,1046.5].forEach((f,i)=>setTimeout(()=>beep(f,0.3,"triangle",0.25),i*90));
   }
-  const MELODY=[659,0,784,880,0,784,659,587,523,0,587,659,0,659,587,523,
-                440,0,523,659,0,587,523,494,523,0,659,784,0,880,784,659];
-  const BASS=[220,0,165,0,196,0,147,0,220,0,165,0,196,0,110,0];
+  
+  /* Italian Folk / Tarantella Style Procedural Melody & Chord Arpeggios */
+  const ITALIAN_MELODY = [
+    523.25, 587.33, 659.25, 698.46, 783.99, 659.25, 587.33, 523.25,
+    440.00, 493.88, 523.25, 587.33, 659.25, 523.25, 493.88, 440.00,
+    523.25, 659.25, 783.99, 1046.50, 783.99, 659.25, 587.33, 659.25,
+    523.25, 392.00, 523.25, 587.33, 659.25, 587.33, 523.25, 523.25
+  ];
+  const ITALIAN_BASS = [
+    261.63, 0, 196.00, 0, 220.00, 0, 164.81, 0,
+    261.63, 0, 196.00, 0, 174.61, 0, 130.81, 0
+  ];
+
   function tick(){
     if(!playing) return;
-    const m=MELODY[step%MELODY.length]; if(m) beep(m,0.14,"square",0.3,musicGain);
-    const b=BASS[step%BASS.length]; if(b) beep(b,0.18,"triangle",0.35,musicGain);
-    if(step%4===0) beep(90,0.06,"sawtooth",0.25,musicGain);
+    const m = ITALIAN_MELODY[step % ITALIAN_MELODY.length];
+    if(m) beep(m, 0.16, "triangle", 0.28, musicGain);
+    
+    if(step % 2 === 0){
+      const b = ITALIAN_BASS[(step/2) % ITALIAN_BASS.length];
+      if(b) beep(b, 0.22, "sawtooth", 0.2, musicGain);
+    }
     step++;
   }
-  function startMusic(){ resume(); if(playing||!ctx) return; playing=true; loopTimer=setInterval(tick,175); }
+  function startMusic(){ resume(); if(playing||!ctx) return; playing=true; loopTimer=setInterval(tick, 150); }
   function stopMusic(){ playing=false; clearInterval(loopTimer); }
   return {
     resume, sizzle, chime, fanfare, startMusic, stopMusic,
@@ -643,36 +658,36 @@ const Audio8 = (() => {
 })();
 
 /* ============================================================
-   CONTENT — 4 seasons, 100 levels, Italian dishes
+   CONTENT — 4 seasons, 100 levels, Italian dishes (Extended & Long Progression)
    ============================================================ */
 const ITALIAN_DISHES=[
-  ["Bruschetta al Pomodoro","🍅",1],["Focaccia Genovese","🫓",2],["Margherita Pizza","🍕",3],
-  ["Arancini Siciliani","🧆",5],["Caprese Salad","🥗",7],["Minestrone Soup","🍲",10],
-  ["Spaghetti Aglio e Olio","🍝",13],["Penne Arrabbiata","🌶️",17],["Garlic Ciabatta","🥖",22],
-  ["Prosciutto e Melone","🍈",28],["Calzone Napoletano","🥟",35],["Fettuccine Alfredo","🍜",44],
-  ["Spaghetti Carbonara","🥓",55],["Gnocchi al Pesto","🥔",68],["Ravioli di Ricotta","🥧",85],
-  ["Lasagna alla Bolognese","🍱",105],["Risotto ai Funghi","🍚",130],["Melanzane Parmigiana","🍆",160],
-  ["Pollo alla Cacciatora","🍗",195],["Saltimbocca alla Romana","🥩",240],["Vitello Tonnato","🍖",295],
-  ["Frutti di Mare Linguine","🦐",360],["Cacio e Pepe","🧀",440],["Orecchiette Pugliesi","🌿",540],
-  ["Tortellini in Brodo","🥣",660],["Panzanella Toscana","🥬",805],["Polpette al Sugo","🍡",980],
-  ["Pizza Quattro Formaggi","🧈",1200],["Pizza Diavola","🔥",1460],["Osso Buco Milanese","🦴",1780],
-  ["Bistecca alla Fiorentina","🥩",2170],["Risotto alla Milanese","🌼",2640],["Truffle Risotto","🍄",3220],
-  ["Branzino al Forno","🐟",3920],["Cozze alla Marinara","🦪",4770],["Fritto Misto","🍤",5800],
-  ["Pappardelle al Cinghiale","🍛",7060],["Agnolotti del Plin","🥟",8580],["Carpaccio di Manzo","🥓",10400],
-  ["Burrata con Tartufo","🧀",12650],["Tagliatelle al Tartufo","🍝",15380],["Cannoli Siciliani","🥐",18690],
-  ["Panna Cotta","🍮",22700],["Tiramisu","☕",27570],["Gelato Artigianale","🍨",33470],
-  ["Affogato al Caffè","🍦",40640],["Zabaglione","🥂",49320],["Sfogliatella","🥧",59870],
-  ["Torta Caprese","🍫",72650],["Panettone Milanese","🎂",88150],["Amaretti di Saronno","🍪",106900],
-  ["Espresso Romano","☕",129600],["Limoncello Spritz","🍋",157100],["Chef's Tasting Menu","👑",190500]
+  ["Bruschetta al Pomodoro","🍅",1],["Focaccia Genovese","🫓",3],["Margherita Pizza","🍕",5],
+  ["Arancini Siciliani","🧆",8],["Caprese Salad","🥗",11],["Minestrone Soup","🍲",15],
+  ["Spaghetti Aglio e Olio","🍝",20],["Penne Arrabbiata","🌶️",26],["Garlic Ciabatta","🥖",33],
+  ["Prosciutto e Melone","🍈",41],["Calzone Napoletano","🥟",50],["Fettuccine Alfredo","🍜",61],
+  ["Spaghetti Carbonara","🥓",74],["Gnocchi al Pesto","🥔",89],["Ravioli di Ricotta","🥧",107],
+  ["Lasagna alla Bolognese","🍱",128],["Risotto ai Funghi","🍚",153],["Melanzane Parmigiana","🍆",182],
+  ["Pollo alla Cacciatora","🍗",216],["Saltimbocca alla Romana","🥩",256],["Vitello Tonnato","🍖",303],
+  ["Frutti di Mare Linguine","🦐",358],["Cacio e Pepe","🧀",423],["Orecchiette Pugliesi","🌿",499],
+  ["Tortellini in Brodo","🥣",588],["Panzanella Toscana","🥬",692],["Polpette al Sugo","🍡",813],
+  ["Pizza Quattro Formaggi","🧈",954],["Pizza Diavola","🔥",1118],["Osso Buco Milanese","🦴",1308],
+  ["Bistecca alla Fiorentina","🥩",1528],["Risotto alla Milanese","🌼",1782],["Truffle Risotto","🍄",2075],
+  ["Branzino al Forno","🐟",2413],["Cozze alla Marinara","🦪",2803],["Fritto Misto","🍤",3252],
+  ["Pappardelle al Cinghiale","🍛",3769],["Agnolotti del Plin","🥟",4364],["Carpaccio di Manzo","🥓",5048],
+  ["Burrata con Tartufo","🧀",5834],["Tagliatelle al Tartufo","🍝",6736],["Cannoli Siciliani","🥐",7773],
+  ["Panna Cotta","🍮",8966],["Tiramisu","☕",10338],["Gelato Artigianale","🍨",11913],
+  ["Affogato al Caffè","🍦",13717],["Zabaglione","🥂",15785],["Sfogliatella","🥧",18153],
+  ["Torta Caprese","🍫",20861],["Panettone Milanese","🎂",23956],["Amaretti di Saronno","🍪",27503],
+  ["Espresso Romano","☕",31568],["Limoncello Spritz","🍋",36228],["Chef's Tasting Menu","👑",41570]
 ];
 const SEASONS=[
   {name:"Bella Italia",emoji:"🇮🇹",desc:"A cozy trattoria in Trastevere. Wood-fired ovens, red checkered linen.",dishes:ITALIAN_DISHES},
   {name:"Sakura Sushi-Ya",emoji:"🇯🇵",desc:"An eight-seat counter in Ginza. Precision, silence, perfect rice.",
-   dishes:[["Edamame","🫛",250000],["Miso Soup","🍜",320000],["Salmon Nigiri","🍣",410000],["Tuna Sashimi","🐟",530000],["California Roll","🍥",680000],["Tempura Ebi","🍤",870000],["Chicken Katsu","🍗",1.1e6],["Tonkotsu Ramen","🍲",1.4e6],["Unagi Don","🍱",1.8e6],["Wagyu Tataki","🥩",2.3e6],["Uni Gunkan","🦪",3.0e6],["Omakase Set","👑",3.9e6],["Matcha Mochi","🍡",5.0e6],["Dorayaki","🥞",6.4e6],["Sake Flight","🍶",8.2e6]]},
+   dishes:[["Edamame","🫛",48000],["Miso Soup","🍜",55000],["Salmon Nigiri","🍣",63000],["Tuna Sashimi","🐟",72000],["California Roll","🍥",82000],["Tempura Ebi","🍤",94000],["Chicken Katsu","🍗",108000],["Tonkotsu Ramen","🍲",124000],["Unagi Don","🍱",142000],["Wagyu Tataki","🥩",163000],["Uni Gunkan","🦪",187000],["Omakase Set","👑",215000],["Matcha Mochi","🍡",247000],["Dorayaki","🥞",284000],["Sake Flight","🍶",327000]]},
   {name:"Le Petit Paris",emoji:"🇫🇷",desc:"A Michelin bistro on Rue Cler. Butter, patience, and copper pans.",
-   dishes:[["Croissant Beurre","🥐",1.2e7],["French Onion Soup","🧅",1.6e7],["Escargots","🐌",2.0e7],["Quiche Lorraine","🥧",2.6e7],["Coq au Vin","🍗",3.4e7],["Bouillabaisse","🐟",4.4e7],["Duck Confit","🦆",5.7e7],["Beef Bourguignon","🍲",7.3e7],["Foie Gras Terrine","🍽️",9.5e7],["Soufflé au Fromage","🧀",1.2e8],["Crème Brûlée","🍮",1.6e8],["Macarons","🍬",2.1e8],["Tarte Tatin","🥮",2.7e8],["Éclair au Chocolat","🍫",3.5e8],["Grand Dégustation","👑",4.5e8]]},
+   dishes:[["Croissant Beurre","🥐",375000],["French Onion Soup","🧅",430000],["Escargots","🐌",494000],["Quiche Lorraine","🥧",568000],["Coq au Vin","🍗",653000],["Bouillabaisse","🐟",751000],["Duck Confit","🦆",864000],["Beef Bourguignon","🍲",994000],["Foie Gras Terrine","🍽️",1143000],["Soufflé au Fromage","🧀",1314000],["Crème Brûlée","🍮",1511000],["Macarons","🍬",1738000],["Tarte Tatin","🥮",1999000],["Éclair au Chocolat","🍫",2300000],["Grand Dégustation","👑",2645000]]},
   {name:"Nova Skyline",emoji:"🌆",desc:"Rooftop molecular fine dining. Liquid nitrogen and city lights.",
-   dishes:[["Nitro Olive Sphere","⚪",6e8],["Smoke Bubble Broth","💨",8e8],["Caviar Pearls","⚫",1.0e9],["Gold Leaf Scallop","🥇",1.4e9],["Levitation Toast","🥪",1.8e9],["Aurora Consommé","🌈",2.3e9],["Lobster Cloud","🦞",3.0e9],["Wagyu A5 Ember","🔥",3.9e9],["Truffle Snowfall","❄️",5.1e9],["Edible Glass Garden","🪟",6.6e9],["Deconstructed Tiramisu","🌀",8.6e9],["Zero-G Sorbet","🍧",1.1e10],["Solar Flare Dessert","☀️",1.5e10],["Skyline Signature","🌃",1.9e10],["The Nova Experience","👑",2.5e10]]}
+   dishes:[["Nitro Olive Sphere","⚪",3040000],["Smoke Bubble Broth","💨",3500000],["Caviar Pearls","⚫",4025000],["Gold Leaf Scallop","🥇",4630000],["Levitation Toast","🥪",5325000],["Aurora Consommé","🌈",6125000],["Lobster Cloud","🦞",7045000],["Wagyu A5 Ember","🔥",8100000],["Truffle Snowfall","❄️",9315000],["Edible Glass Garden","🪟",10715000],["Deconstructed Tiramisu","🌀",12325000],["Zero-G Sorbet","🍧",14175000],["Solar Flare Dessert","☀️",16300000],["Skyline Signature","🌃",18750000],["The Nova Experience","👑",21565000]]}
 ];
 const STAFF=[
   {id:"prep",name:"Prep Cook",emo:"🔪",gps:2,base:60},
@@ -703,9 +718,9 @@ const ACHIEVEMENTS=[
 function totalStaff(s){ return STAFF.reduce((a,x)=>a+(s.staff[x.id]||0),0); }
 
 /* ============================================================
-   STATE
+   STATE (Longer level progression curve via steeper scaling exponent)
    ============================================================ */
-const SAVE_KEY="agunnagreat_cooking_tycoon_v4";
+const SAVE_KEY="agunnagreat_cooking_tycoon_v5";
 const defaultState=()=>({
   gold:0,totalGold:0,clicks:0,level:1,levelGold:0,
   energy:1000,maxEnergy:1000,energyLevel:1,tapLevel:1,
@@ -714,7 +729,7 @@ const defaultState=()=>({
 });
 let S = defaultState();
 
-function levelTarget(l){ return Math.floor(100 * Math.pow(1.42, l-1)); }
+function levelTarget(l){ return Math.floor(250 * Math.pow(1.75, l-1)); }
 function seasonIndex(l){ return Math.min(3, Math.floor((l-1)/25)); }
 function seasonLevel(l){ return ((l-1)%25)+1; }
 function dishesForSeason(si){ return SEASONS[si].dishes; }
