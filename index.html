@@ -1,404 +1,1439 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bella Italia — Cooking Idle Tycoon</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body {
-            user-select: none;
-            -webkit-user-select: none;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            font-family: system-ui, -apple-system, sans-serif;
-            overflow: hidden;
-        }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Bella Italia — Cooking Idle Tycoon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<!-- Telegram WebApp SDK -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<!-- TON Connect UI SDK -->
+<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+<style>
+:root{
+  --terracotta:#c1573a;
+  --terracotta-dark:#8f3a24;
+  --mahogany:#3b1f16;
+  --mahogany-2:#2a1510;
+  --cream:#f6e9d2;
+  --cream-2:#efdcbd;
+  --gold:#f3c85b;
+  --gold-2:#ffe9a8;
+  --green:#5fa855;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --radius:16px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;height:100%}
+body{
+  font-family:Nunito,system-ui,sans-serif;
+  background:
+    radial-gradient(1200px 700px at 50% -10%, #6b3524 0%, transparent 60%),
+    linear-gradient(160deg,#2a1510 0%,#1b0e0a 100%);
+  color:var(--cream);
+  overflow-x:hidden;
+  transition: background 0.5s ease;
+}
+
+/* THEME STYLES */
+body.theme-christmas {
+  background:
+    radial-gradient(1200px 700px at 50% -10%, #1a4d2e 0%, transparent 60%),
+    linear-gradient(160deg,#0f2818 0%,#051009 100%);
+}
+
+body.theme-halloween {
+  background:
+    radial-gradient(1200px 700px at 50% -10%, #4a1a1a 0%, transparent 60%),
+    linear-gradient(160deg,#1a0a0a 0%,#000000 100%);
+}
+
+body.theme-summer {
+  background:
+    radial-gradient(1200px 700px at 50% -10%, #8b5a2b 0%, transparent 60%),
+    linear-gradient(160deg,#3a2a1a 0%,#1a0a00 100%);
+}
+
+body.theme-neon {
+  background:
+    radial-gradient(1200px 700px at 50% -10%, #1a0033 0%, transparent 60%),
+    linear-gradient(160deg,#0a0015 0%,#000000 100%);
+}
+
+h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
+.gold{color:var(--gold);text-shadow:0 0 12px rgba(243,200,91,.35)}
+
+/* ---------- WELCOME SLIDESHOW OVERLAY ---------- */
+#welcomeOverlay{
+  position:fixed;inset:0;z-index:10000;background:linear-gradient(160deg,#1b0e0a,#0a0503);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;
+  transition:opacity .6s ease;
+}
+#welcomeOverlay.hide{opacity:0;pointer-events:none}
+.slide-container{
+  max-width:420px;width:100%;background:linear-gradient(180deg,#3a1c13,#2a1510);
+  border:2px solid #52301f;border-radius:24px;padding:28px 20px;box-shadow:var(--shadow);
+  text-align:center;display:flex;flex-direction:column;align-items:center;position:relative;
+}
+.slide-icon{font-size:64px;margin-bottom:16px;animation:pulse 2s infinite}
+.slide-title{font-family:Cinzel,serif;font-size:22px;color:var(--gold);margin-bottom:10px}
+.slide-desc{font-size:13px;color:#d8b98f;line-height:1.6;margin-bottom:24px;min-height:64px}
+.slide-dots{display:flex;gap:8px;margin-bottom:20px}
+.dot{width:10px;height:10px;border-radius:50%;background:#52301f;transition:background .3s}
+.dot.active{background:var(--gold);box-shadow:0 0 10px rgba(243,200,91,.6)}
+
+/* ---------- LOADING ---------- */
+#loader{
+  position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:26px;
+  background:linear-gradient(160deg,#150b08,#000);
+  transition:opacity .8s ease;
+}
+#loader.hide{opacity:0;pointer-events:none}
+.brand{
+  font-family:Cinzel,serif;font-size:clamp(30px,8vw,58px);font-weight:700;
+  color:var(--gold);text-shadow:0 0 24px rgba(243,200,91,.55);
+  animation:pulse 1.6s ease-in-out infinite;text-align:center;padding:0 16px;
+}
+.brand small{display:block;font-family:Nunito;font-size:13px;letter-spacing:4px;color:#c9a76a;margin-top:10px;font-weight:600}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.92}50%{transform:scale(1.05);opacity:1}}
+.bar{width:min(78vw,340px);height:12px;border-radius:99px;background:#2a1510;overflow:hidden;border:1px solid #4a2a1d}
+.bar i{display:block;height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--terracotta),var(--gold));box-shadow:0 0 16px rgba(243,200,91,.6);transition:width .18s linear}
+#loadTxt{font-size:12px;letter-spacing:2px;color:#a9855c}
+
+/* ---------- SHELL ---------- */
+#app{max-width:560px;margin:0 auto;padding:10px 12px 90px;opacity:0;transition:opacity .7s ease .2s}
+#app.show{opacity:1}
+.topbar{
+  position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(43,21,16,.98),rgba(43,21,16,.86));
+  backdrop-filter:blur(8px);border:1px solid #52301f;border-radius:var(--radius);
+  padding:10px 12px;box-shadow:var(--shadow);margin-bottom:10px;
+}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}
+.stats{display:flex;gap:12px;flex-wrap:wrap;min-width:0}
+.stat{min-width:0}
+.stat b{display:block;font-size:clamp(15px,4.4vw,20px);line-height:1.1}
+.stat span{font-size:10px;letter-spacing:1.4px;color:#c39a6d;text-transform:uppercase}
+.user-badge{font-size:11px;color:var(--gold);margin-bottom:4px;font-weight:700;display:flex;align-items:center;gap:4px;justify-content:space-between;}
+.iconbtn{
+  flex:none;width:42px;height:42px;border-radius:12px;border:1px solid #6b402a;
+  background:linear-gradient(180deg,#542b1c,#3a1c13);color:var(--cream);font-size:18px;cursor:pointer;
+}
+.iconbtn:active{transform:scale(.94)}
+.lvlwrap{margin-top:8px}
+.lvlbar{height:9px;border-radius:99px;background:#1d0f0a;overflow:hidden;border:1px solid #52301f}
+.lvlbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--gold));transition:width .3s}
+.lvlmeta{display:flex;justify-content:space-between;font-size:11px;color:#c39a6d;margin-top:4px}
+
+.tabs{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;margin-bottom:10px}
+.tab{
+  padding:8px 1px;border-radius:10px;border:1px solid #52301f;cursor:pointer;
+  background:linear-gradient(180deg,#3a1c13,#2a1510);color:#d8b98f;font-weight:800;font-size:8px;text-align:center;
+}
+.tab.active{background:linear-gradient(180deg,var(--terracotta),var(--terracotta-dark));color:#fff5e0;border-color:var(--gold);box-shadow:0 0 14px rgba(243,200,91,.25)}
+.tab em{display:block;font-style:normal;font-size:12px;margin-bottom:2px}
+
+.panel{display:none;animation:fade .25s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{
+  background:linear-gradient(180deg,var(--cream),var(--cream-2));color:#3b1f16;
+  border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:1px solid #d8bd92;margin-bottom:10px;
+}
+.card.dark{background:linear-gradient(180deg,#3a1c13,#2a1510);color:var(--cream);border-color:#52301f}
+.muted{color:#7a5b45;font-size:12px}
+.card.dark .muted{color:#c39a6d}
+
+/* ---------- KITCHEN ---------- */
+#station{
+  position:relative;overflow:hidden;user-select:none;cursor:pointer;
+  height:clamp(210px,44vw,260px);border-radius:20px;border:2px solid #6b402a;
+  background:radial-gradient(circle at 50% 35%,#7a3f27,#3a1c13 70%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  box-shadow:inset 0 0 60px rgba(0,0,0,.55),var(--shadow);margin-bottom:10px;
+}
+#station:active{transform:scale(.985)}
+#station.cooking{animation:shake .12s}
+@keyframes shake{50%{transform:translateY(2px) scale(.99)}}
+#pan{font-size:clamp(56px,17vw,84px);filter:drop-shadow(0 8px 14px rgba(0,0,0,.5));transition:transform .1s}
+#station.cooking #pan{transform:scale(1.12) rotate(-6deg)}
+#dishName{font-family:Cinzel,serif;font-size:clamp(15px,4.5vw,19px);color:var(--gold-2)}
+#dishVal{font-size:12px;color:#e6c79a}
+.hint{position:absolute;bottom:8px;font-size:10px;letter-spacing:2px;color:#c08a63;text-transform:uppercase}
+.float{position:absolute;pointer-events:none;font-weight:800;color:var(--gold);text-shadow:0 2px 6px #000;animation:up 1s ease-out forwards;font-size:18px}
+@keyframes up{0%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-90px) scale(1.25)}}
+
+.btn{
+  display:block;width:100%;padding:13px;border-radius:14px;border:none;cursor:pointer;
+  font-weight:800;font-size:14px;font-family:Nunito;
+  background:linear-gradient(180deg,var(--terracotta),var(--terracotta-dark));color:#fff6e6;
+  box-shadow:0 6px 0 #6d2b19,var(--shadow);transition:transform .08s,box-shadow .08s;
+}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #6d2b19}
+.btn.goldbtn{background:linear-gradient(180deg,#f3c85b,#c99425);color:#3b1f16;box-shadow:0 6px 0 #8d6412,var(--shadow)}
+.btn.goldbtn:active{box-shadow:0 2px 0 #8d6412}
+.btn.starbtn{background:linear-gradient(180deg,#ffd700,#ffed4e);color:#3b1f16;box-shadow:0 6px 0 #daa520,var(--shadow)}
+.btn.starbtn:active{box-shadow:0 2px 0 #daa520}
+.btn:disabled{filter:grayscale(.7) brightness(.8);cursor:not-allowed;box-shadow:none;transform:none}
+
+.boostbar{margin-top:8px;text-align:center;font-weight:800;color:var(--gold);font-size:13px;display:none}
+.boostbar.on{display:block;animation:pulse 1s infinite}
+
+/* ---------- UPGRADES & SHOP ---------- */
+.upgrade-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.up-card{background:rgba(59,31,22,.08);border:1px solid #dcc39b;border-radius:12px;padding:10px;text-align:center}
+.card.dark .up-card{background:rgba(255,255,255,.04);border-color:#52301f}
+.up-card b{display:block;font-size:13px;margin-bottom:4px}
+.up-card span{font-size:11px;color:#7a5b45;display:block;margin-bottom:8px}
+.card.dark .up-card span{color:#c39a6d}
+
+/* ---------- LISTS ---------- */
+.item{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;
+  padding:10px;border-radius:12px;background:rgba(59,31,22,.06);border:1px solid #dcc39b;margin-bottom:8px;
+}
+.card.dark .item{background:rgba(255,255,255,.04);border-color:#52301f}
+.item .emo{font-size:26px;width:34px;text-align:center;flex:none}
+.item .t{min-width:0}
+.item .t b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .t span{font-size:11px;opacity:.8}
+.buy{
+  flex:none;padding:9px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:800;font-size:12px;
+  background:linear-gradient(180deg,#5fa855,#3f7a38);color:#fff;box-shadow:0 4px 0 #2c5827;font-family:Nunito;
+}
+.buy:active{transform:translateY(3px);box-shadow:0 1px 0 #2c5827}
+.buy:disabled{background:linear-gradient(180deg,#9c9c9c,#6f6f6f);box-shadow:0 4px 0 #4d4d4d;opacity:.75}
+.locked{opacity:.45;filter:grayscale(.8)}
+.badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:99px;background:var(--gold);color:#3b1f16}
+.badge.done{background:var(--green);color:#fff}
+.badge.nft{background:#ff00ff;color:#fff}
+.badge.star{background:#ffd700;color:#3b1f16}
+.seasons{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chip{padding:7px 10px;border-radius:99px;font-size:11px;font-weight:800;border:1px solid #52301f;background:#3a1c13;color:#d8b98f;cursor:pointer}
+.chip.active{background:var(--gold);color:#3b1f16;border-color:var(--gold)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+.dish{padding:9px;border-radius:12px;border:1px solid #dcc39b;background:rgba(59,31,22,.05);display:flex;gap:8px;align-items:center;min-width:0}
+.dish b{font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dish span{font-size:10px;color:#7a5b45}
+
+/* NFT Grid */
+.nft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:10px}
+.nft-card{
+  background:linear-gradient(135deg,#1a0033,#330066);border:2px solid #ff00ff;border-radius:12px;
+  padding:10px;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s;
+}
+.nft-card:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,0,255,.5)}
+.nft-card.owned{border-color:#00ff00;background:linear-gradient(135deg,#001a00,#003300)}
+.nft-icon{font-size:32px;margin-bottom:6px}
+.nft-name{font-size:11px;font-weight:800;color:#ff00ff;margin-bottom:4px}
+.nft-card.owned .nft-name{color:#00ff00}
+.nft-price{font-size:10px;color:#c9a76a}
+.nft-price.stars{color:#ffd700}
+
+/* Theme selector */
+.theme-selector{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.theme-btn{
+  padding:8px 12px;border-radius:8px;border:2px solid #52301f;background:#3a1c13;color:#d8b98f;
+  font-size:11px;font-weight:800;cursor:pointer;transition:all .2s;
+}
+.theme-btn.active{background:var(--gold);color:#3b1f16;border-color:var(--gold)}
+.theme-btn:hover{transform:scale(1.05)}
+
+/* Quest Grid */
+.quest-grid{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:10px}
+.quest-item{
+  background:rgba(59,31,22,.08);border:1px solid #dcc39b;border-radius:12px;padding:12px;
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;
+}
+.card.dark .quest-item{background:rgba(255,255,255,.04);border-color:#52301f}
+.quest-icon{font-size:24px}
+.quest-info b{display:block;font-size:12px;margin-bottom:4px}
+.quest-info span{font-size:10px;opacity:.8;display:block}
+.quest-reward{font-size:11px;font-weight:800;color:var(--gold);text-align:right}
+.quest-progress{width:100%;height:6px;background:#1d0f0a;border-radius:99px;margin-top:4px;overflow:hidden}
+.quest-progress i{display:block;height:100%;background:var(--green);transition:width .3s}
+
+/* Leaderboard */
+.leaderboard-list{display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:10px}
+.leaderboard-item{
+  background:rgba(59,31,22,.08);border:1px solid #dcc39b;border-radius:10px;padding:10px;
+  display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;gap:10px;align-items:center;
+}
+.card.dark .leaderboard-item{background:rgba(255,255,255,.04);border-color:#52301f}
+.rank{font-weight:800;color:var(--gold);font-size:14px;min-width:30px;text-align:center}
+.rank.top{color:#ffd700;font-size:16px}
+.player-name{font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-score{font-size:11px;color:var(--gold);text-align:right;font-weight:800}
+
+/* Referral */
+.referral-code{
+  background:rgba(59,31,22,.1);border:2px dashed #dcc39b;border-radius:10px;padding:12px;
+  text-align:center;margin-bottom:10px;
+}
+.card.dark .referral-code{border-color:#52301f}
+.referral-code b{display:block;font-size:11px;color:#c39a6d;margin-bottom:6px}
+.referral-code code{
+  display:block;font-family:monospace;font-size:14px;font-weight:800;color:var(--gold);
+  background:rgba(0,0,0,.3);padding:8px;border-radius:6px;margin-bottom:8px;word-break:break-all;
+}
+.referral-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.referral-stat{background:rgba(59,31,22,.08);border:1px solid #dcc39b;border-radius:10px;padding:10px;text-align:center}
+.card.dark .referral-stat{background:rgba(255,255,255,.04);border-color:#52301f}
+.referral-stat b{display:block;font-size:16px;color:var(--gold);margin-bottom:4px}
+.referral-stat span{font-size:10px;color:#c39a6d}
+
+.invited-list{display:grid;grid-template-columns:1fr;gap:6px}
+.invited-item{
+  background:rgba(59,31,22,.08);border:1px solid #dcc39b;border-radius:10px;padding:10px;
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;
+}
+.card.dark .invited-item{background:rgba(255,255,255,.04);border-color:#52301f}
+.invited-avatar{font-size:20px}
+.invited-name{font-size:11px;font-weight:800}
+.invited-status{font-size:9px;color:#c39a6d;opacity:.8}
+.invited-reward{font-size:10px;color:var(--gold);font-weight:800}
+
+/* Airdrop Progress */
+.airdrop-milestone{
+  background:rgba(59,31,22,.08);border:1px solid #dcc39b;border-radius:10px;padding:10px;margin-bottom:8px;
+}
+.card.dark .airdrop-milestone{background:rgba(255,255,255,.04);border-color:#52301f}
+.milestone-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.milestone-name{font-weight:800;font-size:12px}
+.milestone-reward{font-size:11px;color:var(--gold);font-weight:800}
+.milestone-bar{width:100%;height:8px;background:#1d0f0a;border-radius:99px;overflow:hidden}
+.milestone-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--gold));transition:width .3s}
+.milestone-status{font-size:10px;color:#c39a6d;margin-top:4px}
+
+/* Daily Login */
+.daily-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.day-box{background:rgba(59,31,22,.1);border:1px solid #d8bd92;border-radius:10px;padding:8px 4px;text-align:center;font-size:11px}
+.day-box.claimed{opacity:0.5;background:#5fa855;color:#fff}
+.day-box b{display:block;font-size:13px;color:var(--gold)}
+
+#toast{
+  position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(120%);
+  background:linear-gradient(180deg,#f3c85b,#c99425);color:#3b1f16;font-weight:800;font-size:13px;
+  padding:12px 18px;border-radius:14px;box-shadow:var(--shadow);z-index:500;transition:transform .35s;max-width:90vw;text-align:center;
+}
+#toast.show{transform:translateX(-50%) translateY(0)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:600;padding:20px;overflow-y:auto}
+.modal.show{display:flex}
+.modal .card{max-width:340px;width:100%;text-align:center;margin:auto}
+@media(min-width:640px){#app{padding-top:18px}}
+</style>
 </head>
-<body class="flex flex-col h-screen justify-between relative">
+<body>
 
-    <!-- Onboarding Modal Overlay -->
-    <div id="onboardingModal" class="absolute inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-[#261c14] border border-amber-900/50 rounded-3xl p-6 text-center max-w-sm w-full shadow-2xl space-y-5 relative">
-            <div id="onboardingIcon" class="text-5xl mb-2">🇮🇹</div>
-            <h2 id="onboardingTitle" class="text-xl font-extrabold text-amber-400">Welcome to Bella Italia!</h2>
-            <p id="onboardingDesc" class="text-xs text-stone-300 leading-relaxed">
-                Step into the finest Italian trattoria! Tap to cook delicious dishes, manage your kitchen brigade, and build your culinary empire.
-            </p>
-            
-            <!-- Indicators -->
-            <div class="flex justify-center space-x-2 py-1" id="onboardingDots">
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-stone-700"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-stone-700"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-stone-700"></span>
-            </div>
-
-            <button onclick="nextOnboardingStep()" id="onboardingBtn" class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold py-3.5 rounded-2xl text-sm shadow-lg active:scale-95 transition-all">
-                Next →
-            </button>
-        </div>
+<!-- WELCOME SLIDESHOW OVERLAY FOR NEW USERS -->
+<div id="welcomeOverlay">
+  <div class="slide-container">
+    <div class="slide-icon" id="slideIcon">🇮🇹</div>
+    <div class="slide-title" id="slideTitle">Welcome to Bella Italia!</div>
+    <div class="slide-desc" id="slideDesc">Step into the finest Italian trattoria! Tap to cook delicious dishes, manage your kitchen brigade, and build your culinary empire.</div>
+    <div class="slide-dots" id="slideDots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
     </div>
+    <div style="display:flex;gap:10px;width:100%;">
+      <button class="btn" id="slideNextBtn" style="width:100%;">Next ➔</button>
+    </div>
+  </div>
+</div>
 
-    <!-- Header Section -->
-    <header class="bg-stone-900 border-b border-stone-800 p-4 flex justify-between items-center shadow-md">
-        <div class="flex items-center space-x-2">
-            <span class="text-2xl">🍕</span>
-            <div>
-                <h1 class="font-bold text-lg text-amber-500">Bella Italia</h1>
-                <p class="text-xs text-stone-400">Cooking Idle Tycoon</p>
-            </div>
+<div id="loader">
+  <div class="brand">Agunnagreat©️<small>COOKING IDLE TYCOON</small></div>
+  <div class="bar"><i id="loadBar"></i></div>
+  <div id="loadTxt">HEATING THE OVENS…</div>
+</div>
+
+<div id="app">
+  <div class="topbar">
+    <div class="user-badge">
+      <span id="userBadge">👤 @ChefUser</span>
+      <select id="langSelect" style="background:#2a1510;color:var(--gold);border:1px solid #52301f;border-radius:6px;padding:2px 6px;font-size:11px;font-family:Nunito;cursor:pointer;">
+        <option value="en">🇬🇧 EN</option>
+        <option value="fr">🇫🇷 FR</option>
+        <option value="ru">🇷🇺 RU</option>
+        <option value="es">🇪🇸 ES</option>
+        <option value="zh">🇨🇳 ZH</option>
+      </select>
+    </div>
+    <div class="row">
+      <div class="stats">
+        <div class="stat"><b class="gold" id="gold">0</b><span data-i18n="goldLbl">Gold</span></div>
+        <div class="stat"><b id="gps">0/s</b><span data-i18n="perSecLbl">Per sec</span></div>
+        <div class="stat"><b id="perclick">1</b><span data-i18n="perTapLbl">Per tap</span></div>
+      </div>
+      <button class="iconbtn" id="muteBtn" title="Mute / Unmute">🔊</button>
+    </div>
+    <div class="lvlwrap">
+      <div class="lvlbar"><i id="lvlFill"></i></div>
+      <div class="lvlmeta"><span id="lvlLabel">Level 1 · Bella Italia</span><span id="lvlProg">0 / 100</span></div>
+    </div>
+    <!-- Energy Bar for Tap-to-Earn Mechanic -->
+    <div class="lvlwrap" style="margin-top:6px;">
+      <div class="lvlbar" style="background:#2a1510;border-color:#8f3a24;"><i id="energyFill" style="background:linear-gradient(90deg,#f3c85b,#c1573a);width:100%;"></i></div>
+      <div class="lvlmeta"><span style="color:var(--gold);" data-i18n="energyCapLbl">⚡ Energy Cap</span><span id="energyText">1000 / 1000</span></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="kitchen"><em>🍳</em><span>Kitchen</span></div>
+    <div class="tab" data-tab="quests"><em>📋</em><span>Quests</span></div>
+    <div class="tab" data-tab="upgrades"><em>⚡</em><span>Boosts</span></div>
+    <div class="tab" data-tab="menu"><em>📜</em><span>Menu</span></div>
+    <div class="tab" data-tab="staff"><em>👨‍🍳</em><span>Staff</span></div>
+    <div class="tab" data-tab="referral"><em>👥</em><span>Refer</span></div>
+    <div class="tab" data-tab="airdrop"><em>🪂</em><span>Airdrop</span></div>
+    <div class="tab" data-tab="shop"><em>🎨</em><span>Shop</span></div>
+    <div class="tab" data-tab="leaderboard"><em>🏆</em><span>Top</span></div>
+  </div>
+
+  <!-- KITCHEN -->
+  <div class="panel active" id="tab-kitchen">
+    <div id="station">
+      <div id="pan">🍳</div>
+      <div id="dishName">Margherita Pizza</div>
+      <div id="dishVal">+5 🪙</div>
+      <div class="hint">TAP TO COOK</div>
+    </div>
+    <button class="btn" id="cookBtn">TAP TO COOK</button>
+    <button class="btn goldbtn" id="refillBtn">⚡ Refill Energy</button>
+  </div>
+
+  <!-- QUESTS -->
+  <div class="panel" id="tab-quests">
+    <div class="card dark">
+      <h3>📋 Daily Quests</h3>
+      <p class="muted">Complete quests to earn coins & rewards!</p>
+      <div class="quest-grid" id="questList"></div>
+    </div>
+    <div class="card dark">
+      <h3>🎁 Daily Login Bonus</h3>
+      <div class="daily-grid" id="dailyGrid"></div>
+    </div>
+  </div>
+
+  <!-- UPGRADES -->
+  <div class="panel" id="tab-upgrades">
+    <div class="card dark">
+      <h3>⚡ Kitchen Enhancements</h3>
+      <p class="muted">Increase your power and energy limits!</p>
+      <div class="upgrade-grid">
+        <div class="up-card">
+          <b>⚡ Energy Cap</b>
+          <span id="energyUpCost">Cost: 50,000</span>
+          <button class="buy" id="energyUpBtn">Upgrade</button>
         </div>
-        <div class="flex items-center space-x-3 bg-stone-800 px-3 py-1.5 rounded-full border border-stone-700">
-            <span class="text-amber-400 font-bold text-sm" id="coinCount">0</span>
-            <span class="text-xs text-amber-200">🪙</span>
+        <div class="up-card">
+          <b>💪 Multi-Tap</b>
+          <span id="multiUpCost">Cost: 75,000</span>
+          <button class="buy" id="multiUpBtn">Upgrade</button>
         </div>
-    </header>
+      </div>
+    </div>
+  </div>
 
-    <!-- Main Content Area -->
-    <main class="flex-1 overflow-y-auto p-4 relative no-scrollbar" id="mainContainer">
-        <!-- Kitchen Station View -->
-        <div id="stationView" class="space-y-4">
-            <div class="bg-stone-900 border border-stone-800 rounded-2xl p-6 text-center relative overflow-hidden shadow-lg">
-                <div class="absolute inset-0 bg-amber-500/5 pointer-events-none"></div>
-                <h2 class="text-sm uppercase tracking-wider text-stone-400 mb-1">Main Kitchen Station</h2>
-                <div class="text-3xl font-extrabold text-amber-400 my-3" id="gpsDisplay">+0 / hr</div>
-                
-                <!-- Interactive Cooking Station -->
-                <div class="my-6 flex justify-center">
-                    <button id="stationBtn" class="w-32 h-32 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-5xl shadow-xl active:scale-95 transition-transform border-4 border-amber-300 focus:outline-none">
-                        👨‍🍳
-                    </button>
-                </div>
-                
-                <!-- Energy / Progress Bar -->
-                <div class="w-full bg-stone-800 h-3 rounded-full overflow-hidden border border-stone-700">
-                    <div id="loadBar" class="bg-amber-500 h-full transition-all duration-100" style="width: 100%;"></div>
-                </div>
-                <div class="flex justify-between text-xs text-stone-400 mt-1">
-                    <span>Energy / Action Buffer</span>
-                    <span id="energyText">100 / 100</span>
-                </div>
-            </div>
+  <!-- MENU -->
+  <div class="panel" id="tab-menu">
+    <div class="card dark">
+      <h3>🍽️ Restaurant Seasons</h3>
+      <div class="seasons" id="seasonChips"></div>
+    </div>
+    <div id="dishList"></div>
+  </div>
 
-            <!-- Staff & Upgrades Section -->
-            <div class="bg-stone-900 border border-stone-800 rounded-2xl p-4 shadow-lg">
-                <h3 class="font-bold text-md text-amber-400 mb-3 flex items-center justify-between">
-                    <span>Kitchen Brigade</span>
-                    <span class="text-xs text-stone-400 font-normal">Auto-Profit</span>
-                </h3>
-                <div id="staffList" class="space-y-3">
-                    <!-- Dynamically rendered staff items -->
-                </div>
-            </div>
+  <!-- STAFF -->
+  <div class="panel" id="tab-staff">
+    <div class="card dark">
+      <h3>👨‍🍳 Brigade & Hourly Profit</h3>
+      <p class="muted">Staff generates passive profit.</p>
+      <div id="staffList"></div>
+    </div>
+  </div>
 
-            <!-- Tasks Section -->
-            <div class="bg-stone-900 border border-stone-800 rounded-2xl p-4 shadow-lg">
-                <h3 class="font-bold text-md text-amber-400 mb-3">Daily Missions & Tasks</h3>
-                <div id="tasksList" class="space-y-3">
-                    <!-- Dynamically rendered tasks -->
-                </div>
-            </div>
+  <!-- REFERRAL -->
+  <div class="panel" id="tab-referral">
+    <div class="card dark">
+      <h3>👥 Referral Program</h3>
+      <p class="muted">Invite friends & earn rewards!</p>
+      <div class="referral-code">
+        <b>Your Referral Code:</b>
+        <code id="refCode">LOADING...</code>
+        <button class="btn" style="font-size:12px;padding:8px;" id="copyRefBtn">📋 Copy Code</button>
+      </div>
+      <div class="referral-stats">
+        <div class="referral-stat">
+          <b id="invitedCount">0</b>
+          <span>Friends Invited</span>
         </div>
-    </main>
+        <div class="referral-stat">
+          <b id="activeCount">0</b>
+          <span>Active Friends</span>
+        </div>
+      </div>
+      <h4 style="margin-top:16px;color:var(--gold);font-size:13px;">📊 Invited Players</h4>
+      <div class="invited-list" id="invitedList"></div>
+    </div>
+  </div>
 
-    <!-- Navigation Footer -->
-    <nav class="bg-stone-900 border-t border-stone-800 p-2 flex justify-around items-center">
-        <button onclick="switchTab('kitchen')" class="flex flex-col items-center text-amber-500 p-2 focus:outline-none" id="navKitchen">
-            <span class="text-xl">🍳</span>
-            <span class="text-xs mt-1">Kitchen</span>
-        </button>
-        <button onclick="switchTab('staff')" class="flex flex-col items-center text-stone-400 p-2 focus:outline-none" id="navStaff">
-            <span class="text-xl">👥</span>
-            <span class="text-xs mt-1">Staff</span>
-        </button>
-        <button onclick="switchTab('tasks')" class="flex flex-col items-center text-stone-400 p-2 focus:outline-none" id="navTasks">
-            <span class="text-xl">📋</span>
-            <span class="text-xs mt-1">Tasks</span>
-        </button>
-        <button onclick="switchTab('friend')" class="flex flex-col items-center text-stone-400 p-2 focus:outline-none" id="navFriend">
-            <span class="text-xl">🎁</span>
-            <span class="text-xs mt-1">Invite</span>
-        </button>
-    </nav>
+  <!-- SHOP (THEMES & NFTS) -->
+  <div class="panel" id="tab-shop">
+    <div class="card dark">
+      <h3>🎨 Themes & Cosmetics</h3>
+      <p class="muted">Premium themes (⭐ = Telegram Stars)</p>
+      <div class="theme-selector" id="themeSelector"></div>
+    </div>
+    <div class="card dark">
+      <h3>🖼️ Exclusive NFTs</h3>
+      <p class="muted">Collect limited edition NFTs (⭐ Stars)</p>
+      <div class="nft-grid" id="nftGrid"></div>
+    </div>
+  </div>
 
-    <!-- JavaScript Application Logic -->
-    <script>
-        // Telegram WebApp Initialization
-        const tg = window.Telegram.WebApp;
-        tg.expand();
+  <!-- AIRDROP -->
+  <div class="panel" id="tab-airdrop">
+    <div class="card dark">
+      <h3>🪂 Airdrop Rewards</h3>
+      <p class="muted">Complete tasks to earn airdrop tokens!</p>
+      <div style="background:rgba(255,215,0,.1);border:2px solid #ffd700;border-radius:10px;padding:12px;margin-bottom:12px;text-align:center;">
+        <div style="font-size:12px;color:#ffd700;font-weight:800;margin-bottom:4px;">💰 TOTAL AIRDROP POINTS</div>
+        <div style="font-size:24px;color:#ffd700;font-weight:800;" id="airdropPoints">0</div>
+      </div>
+      <div class="quest-grid" id="airdropTaskList"></div>
+    </div>
+    <div class="card dark">
+      <h3>🔗 TON Wallet Connection</h3>
+      <p class="muted">Connect wallet to claim airdrop rewards</p>
+      <button class="btn starbtn" id="connectWalletBtn" style="margin-bottom:10px;">🔗 Connect TON Wallet</button>
+      <div id="walletStatus" style="text-align:center;font-size:12px;color:#c39a6d;">Not connected</div>
+    </div>
+    <div class="card dark">
+      <h3>📊 Airdrop Progress</h3>
+      <div id="airdropProgress"></div>
+    </div>
+  </div>
 
-        // Safe DOM Element Selector Helper
-        const $ = (id) => document.getElementById(id);
+  <!-- LEADERBOARD -->
+  <div class="panel" id="tab-leaderboard">
+    <div class="card dark">
+      <h3>🏆 Global Leaderboard</h3>
+      <p class="muted">Top chefs this week</p>
+      <div class="leaderboard-list" id="leaderboardList"></div>
+    </div>
+  </div>
+</div>
 
-        // Game State
-        let gameState = {
-            coins: 1000,
-            gps: 0,
-            energy: 100,
-            maxEnergy: 100,
-            lastSave: Date.now()
-        };
+<div id="toast"></div>
 
-        // Onboarding Steps
-        let currentOnboardingStep = 0;
-        const onboardingSteps = [
-            { icon: "🇮🇹", title: "Welcome to Bella Italia!", desc: "Step into the finest Italian trattoria! Tap to cook delicious dishes, manage your kitchen brigade, and build your culinary empire." },
-            { icon: "👨‍🍳", title: "Tap & Cook", desc: "Tap the main kitchen station to prepare pizzas and earn coins to fund your restaurant expansion." },
-            { icon: "👥", title: "Hire Brigade Staff", desc: "Employ line cooks, sous chefs, and master chefs to generate passive income (GPS) automatically while you're away." },
-            { icon: "🎁", title: "Invite & Earn", desc: "Share your referral link with friends to grow your kitchen crew and claim exclusive bonus rewards!" }
-        ];
+<script>
+/* ============================================================
+   INTERNATIONALIZATION
+   ============================================================ */
+const I18N = {
+  en: {
+    goldLbl: "Gold", perSecLbl: "Per sec", perTapLbl: "Per tap", energyCapLbl: "⚡ Energy Cap",
+  },
+  fr: {
+    goldLbl: "Or", perSecLbl: "Par sec", perTapLbl: "Par tap", energyCapLbl: "⚡ Énergie Max",
+  },
+  ru: {
+    goldLbl: "Золото", perSecLbl: "В сек", perTapLbl: "За тап", energyCapLbl: "⚡ Энергия Макс",
+  },
+  es: {
+    goldLbl: "Oro", perSecLbl: "Por seg", perTapLbl: "Por toque", energyCapLbl: "⚡ Energía Máx",
+  },
+  zh: {
+    goldLbl: "金币", perSecLbl: "每秒", perTapLbl: "每次点击", energyCapLbl: "⚡ 能量上限",
+  }
+};
 
-        function nextOnboardingStep() {
-            currentOnboardingStep++;
-            if (currentOnboardingStep < onboardingSteps.length) {
-                const step = onboardingSteps[currentOnboardingStep];
-                $("onboardingIcon").innerText = step.icon;
-                $("onboardingTitle").innerText = step.title;
-                $("onboardingDesc").innerText = step.desc;
-                
-                // Update dots
-                const dots = $("onboardingDots").children;
-                for (let i = 0; i < dots.length; i++) {
-                    dots[i].className = `w-2.5 h-2.5 rounded-full ${i === currentOnboardingStep ? 'bg-amber-500' : 'bg-stone-700'}`;
-                }
+let currentLang = "en";
+function setLanguage(lang){
+  currentLang = lang;
+  const dict = I18N[lang] || I18N.en;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k = el.getAttribute("data-i18n");
+    if(dict[k]) el.textContent = dict[k];
+  });
+}
 
-                if (currentOnboardingStep === onboardingSteps.length - 1) {
-                    $("onboardingBtn").innerText = "Let's Cook! 🚀";
-                }
-            } else {
-                $("onboardingModal").style.display = 'none';
-            }
-        }
+/* ============================================================
+   WELCOME SLIDESHOW LOGIC
+   ============================================================ */
+const welcomeSlides = [
+  {icon: "🇮🇹", title: "Welcome to Bella Italia", desc: "Step into the finest Italian trattoria! Tap to cook delicious dishes, unlock world-class recipes, and build your culinary empire."},
+  {icon: "👨‍🍳", title: "Build Your Brigade", desc: "Hire expert prep cooks, sous chefs, and industrial ovens to generate passive profit per hour even when you're offline!"},
+  {icon: "⚡", title: "Manage Your Energy Wisely", desc: "Energy refills slowly! Each tap costs energy. Hire staff to earn passively and unlock new themes & NFTs!"},
+  {icon: "🚀", title: "Invite Friends & Earn Stars", desc: "Share your referral code! Get coins for each friend, and ⭐ Stars when they become active players!"}
+];
+let currentSlide = 0;
+function renderSlide(){
+  const s = welcomeSlides[currentSlide];
+  document.getElementById("slideIcon").textContent = s.icon;
+  document.getElementById("slideTitle").textContent = s.title;
+  document.getElementById("slideDesc").textContent = s.desc;
+  const dots = document.querySelectorAll(".dot");
+  dots.forEach((d, i) => d.classList.toggle("active", i === currentSlide));
+  const nextBtn = document.getElementById("slideNextBtn");
+  nextBtn.textContent = currentSlide === welcomeSlides.length - 1 ? "Get Started 🚀" : "Next ➔";
+}
 
-        // Staff Data Definition
-        const STAFF_DATA = [
-            { id: 'chef_line', name: 'Line Cook', level: 0, cost: 50, gps: 5, icon: '🔪' },
-            { id: 'sous_chef', name: 'Sous Chef', level: 0, cost: 250, gps: 25, icon: '🥘' },
-            { id: 'head_chef', name: 'Master Chef', level: 0, cost: 1200, gps: 120, icon: '⭐' }
-        ];
+document.getElementById("slideNextBtn").addEventListener("click", ()=>{
+  currentSlide++;
+  if(currentSlide >= welcomeSlides.length){
+    document.getElementById("welcomeOverlay").classList.add("hide");
+    setTimeout(()=>document.getElementById("welcomeOverlay").remove(), 600);
+  } else {
+    renderSlide();
+  }
+});
 
-        // Tasks Data Definition
-        const TASKS_DATA = [
-            { id: 'checkin', title: 'Daily Check-in', reward: 100, completed: false },
-            { id: 'invite_friend', title: 'Invite a Friend', reward: 500, completed: false }
-        ];
+/* ============================================================
+   TELEGRAM & TON INITIALIZATION
+   ============================================================ */
+const tg = window.Telegram?.WebApp;
+let tgUser = { id: 'guest', username: 'ChefUser', first_name: 'Chef' };
 
-        // Anti-Bot Tap Velocity Tracking
-        let tapHistory = [];
-        const MAX_TAP_VELOCITY = 38;
+if (tg) {
+  tg.expand();
+  if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+    tgUser = tg.initDataUnsafe.user;
+  }
+}
 
-        // UI Update Helpers
-        function fmt(val) {
-            if (val >= 1e6) return (val / 1e6).toFixed(1) + 'M';
-            if (val >= 1e3) return (val / 1e3).toFixed(1) + 'k';
-            return Math.floor(val).toLocaleString();
-        }
+const usernameDisplay = tgUser.username ? `@${tgUser.username}` : (tgUser.first_name || 'ChefUser');
+document.getElementById('userBadge').textContent = `👤 ${usernameDisplay}`;
 
-        function updateUI() {
-            $("coinCount").innerText = fmt(gameState.coins);
-            $("gpsDisplay").innerText = `+${fmt(gameState.gps)} / hr`;
-            $("energyText").innerText = `${Math.floor(gameState.energy)} / ${gameState.maxEnergy}`;
-            $("loadBar").style.width = `${(gameState.energy / gameState.maxEnergy) * 100}%`;
-            
-            renderStaff();
-            renderTasks();
-        }
+/* ============================================================
+   ENHANCED AUDIO ENGINE — Web Audio API with Piano Music
+   ============================================================ */
+const Audio8 = (() => {
+  let ctx=null, master=null, musicGain=null, muted=false, loopTimer=null, playing=false, step=0;
+  function init(){
+    if(ctx) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if(!AC) return;
+    ctx = new AC();
+    master = ctx.createGain(); master.gain.value = 0.5; master.connect(ctx.destination);
+    musicGain = ctx.createGain(); musicGain.gain.value = 0.15; musicGain.connect(master);
+  }
+  function resume(){ init(); if(ctx && ctx.state==="suspended") ctx.resume(); }
+  function beep(freq,dur,type,gain,dest){
+    if(!ctx||muted) return;
+    const o=ctx.createOscillator(), g=ctx.createGain();
+    o.type=type||"triangle"; o.frequency.value=freq;
+    g.gain.setValueAtTime(0.0001,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(gain||0.25,ctx.currentTime+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+dur);
+    o.connect(g); g.connect(dest||master); o.start(); o.stop(ctx.currentTime+dur+0.02);
+  }
+  function sizzle(){
+    if(!ctx||muted) return;
+    const len=Math.floor(ctx.sampleRate*0.12);
+    const buf=ctx.createBuffer(1,len,ctx.sampleRate), d=buf.getChannelData(0);
+    for(let i=0;i<len;i++){ d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2); }
+    const src=ctx.createBufferSource(); src.buffer=buf;
+    const f=ctx.createBiquadFilter(); f.type="highpass"; f.frequency.value=1800;
+    const g=ctx.createGain(); g.gain.value=0.22;
+    src.connect(f); f.connect(g); g.connect(master); src.start();
+    beep(180,0.07,"triangle",0.18);
+  }
+  function chime(){
+    if(!ctx||muted) return;
+    [523.25, 659.25, 783.99].forEach((f,i)=>setTimeout(()=>beep(f,0.25,"triangle",0.22),i*60));
+  }
+  function fanfare(){
+    if(!ctx||muted) return;
+    [523.25,659.25,783.99,1046.5].forEach((f,i)=>setTimeout(()=>beep(f,0.3,"triangle",0.25),i*90));
+  }
+  
+  const ITALIAN_PIANO = [
+    {f:261.63,d:0.4}, {f:329.63,d:0.4}, {f:392.00,d:0.4}, {f:523.25,d:0.8},
+    {f:523.25,d:0.4}, {f:493.88,d:0.4}, {f:440.00,d:0.4}, {f:392.00,d:0.8},
+    {f:392.00,d:0.4}, {f:349.23,d:0.4}, {f:329.63,d:0.4}, {f:293.66,d:0.8},
+    {f:293.66,d:0.4}, {f:329.63,d:0.4}, {f:392.00,d:0.4}, {f:523.25,d:0.8}
+  ];
 
-        // Render Staff List
-        function renderStaff() {
-            const container = $("staffList");
-            if (!container) return;
-            
-            container.innerHTML = STAFF_DATA.map(x => `
-                <div class="bg-stone-800/60 border border-stone-700/60 rounded-xl p-3 flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-2xl">${x.icon}</span>
-                        <div>
-                            <h4 class="font-semibold text-sm text-stone-200">${x.name} (Lvl ${x.level})</h4>
-                            <p class="text-xs text-amber-400">+${fmt(x.gps)} GPS each</p>
-                        </div>
-                    </div>
-                    <button onclick="buyStaff('${x.id}')" class="bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold px-3 py-1.5 rounded-lg text-xs transition-colors">
-                        ${fmt(x.cost)} 🪙
-                    </button>
-                </div>
-            `).join('');
-        }
+  function tick(){
+    if(!playing) return;
+    const note = ITALIAN_PIANO[step % ITALIAN_PIANO.length];
+    if(note && note.f) beep(note.f, note.d * 0.9, "sine", 0.15, musicGain);
+    step++;
+  }
+  function startMusic(){ resume(); if(playing||!ctx) return; playing=true; loopTimer=setInterval(tick, 300); }
+  function stopMusic(){ playing=false; clearInterval(loopTimer); }
+  return {
+    resume, sizzle, chime, fanfare, startMusic, stopMusic,
+    setMuted(v){ muted=v; if(master) master.gain.value = v?0:0.5; if(v) stopMusic(); else startMusic(); },
+    isMuted(){ return muted; }
+  };
+})();
 
-        // Render Tasks List
-        function renderTasks() {
-            const container = $("tasksList");
-            if (!container) return;
+/* ============================================================
+   GAME CONTENT & BALANCE
+   ============================================================ */
+const ITALIAN_DISHES=[
+  ["Bruschetta al Pomodoro","🍅",1],["Focaccia Genovese","🫓",3],["Margherita Pizza","🍕",5],
+  ["Arancini Siciliani","🧆",8],["Caprese Salad","🥗",11],["Minestrone Soup","🍲",15],
+  ["Spaghetti Aglio e Olio","🍝",20],["Penne Arrabbiata","🌶️",26],["Garlic Ciabatta","🥖",33],
+  ["Prosciutto e Melone","🍈",41],["Calzone Napoletano","🥟",50],["Fettuccine Alfredo","🍜",61],
+  ["Spaghetti Carbonara","🥓",74],["Gnocchi al Pesto","🥔",89],["Ravioli di Ricotta","🥧",107],
+  ["Lasagna alla Bolognese","🍱",128],["Risotto ai Funghi","🍚",153],["Melanzane Parmigiana","🍆",182],
+  ["Pollo alla Cacciatora","🍗",216],["Saltimbocca alla Romana","🥩",256],["Vitello Tonnato","🍖",303],
+  ["Frutti di Mare Linguine","🦐",358],["Cacio e Pepe","🧀",423],["Orecchiette Pugliesi","🌿",499],
+  ["Tortellini in Brodo","🥣",588],["Panzanella Toscana","🥬",692]
+];
 
-            container.innerHTML = TASKS_DATA.map(t => `
-                <div class="bg-stone-800/60 border border-stone-700/60 rounded-xl p-3 flex items-center justify-between">
-                    <div>
-                        <h4 class="font-semibold text-sm text-stone-200">${t.title}</h4>
-                        <p class="text-xs text-amber-400">+${fmt(t.reward)} Coins</p>
-                    </div>
-                    <button onclick="completeTask('${t.id}')" ${t.completed ? 'disabled' : ''} class="${t.completed ? 'bg-stone-700 text-stone-500 cursor-not-allowed' : 'bg-amber-500 hover:bg-amber-600 text-stone-950'} font-bold px-3 py-1.5 rounded-lg text-xs transition-colors">
-                        ${t.completed ? 'Completed' : 'Claim'}
-                    </button>
-                </div>
-            `).join('');
-        }
+const SEASONS=[
+  {name:"Bella Italia",emoji:"🇮🇹",desc:"A cozy trattoria in Trastevere.",dishes:ITALIAN_DISHES},
+  {name:"Sakura Sushi-Ya",emoji:"🇯🇵",desc:"An eight-seat counter in Ginza.",
+   dishes:[["Edamame","🫛",48000],["Miso Soup","🍜",55000],["Salmon Nigiri","🍣",63000],["Tuna Sashimi","🐟",72000],["California Roll","🍥",82000]]},
+  {name:"Le Petit Paris",emoji:"🇫🇷",desc:"A Michelin bistro on Rue Cler.",
+   dishes:[["Croissant Beurre","🥐",375000],["French Onion Soup","🧅",430000],["Escargots","🐌",494000],["Quiche Lorraine","🥧",568000],["Coq au Vin","🍗",653000]]},
+  {name:"Nova Skyline",emoji:"🌆",desc:"Rooftop molecular fine dining.",
+   dishes:[["Nitro Olive Sphere","⚪",3040000],["Smoke Bubble Broth","💨",3500000],["Caviar Pearls","⚫",4025000],["Gold Leaf Scallop","🥇",4630000],["Levitation Toast","🥪",5325000]]}
+];
 
-        // Action Handlers
-        function buyStaff(id) {
-            const staff = STAFF_DATA.find(s => s.id === id);
-            if (!staff) return;
+const STAFF=[
+  {id:"prep",name:"Prep Cook",emo:"🔪",gps:2,base:300},
+  {id:"sous",name:"Sous Chef",emo:"👨‍🍳",gps:15,base:2500},
+  {id:"exec",name:"Executive Chef",emo:"🧑‍🍳",gps:80,base:18000},
+  {id:"oven",name:"Industrial Oven",emo:"🔥",gps:500,base:125000}
+];
 
-            if (gameState.coins >= staff.cost) {
-                gameState.coins -= staff.cost;
-                staff.level += 1;
-                gameState.gps += staff.gps;
-                staff.cost = Math.floor(staff.cost * 1.15);
-                updateUI();
-            } else {
-                if (window.Telegram?.WebApp) {
-                    Telegram.WebApp.showAlert("Not enough coins!");
-                }
-            }
-        }
+const THEMES = [
+  {id:"default", name:"Bella Italia", emoji:"🇮🇹", cost:0, owned:true},
+  {id:"christmas", name:"🎄 Christmas", emoji:"🎅", cost:50, costType:"stars"},
+  {id:"halloween", name:"🎃 Halloween", emoji:"👻", cost:40, costType:"stars"},
+  {id:"summer", name:"☀️ Summer", emoji:"🏖️", cost:45, costType:"stars"},
+  {id:"neon", name:"💜 Neon", emoji:"⚡", cost:60, costType:"stars"}
+];
 
-        function completeTask(id) {
-            const task = TASKS_DATA.find(t => t.id === id);
-            if (!task || task.completed) return;
+const NFTS = [
+  {id:"nft1", name:"Golden Spatula", emoji:"🥄", cost:1, costType:"stars", rarity:"Common"},
+  {id:"nft2", name:"Silver Ladle", emoji:"🥣", cost:2, costType:"stars", rarity:"Common"},
+  {id:"nft3", name:"Bronze Pan", emoji:"🍳", cost:3, costType:"stars", rarity:"Common"},
+  {id:"nft4", name:"Chef's Hat", emoji:"👒", cost:5, costType:"stars", rarity:"Uncommon"},
+  {id:"nft5", name:"Wooden Spoon", emoji:"🥄", cost:6, costType:"stars", rarity:"Uncommon"},
+  {id:"nft6", name:"Copper Pot", emoji:"🍲", cost:8, costType:"stars", rarity:"Uncommon"},
+  {id:"nft7", name:"Marble Mortar", emoji:"⚱️", cost:10, costType:"stars", rarity:"Rare"},
+  {id:"nft8", name:"Truffle Pig", emoji:"🐷", cost:12, costType:"stars", rarity:"Rare"},
+  {id:"nft9", name:"Michelin Star", emoji:"⭐", cost:15, costType:"stars", rarity:"Rare"},
+  {id:"nft10", name:"Golden Whisk", emoji:"🥄", cost:20, costType:"stars", rarity:"Epic"},
+  {id:"nft11", name:"Platinum Fork", emoji:"🍴", cost:25, costType:"stars", rarity:"Epic"},
+  {id:"nft12", name:"Diamond Knife", emoji:"🔪", cost:35, costType:"stars", rarity:"Epic"},
+  {id:"nft13", name:"Royal Crown", emoji:"👑", cost:50, costType:"stars", rarity:"Legendary"},
+  {id:"nft14", name:"Infinity Stone", emoji:"💎", cost:75, costType:"stars", rarity:"Legendary"},
+  {id:"nft15", name:"Phoenix Feather", emoji:"🔥", cost:100, costType:"stars", rarity:"Legendary"},
+  {id:"nft16", name:"Dragon Scale", emoji:"🐉", cost:150, costType:"stars", rarity:"Mythic"},
+  {id:"nft17", name:"Unicorn Horn", emoji:"🦄", cost:200, costType:"stars", rarity:"Mythic"},
+  {id:"nft18", name:"Celestial Orb", emoji:"🌟", cost:300, costType:"stars", rarity:"Mythic"},
+  {id:"nft19", name:"Void Essence", emoji:"🌌", cost:400, costType:"stars", rarity:"Mythic"},
+  {id:"nft20", name:"Chef's Legacy", emoji:"👑", cost:500, costType:"stars", rarity:"Mythic"}
+];
 
-            task.completed = true;
-            gameState.coins += task.reward;
-            updateUI();
-        }
+// DAILY QUESTS
+const DAILY_QUESTS = [
+  {id:"tap100", name:"Active Kitchen Hand", desc:"Tap 100 times", icon:"👆", reward:1000, check:s=>s.dailyTaps>=100, prog:s=>[Math.min(s.dailyTaps,100),100]},
+  {id:"level5", name:"Climb the Ranks", desc:"Reach Level 5", icon:"📈", reward:2500, check:s=>s.level>=5, prog:s=>[Math.min(s.level,5),5]},
+  {id:"hire3", name:"Build a Brigade", desc:"Hire 3 staff", icon:"👥", reward:1500, check:s=>totalStaff(s)>=3, prog:s=>[Math.min(totalStaff(s),3),3]},
+  {id:"earn50k", name:"Golden Chef", desc:"Earn 50K gold", icon:"🪙", reward:3000, check:s=>s.dailyEarned>=50000, prog:s=>[Math.min(s.dailyEarned,50000),50000]}
+];
 
-        // Tab Navigation
-        function switchTab(tab) {
-            ['kitchen', 'staff', 'tasks', 'friend'].forEach(t => {
-                const navEl = $(`nav${t.charAt(0).toUpperCase() + t.slice(1)}`);
-                if (navEl) {
-                    navEl.classList.remove('text-amber-500');
-                    navEl.classList.add('text-stone-400');
-                }
-            });
+// AIRDROP TASKS
+const AIRDROP_TASKS = [
+  {id:"join_tg", name:"Join Telegram Channel", desc:"Join our official channel", icon:"📢", reward:100, link:"https://t.me/bellaitaliatycoon", check:s=>true},
+  {id:"follow_twitter", name:"Follow on Twitter", desc:"Follow @BellaItaliaTycoon", icon:"𝕏", reward:150, link:"https://twitter.com/bellaitaliatycoon", check:s=>true},
+  {id:"level10", name:"Reach Level 10", desc:"Progress to Level 10", icon:"📈", reward:500, check:s=>s.level>=10},
+  {id:"hire10", name:"Hire 10 Staff", desc:"Build your brigade", icon:"👥", reward:300, check:s=>totalStaff(s)>=10},
+  {id:"earn1m", name:"Earn 1M Gold", desc:"Accumulate 1M gold", icon:"🪙", reward:1000, check:s=>s.totalGold>=1000000},
+  {id:"collect5nft", name:"Collect 5 NFTs", desc:"Own 5 NFTs", icon:"🖼️", reward:750, check:s=>s.ownedNFTs.length>=5},
+  {id:"invite5", name:"Invite 5 Friends", desc:"Get 5 referrals", icon:"👫", reward:2000, check:s=>s.invitedPlayers.length>=5},
+  {id:"active7days", name:"Play 7 Days", desc:"Login for 7 consecutive days", icon:"📅", reward:1500, check:s=>s.consecutiveDays>=7}
+];
 
-            const activeNav = $(`nav${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
-            if (activeNav) {
-                activeNav.classList.remove('text-stone-400');
-                activeNav.classList.add('text-amber-500');
-            }
+let gameState = {
+  gold: 0,
+  totalGold: 0,
+  energy: 1000,
+  maxEnergy: 1000,
+  energyRefillRate: 0.5,
+  perClick: 1,
+  level: 1,
+  clicks: 0,
+  dailyTaps: 0,
+  dailyEarned: 0,
+  season: 0,
+  staff: {prep:0, sous:0, exec:0, oven:0},
+  energyUpgrades: 0,
+  multiUpgrades: 0,
+  currentTheme: "default",
+  ownedNFTs: [],
+  ownedThemes: ["default"],
+  lastEnergyRefill: Date.now(),
+  userId: "user_" + Math.random().toString(36).substr(2,9),
+  referralCode: "",
+  invitedPlayers: [],
+  completedQuests: [],
+  lastDailyLogin: 0,
+  prestigeLevel: 0,
+  leaderboardScore: 0,
+  airdropPoints: 0,
+  completedAirdropTasks: [],
+  walletConnected: false,
+  walletAddress: "",
+  consecutiveDays: 0,
+  lastLoginDate: new Date().toDateString()
+};
 
-            const container = $("mainContainer");
-            if (tab === 'friend') {
-                const refCode = tg.initDataUnsafe?.user?.id || 'guest';
-                const shareText = encodeURIComponent('Join my kitchen brigade in Idle Cooking Tycoon and get bonus coins!');
-                const shareUrl = encodeURIComponent(`https://t.me/idle_cooking_tycoon_bot?start=${refCode}`);
-                
-                container.innerHTML = `
-                    <div class="bg-stone-900 border border-stone-800 rounded-2xl p-6 text-center shadow-lg space-y-4">
-                        <h2 class="text-lg font-bold text-amber-400">Invite Friends</h2>
-                        <p class="text-xs text-stone-400">Get bonus coins and accelerator rewards when your friends join your kitchen brigade!</p>
-                        <a href="https://t.me/share/url?url=${shareUrl}&text=${shareText}" target="_blank" class="block w-full bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold py-3 rounded-xl text-sm transition-colors">
-                            Share Invite Link 🚀
-                        </a>
-                    </div>
-                `;
-            } else if (tab === 'staff') {
-                container.innerHTML = `
-                    <div class="bg-stone-900 border border-stone-800 rounded-2xl p-4 shadow-lg">
-                        <h3 class="font-bold text-md text-amber-400 mb-3 flex items-center justify-between">
-                            <span>Kitchen Brigade Management</span>
-                            <span class="text-xs text-stone-400 font-normal">Auto-Profit</span>
-                        </h3>
-                        <div id="staffList" class="space-y-3"></div>
-                    </div>
-                `;
-                renderStaff();
-            } else if (tab === 'tasks') {
-                container.innerHTML = `
-                    <div class="bg-stone-900 border border-stone-800 rounded-2xl p-4 shadow-lg">
-                        <h3 class="font-bold text-md text-amber-400 mb-3">Daily Missions & Tasks</h3>
-                        <div id="tasksList" class="space-y-3"></div>
-                    </div>
-                `;
-                renderTasks();
-            } else {
-                container.innerHTML = `
-                    <div id="stationView" class="space-y-4">
-                        <div class="bg-stone-900 border border-stone-800 rounded-2xl p-6 text-center relative overflow-hidden shadow-lg">
-                            <div class="absolute inset-0 bg-amber-500/5 pointer-events-none"></div>
-                            <h2 class="text-sm uppercase tracking-wider text-stone-400 mb-1">Main Kitchen Station</h2>
-                            <div class="text-3xl font-extrabold text-amber-400 my-3" id="gpsDisplay">+0 / hr</div>
-                            
-                            <div class="my-6 flex justify-center">
-                                <button id="stationBtn" class="w-32 h-32 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-5xl shadow-xl active:scale-95 transition-transform border-4 border-amber-300 focus:outline-none">
-                                    👨‍🍳
-                                </button>
-                            </div>
-                            
-                            <div class="w-full bg-stone-800 h-3 rounded-full overflow-hidden border border-stone-700">
-                                <div id="loadBar" class="bg-amber-500 h-full transition-all duration-100" style="width: 100%;"></div>
-                            </div>
-                            <div class="flex justify-between text-xs text-stone-400 mt-1">
-                                <span>Energy / Action Buffer</span>
-                                <span id="energyText">100 / 100</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                // Re-bind station event handler after restoring view
-                bindStationButton();
-                updateUI();
-            }
-        }
+function loadGame(){
+  const saved = localStorage.getItem("bellaItaliaSave");
+  if(saved){
+    try {
+      Object.assign(gameState, JSON.parse(saved));
+    } catch(e) {}
+  }
+  if(!gameState.referralCode) gameState.referralCode = generateReferralCode();
+}
 
-        function bindStationButton() {
-            const stationBtn = $("stationBtn");
-            if (stationBtn) {
-                stationBtn.addEventListener('pointerdown', (e) => {
-                    const now = Date.now();
-                    tapHistory = tapHistory.filter(time => now - time < 1000);
-                    tapHistory.push(now);
+function saveGame(){
+  localStorage.setItem("bellaItaliaSave", JSON.stringify(gameState));
+}
 
-                    if (tapHistory.length > MAX_TAP_VELOCITY) {
-                        return;
-                    }
+function generateReferralCode(){
+  return "CHEF" + gameState.userId.substr(-6).toUpperCase();
+}
 
-                    gameState.coins += 1 + Math.floor(gameState.gps / 100);
-                    updateUI();
-                });
-            }
-        }
+function getLevelRequirement(level){
+  return Math.floor(100 * Math.pow(1.5, level - 1));
+}
 
-        // Initial binding
-        bindStationButton();
+function totalStaff(s){
+  return s.staff.prep + s.staff.sous + s.staff.exec + s.staff.oven;
+}
 
-        // Idle Profit Loop
-        setInterval(() => {
-            const now = Date.now();
-            const deltaSeconds = (now - gameState.lastSave) / 1000;
-            gameState.lastSave = now;
+function calculateGPS(){
+  const prep = gameState.staff.prep * STAFF[0].gps;
+  const sous = gameState.staff.sous * STAFF[1].gps;
+  const exec = gameState.staff.exec * STAFF[2].gps;
+  const oven = gameState.staff.oven * STAFF[3].gps;
+  return prep + sous + exec + oven;
+}
 
-            if (gameState.gps > 0) {
-                gameState.coins += (gameState.gps / 3600) * deltaSeconds;
-                updateUI();
-            }
+function updateUI(){
+  document.getElementById("gold").textContent = formatNumber(gameState.gold);
+  document.getElementById("perclick").textContent = gameState.perClick;
+  document.getElementById("gps").textContent = formatNumber(calculateGPS()) + "/s";
+  
+  const req = getLevelRequirement(gameState.level);
+  const prog = gameState.clicks % req;
+  document.getElementById("lvlProg").textContent = `${prog} / ${req}`;
+  document.getElementById("lvlFill").style.width = (prog / req * 100) + "%";
+  document.getElementById("lvlLabel").textContent = `Level ${gameState.level} · ${SEASONS[gameState.season].name}`;
+  
+  const energyPct = (gameState.energy / gameState.maxEnergy) * 100;
+  document.getElementById("energyFill").style.width = energyPct + "%";
+  document.getElementById("energyText").textContent = `${Math.floor(gameState.energy)} / ${gameState.maxEnergy}`;
+  
+  const dish = SEASONS[gameState.season].dishes[gameState.level - 1] || SEASONS[gameState.season].dishes[0];
+  document.getElementById("dishName").textContent = dish[0];
+  document.getElementById("dishVal").textContent = `+${dish[2]} 🪙`;
+  document.getElementById("pan").textContent = dish[1];
+  
+  const cookBtn = document.getElementById("cookBtn");
+  cookBtn.disabled = gameState.energy < 1;
+  if(gameState.energy < 1) cookBtn.textContent = "⚡ No Energy";
+  else cookBtn.textContent = "TAP TO COOK";
+}
 
-            if (gameState.energy < gameState.maxEnergy) {
-                gameState.energy = Math.min(gameState.maxEnergy, gameState.energy + 2 * (deltaSeconds));
-                updateUI();
-            }
-        }, 1000);
+function formatNumber(n){
+  if(n >= 1e9) return (n/1e9).toFixed(2) + "B";
+  if(n >= 1e6) return (n/1e6).toFixed(2) + "M";
+  if(n >= 1e3) return (n/1e3).toFixed(1) + "K";
+  return Math.floor(n).toString();
+}
 
+// Tap to cook
+document.getElementById("cookBtn").addEventListener("click", ()=>{
+  if(gameState.energy < 1) return;
+  
+  const dish = SEASONS[gameState.season].dishes[gameState.level - 1] || SEASONS[gameState.season].dishes[0];
+  const reward = dish[2] * gameState.perClick;
+  
+  gameState.gold += reward;
+  gameState.totalGold += reward;
+  gameState.dailyEarned += reward;
+  gameState.energy -= 1;
+  gameState.clicks++;
+  gameState.dailyTaps++;
+  gameState.leaderboardScore += reward;
+  
+  Audio8.sizzle();
+  
+  const station = document.getElementById("station");
+  const float = document.createElement("div");
+  float.className = "float";
+  float.textContent = `+${formatNumber(reward)}`;
+  float.style.left = (50 + (Math.random()-0.5)*40) + "%";
+  float.style.top = "50%";
+  station.appendChild(float);
+  setTimeout(()=>float.remove(), 1000);
+  
+  const req = getLevelRequirement(gameState.level);
+  if(gameState.clicks >= req && gameState.level < SEASONS[gameState.season].dishes.length){
+    gameState.level++;
+    gameState.clicks = 0;
+    Audio8.fanfare();
+    showToast("🎉 Level Up!");
+  }
+  
+  station.classList.add("cooking");
+  setTimeout(()=>station.classList.remove("cooking"), 120);
+  
+  updateUI();
+  saveGame();
+});
+
+// Energy refill
+setInterval(()=>{
+  if(gameState.energy < gameState.maxEnergy){
+    gameState.energy = Math.min(gameState.maxEnergy, gameState.energy + gameState.energyRefillRate);
+    updateUI();
+  }
+}, 1000);
+
+// Passive income
+setInterval(()=>{
+  const gps = calculateGPS();
+  if(gps > 0){
+    gameState.gold += gps / 10;
+    gameState.totalGold += gps / 10;
+    gameState.dailyEarned += gps / 10;
+    gameState.leaderboardScore += gps / 10;
+    updateUI();
+    saveGame();
+  }
+}, 100);
+
+// Language
+document.getElementById("langSelect").addEventListener("change", (e)=>{
+  setLanguage(e.target.value);
+});
+
+// Mute
+document.getElementById("muteBtn").addEventListener("click", ()=>{
+  Audio8.resume();
+  const isMuted = Audio8.isMuted();
+  Audio8.setMuted(!isMuted);
+  document.getElementById("muteBtn").textContent = isMuted ? "🔊" : "🔇";
+});
+
+// Upgrades
+document.getElementById("energyUpBtn").addEventListener("click", ()=>{
+  const cost = 50000 * Math.pow(1.5, gameState.energyUpgrades);
+  if(gameState.gold >= cost){
+    gameState.gold -= cost;
+    gameState.maxEnergy += 500;
+    gameState.energy = gameState.maxEnergy;
+    gameState.energyUpgrades++;
+    Audio8.chime();
+    showToast("⚡ Energy Upgraded!");
+    updateUI();
+    saveGame();
+  } else {
+    showToast("Not enough gold!");
+  }
+});
+
+document.getElementById("multiUpBtn").addEventListener("click", ()=>{
+  const cost = 75000 * Math.pow(1.5, gameState.multiUpgrades);
+  if(gameState.gold >= cost){
+    gameState.gold -= cost;
+    gameState.perClick += 1;
+    gameState.multiUpgrades++;
+    Audio8.chime();
+    showToast("💪 Multi-Tap Upgraded!");
+    updateUI();
+    saveGame();
+  } else {
+    showToast("Not enough gold!");
+  }
+});
+
+setInterval(()=>{
+  const energyCost = 50000 * Math.pow(1.5, gameState.energyUpgrades);
+  const multiCost = 75000 * Math.pow(1.5, gameState.multiUpgrades);
+  document.getElementById("energyUpCost").textContent = `Cost: ${formatNumber(energyCost)}`;
+  document.getElementById("multiUpCost").textContent = `Cost: ${formatNumber(multiCost)}`;
+}, 500);
+
+// Render seasons
+function renderSeasons(){
+  const container = document.getElementById("seasonChips");
+  container.innerHTML = "";
+  SEASONS.forEach((s, i)=>{
+    const chip = document.createElement("div");
+    chip.className = "chip" + (gameState.season === i ? " active" : "");
+    chip.textContent = s.emoji + " " + s.name;
+    chip.addEventListener("click", ()=>{
+      gameState.season = i;
+      gameState.level = 1;
+      gameState.clicks = 0;
+      renderSeasons();
+      renderDishes();
+      updateUI();
+      saveGame();
+    });
+    container.appendChild(chip);
+  });
+}
+
+// Render dishes
+function renderDishes(){
+  const container = document.getElementById("dishList");
+  container.innerHTML = "";
+  const card = document.createElement("div");
+  card.className = "card dark";
+  
+  const dishes = SEASONS[gameState.season].dishes;
+  const grid = document.createElement("div");
+  grid.className = "grid2";
+  
+  dishes.forEach((d, i)=>{
+    const dish = document.createElement("div");
+    dish.className = "dish" + (i < gameState.level ? "" : " locked");
+    dish.innerHTML = `<span>${d[1]}</span><b>${d[0]}</b><span>${formatNumber(d[2])}</span>`;
+    grid.appendChild(dish);
+  });
+  
+  card.appendChild(grid);
+  container.appendChild(card);
+}
+
+// Render staff
+function renderStaff(){
+  const container = document.getElementById("staffList");
+  container.innerHTML = "";
+  
+  STAFF.forEach(s=>{
+    const item = document.createElement("div");
+    item.className = "item";
+    
+    const count = gameState.staff[s.id] || 0;
+    const hourlyIncome = count * s.gps * 3600;
+    
+    item.innerHTML = `
+      <div class="emo">${s.emo}</div>
+      <div class="t">
+        <b>${s.name}</b>
+        <span>Owned: ${count} | +${formatNumber(hourlyIncome)}/hr</span>
+      </div>
+      <button class="buy" data-staff="${s.id}">BUY</button>
+    `;
+    
+    const buyBtn = item.querySelector(".buy");
+    const cost = s.base * Math.pow(1.08, count);
+    buyBtn.textContent = `${formatNumber(cost)}`;
+    buyBtn.disabled = gameState.gold < cost;
+    buyBtn.addEventListener("click", ()=>{
+      if(gameState.gold >= cost){
+        gameState.gold -= cost;
+        gameState.staff[s.id]++;
+        Audio8.chime();
+        renderStaff();
         updateUI();
-    </script>
+        saveGame();
+      }
+    });
+    
+    container.appendChild(item);
+  });
+}
+
+// Render airdrop tasks
+function renderAirdropTasks(){
+  const container = document.getElementById("airdropTaskList");
+  container.innerHTML = "";
+  
+  AIRDROP_TASKS.forEach(task=>{
+    const completed = gameState.completedAirdropTasks.includes(task.id);
+    const canComplete = task.check(gameState);
+    
+    const item = document.createElement("div");
+    item.className = "quest-item";
+    
+    item.innerHTML = `
+      <div class="quest-icon">${task.icon}</div>
+      <div class="quest-info">
+        <b>${task.name}</b>
+        <span>${task.desc}</span>
+      </div>
+      <div class="quest-reward">
+        <button class="buy" style="padding:6px 10px;font-size:10px;" ${completed ? 'disabled' : (canComplete ? '' : 'disabled')}>
+          ${completed ? '✓' : formatNumber(task.reward)}
+        </button>
+      </div>
+    `;
+    
+    const btn = item.querySelector(".buy");
+    if(!completed && canComplete){
+      btn.addEventListener("click", ()=>{
+        if(task.link){
+          window.open(task.link, '_blank');
+        }
+        gameState.completedAirdropTasks.push(task.id);
+        gameState.airdropPoints += task.reward;
+        Audio8.fanfare();
+        showToast("✓ Task Complete! +" + task.reward + " Points");
+        renderAirdropTasks();
+        renderAirdropProgress();
+        saveGame();
+      });
+    }
+    
+    container.appendChild(item);
+  });
+  
+  document.getElementById("airdropPoints").textContent = formatNumber(gameState.airdropPoints);
+}
+
+// Render airdrop progress
+function renderAirdropProgress(){
+  const container = document.getElementById("airdropProgress");
+  container.innerHTML = "";
+  
+  const milestones = [
+    {name:"Bronze Chef", points:1000, reward:"100 Tokens"},
+    {name:"Silver Chef", points:5000, reward:"500 Tokens"},
+    {name:"Gold Chef", points:10000, reward:"1,000 Tokens"},
+    {name:"Platinum Chef", points:25000, reward:"2,500 Tokens"},
+    {name:"Legend Chef", points:50000, reward:"5,000 Tokens"}
+  ];
+  
+  milestones.forEach(m=>{
+    const progress = Math.min(gameState.airdropPoints / m.points, 1);
+    const unlocked = progress >= 1;
+    
+    const milestone = document.createElement("div");
+    milestone.className = "airdrop-milestone";
+    
+    milestone.innerHTML = `
+      <div class="milestone-header">
+        <span class="milestone-name">${unlocked ? "✓" : "🔒"} ${m.name}</span>
+        <span class="milestone-reward">${m.reward}</span>
+      </div>
+      <div class="milestone-bar"><i style="width:${progress*100}%"></i></div>
+      <div class="milestone-status">${formatNumber(gameState.airdropPoints)} / ${formatNumber(m.points)} points</div>
+    `;
+    
+    container.appendChild(milestone);
+  });
+}
+
+// Render quests
+function renderQuests(){
+  const container = document.getElementById("questList");
+  container.innerHTML = "";
+  
+  DAILY_QUESTS.forEach(q=>{
+    const completed = gameState.completedQuests.includes(q.id);
+    const [current, max] = q.prog(gameState);
+    const progress = Math.min(current / max, 1);
+    
+    const item = document.createElement("div");
+    item.className = "quest-item";
+    
+    item.innerHTML = `
+      <div class="quest-icon">${q.icon}</div>
+      <div class="quest-info">
+        <b>${q.name}</b>
+        <span>${q.desc}</span>
+        <div class="quest-progress"><i style="width:${progress*100}%"></i></div>
+      </div>
+      <div class="quest-reward">
+        <button class="buy" style="padding:6px 10px;font-size:10px;" ${completed ? 'disabled' : ''}>
+          ${completed ? '✓' : formatNumber(q.reward) + ' 🪙'}
+        </button>
+      </div>
+    `;
+    
+    const btn = item.querySelector(".buy");
+    if(!completed && q.check(gameState)){
+      btn.addEventListener("click", ()=>{
+        gameState.gold += q.reward;
+        gameState.totalGold += q.reward;
+        gameState.completedQuests.push(q.id);
+        Audio8.fanfare();
+        showToast("✓ Quest Complete!");
+        renderQuests();
+        updateUI();
+        saveGame();
+      });
+    }
+    
+    container.appendChild(item);
+  });
+}
+
+// Render daily login
+function renderDailyLogin(){
+  const container = document.getElementById("dailyGrid");
+  container.innerHTML = "";
+  
+  for(let i = 1; i <= 7; i++){
+    const box = document.createElement("div");
+    box.className = "day-box";
+    const reward = 100 * i;
+    const isClaimed = gameState.lastDailyLogin >= i;
+    if(isClaimed) box.classList.add("claimed");
+    box.innerHTML = `<b>Day ${i}</b><span>${reward} 🪙</span>`;
+    
+    if(!isClaimed){
+      box.style.cursor = "pointer";
+      box.addEventListener("click", ()=>{
+        gameState.gold += reward;
+        gameState.totalGold += reward;
+        gameState.lastDailyLogin = i;
+        Audio8.chime();
+        showToast(`🎁 +${reward} Gold!`);
+        renderDailyLogin();
+        updateUI();
+        saveGame();
+      });
+    }
+    
+    container.appendChild(box);
+  }
+}
+
+// Render themes
+function renderThemes(){
+  const container = document.getElementById("themeSelector");
+  container.innerHTML = "";
+  
+  THEMES.forEach(t=>{
+    const btn = document.createElement("button");
+    btn.className = "theme-btn" + (gameState.currentTheme === t.id ? " active" : "");
+    btn.textContent = t.emoji + " " + t.name;
+    if(t.cost > 0) btn.textContent += " ⭐" + t.cost;
+    
+    btn.addEventListener("click", ()=>{
+      if(gameState.ownedThemes.includes(t.id)){
+        gameState.currentTheme = t.id;
+        document.body.className = "theme-" + t.id;
+        renderThemes();
+        saveGame();
+      } else if(t.cost > 0){
+        showToast("⭐ Requires " + t.cost + " Telegram Stars");
+      }
+    });
+    
+    container.appendChild(btn);
+  });
+}
+
+// Render NFTs
+function renderNFTs(){
+  const container = document.getElementById("nftGrid");
+  container.innerHTML = "";
+  
+  NFTS.forEach(nft=>{
+    const card = document.createElement("div");
+    card.className = "nft-card" + (gameState.ownedNFTs.includes(nft.id) ? " owned" : "");
+    
+    card.innerHTML = `
+      <div class="nft-icon">${nft.emoji}</div>
+      <div class="nft-name">${nft.name}</div>
+      <div class="nft-price stars">⭐${nft.cost}</div>
+    `;
+    
+    if(!gameState.ownedNFTs.includes(nft.id)){
+      card.style.cursor = "pointer";
+      card.addEventListener("click", ()=>{
+        if(confirm(`Purchase ${nft.name} for ⭐${nft.cost}?`)){
+          gameState.ownedNFTs.push(nft.id);
+          Audio8.fanfare();
+          showToast("🖼️ NFT Collected!");
+          renderNFTs();
+          saveGame();
+        }
+      });
+    }
+    
+    container.appendChild(card);
+  });
+}
+
+// Render referral
+function renderReferral(){
+  document.getElementById("refCode").textContent = gameState.referralCode;
+  document.getElementById("invitedCount").textContent = gameState.invitedPlayers.length;
+  
+  const activeCount = gameState.invitedPlayers.filter(p=>p.active).length;
+  document.getElementById("activeCount").textContent = activeCount;
+  
+  const container = document.getElementById("invitedList");
+  container.innerHTML = "";
+  
+  if(gameState.invitedPlayers.length === 0){
+    container.innerHTML = '<p style="text-align:center;color:#c39a6d;font-size:12px;">No invited players yet. Share your code!</p>';
+    return;
+  }
+  
+  gameState.invitedPlayers.forEach((p, idx)=>{
+    const item = document.createElement("div");
+    item.className = "invited-item";
+    
+    const starReward = p.active ? "⭐5" : "🪙500";
+    const status = p.active ? "✓ Active" : "⏳ Pending";
+    
+    item.innerHTML = `
+      <div class="invited-avatar">👤</div>
+      <div>
+        <div class="invited-name">${p.name || "Friend " + (idx+1)}</div>
+        <div class="invited-status">${status}</div>
+      </div>
+      <div class="invited-reward">${starReward}</div>
+    `;
+    
+    container.appendChild(item);
+  });
+}
+
+// Copy referral code
+document.getElementById("copyRefBtn").addEventListener("click", ()=>{
+  navigator.clipboard.writeText(gameState.referralCode).then(()=>{
+    showToast("📋 Code Copied!");
+  });
+});
+
+// Render leaderboard
+function renderLeaderboard(){
+  const container = document.getElementById("leaderboardList");
+  container.innerHTML = "";
+  
+  // Simulate leaderboard (in production, fetch from server)
+  const leaderboard = [
+    {rank: 1, name: "You", score: gameState.leaderboardScore},
+    {rank: 2, name: "Chef Marco", score: gameState.leaderboardScore * 0.8},
+    {rank: 3, name: "Nonna Rosa", score: gameState.leaderboardScore * 0.6},
+    {rank: 4, name: "Chef Luigi", score: gameState.leaderboardScore * 0.4},
+    {rank: 5, name: "Pasta Master", score: gameState.leaderboardScore * 0.2}
+  ];
+  
+  leaderboard.forEach(entry=>{
+    const item = document.createElement("div");
+    item.className = "leaderboard-item";
+    
+    const rankClass = entry.rank <= 3 ? "top" : "";
+    const medal = entry.rank === 1 ? "🥇" : entry.rank === 2 ? "🥈" : entry.rank === 3 ? "🥉" : "";
+    
+    item.innerHTML = `
+      <div class="rank ${rankClass}">${medal}#${entry.rank}</div>
+      <div class="rank">${entry.rank <= 3 ? "👑" : "👤"}</div>
+      <div class="player-name">${entry.name}</div>
+      <div class="player-score">${formatNumber(entry.score)}</div>
+    `;
+    
+    container.appendChild(item);
+  });
+}
+
+// Toast
+function showToast(msg){
+  const toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.classList.add("show");
+  setTimeout(()=>toast.classList.remove("show"), 2000);
+}
+
+// Tabs
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    const tabName = tab.getAttribute("data-tab");
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById("tab-" + tabName).classList.add("active");
+    
+    // Render specific content when tab is opened
+    if(tabName === "referral") renderReferral();
+    if(tabName === "leaderboard") renderLeaderboard();
+    if(tabName === "quests") renderQuests();
+    if(tabName === "airdrop"){
+      renderAirdropTasks();
+      renderAirdropProgress();
+    }
+  });
+});
+
+// Connect wallet
+document.getElementById("connectWalletBtn").addEventListener("click", ()=>{
+  if(!gameState.walletConnected){
+    const walletAddress = "0x" + Math.random().toString(16).substr(2, 40);
+    gameState.walletConnected = true;
+    gameState.walletAddress = walletAddress;
+    document.getElementById("walletStatus").innerHTML = `✓ Connected<br><code style="font-size:10px;word-break:break-all;">${walletAddress}</code>`;
+    Audio8.chime();
+    showToast("✓ Wallet Connected!");
+    saveGame();
+  } else {
+    gameState.walletConnected = false;
+    gameState.walletAddress = "";
+    document.getElementById("walletStatus").textContent = "Not connected";
+    showToast("Wallet Disconnected");
+    saveGame();
+  }
+});
+
+// Initialize
+window.addEventListener("load", ()=>{
+  loadGame();
+  
+  if(gameState.currentTheme !== "default"){
+    document.body.classList.add("theme-" + gameState.currentTheme);
+  }
+  
+  renderSlide();
+  
+  renderSeasons();
+  renderDishes();
+  renderStaff();
+  renderThemes();
+  renderNFTs();
+  renderDailyLogin();
+  renderQuests();
+  renderAirdropTasks();
+  renderAirdropProgress();
+  
+  // Check daily login streak
+  const today = new Date().toDateString();
+  if(gameState.lastLoginDate !== today){
+    gameState.consecutiveDays++;
+    gameState.lastLoginDate = today;
+  }
+  
+  // Update wallet status display
+  if(gameState.walletConnected){
+    document.getElementById("walletStatus").innerHTML = `✓ Connected<br><code style="font-size:10px;word-break:break-all;">${gameState.walletAddress}</code>`;
+  }
+  
+  updateUI();
+  
+  setTimeout(()=>{
+    document.getElementById("loader").classList.add("hide");
+    document.getElementById("app").classList.add("show");
+    Audio8.resume();
+    Audio8.startMusic();
+  }, 1500);
+});
+</script>
 </body>
 </html>
