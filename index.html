@@ -227,7 +227,7 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 }
 .nft-card:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,0,255,.5)}
 .nft-card.owned{border-color:#00ff00;background:linear-gradient(135deg,#001a00,#003300)}
-.nft-icon{font-size:32px;margin-bottom:6px}
+.nft-icon{font-size:32px;margin-bottom:6px;display:flex;align-items:center;justify-content:center}
 .nft-name{font-size:11px;font-weight:800;color:#ff00ff;margin-bottom:4px}
 .nft-card.owned .nft-name{color:#00ff00}
 .nft-price{font-size:10px;color:#c9a76a}
@@ -717,26 +717,40 @@ const THEMES = [
 ];
 
 const NFTS = [
-  {id:"nft1", name:"Golden Spatula", emoji:"🥄", cost:1, costType:"stars", rarity:"Common"},
-  {id:"nft2", name:"Silver Ladle", emoji:"🥣", cost:2, costType:"stars", rarity:"Common"},
-  {id:"nft3", name:"Bronze Pan", emoji:"🍳", cost:3, costType:"stars", rarity:"Common"},
-  {id:"nft4", name:"Chef's Hat", emoji:"👒", cost:5, costType:"stars", rarity:"Uncommon"},
-  {id:"nft5", name:"Wooden Spoon", emoji:"🥄", cost:6, costType:"stars", rarity:"Uncommon"},
-  {id:"nft6", name:"Copper Pot", emoji:"🍲", cost:8, costType:"stars", rarity:"Uncommon"},
-  {id:"nft7", name:"Marble Mortar", emoji:"⚱️", cost:10, costType:"stars", rarity:"Rare"},
-  {id:"nft8", name:"Truffle Pig", emoji:"🐷", cost:12, costType:"stars", rarity:"Rare"},
-  {id:"nft9", name:"Michelin Star", emoji:"⭐", cost:15, costType:"stars", rarity:"Rare"},
-  {id:"nft10", name:"Golden Whisk", emoji:"🥄", cost:20, costType:"stars", rarity:"Epic"},
-  {id:"nft11", name:"Platinum Fork", emoji:"🍴", cost:25, costType:"stars", rarity:"Epic"},
-  {id:"nft12", name:"Diamond Knife", emoji:"🔪", cost:35, costType:"stars", rarity:"Epic"},
-  {id:"nft13", name:"Royal Crown", emoji:"👑", cost:50, costType:"stars", rarity:"Legendary"},
-  {id:"nft14", name:"Infinity Stone", emoji:"💎", cost:75, costType:"stars", rarity:"Legendary"},
-  {id:"nft15", name:"Phoenix Feather", emoji:"🔥", cost:100, costType:"stars", rarity:"Legendary"},
-  {id:"nft16", name:"Dragon Scale", emoji:"🐉", cost:150, costType:"stars", rarity:"Mythic"},
-  {id:"nft17", name:"Unicorn Horn", emoji:"🦄", cost:200, costType:"stars", rarity:"Mythic"},
-  {id:"nft18", name:"Celestial Orb", emoji:"🌟", cost:300, costType:"stars", rarity:"Mythic"},
-  {id:"nft19", name:"Void Essence", emoji:"🌌", cost:400, costType:"stars", rarity:"Mythic"},
-  {id:"nft20", name:"Chef's Legacy", emoji:"👑", cost:500, costType:"stars", rarity:"Mythic"}
+  {
+    id: "nft1", 
+    name: "Golden Spatula", 
+    art: `<svg viewBox="0 0 64 64" width="48" height="48"><path d="M20 12h24v12c0 6.6-5.4 12-12 12s-12-5.4-12-12V12z" fill="#ffd700"/><rect x="28" y="36" width="8" height="20" fill="#c99425"/><circle cx="32" cy="18" r="3" fill="#fff5e0"/></svg>`, 
+    cost: 1, 
+    costType: "stars", 
+    rarity: "Common"
+  },
+  {
+    id: "nft2", 
+    name: "Copper Pot", 
+    art: `<svg viewBox="0 0 64 64" width="48" height="48"><ellipse cx="32" cy="24" rx="22" ry="6" fill="#d97736"/><path d="M10 24l4 28c1 6 6 10 12 10h12c6 0 11-4 12-10l4-28H10z" fill="#c1573a"/><ellipse cx="32" cy="22" rx="18" ry="4" fill="#a84326"/></svg>`, 
+    cost: 3, 
+    costType: "stars", 
+    rarity: "Common"
+  },
+  {id:"nft3", name:"Bronze Pan", art:`<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="18" fill="#cd7f32"/><rect x="46" y="30" width="16" height="4" fill="#8b4513"/></svg>`, cost:3, costType:"stars", rarity:"Common"},
+  {id:"nft4", name:"Chef's Hat", art:`<svg viewBox="0 0 64 64" width="48" height="48"><path d="M20 36h24v16H20z" fill="#fff"/><circle cx="32" cy="24" r="12" fill="#fff"/></svg>`, cost:5, costType:"stars", rarity:"Uncommon"},
+  {id:"nft5", name:"Wooden Spoon", art:`<svg viewBox="0 0 64 64" width="48" height="48"><ellipse cx="32" cy="20" rx="8" ry="12" fill="#deb887"/><rect x="30" y="28" width="4" height="30" fill="#deb887"/></svg>`, cost:6, costType:"stars", rarity:"Uncommon"},
+  {id:"nft6", name:"Copper Pot", art:`<svg viewBox="0 0 64 64" width="48" height="48"><ellipse cx="32" cy="24" rx="22" ry="6" fill="#d97736"/><path d="M10 24l4 28c1 6 6 10 12 10h12c6 0 11-4 12-10l4-28H10z" fill="#c1573a"/></svg>`, cost:8, costType:"stars", rarity:"Uncommon"},
+  {id:"nft7", name:"Marble Mortar", art:`<svg viewBox="0 0 64 64" width="48" height="48"><path d="M16 24h32l-4 28H20z" fill="#e0e0e0"/></svg>`, cost:10, costType:"stars", rarity:"Rare"},
+  {id:"nft8", name:"Truffle Pig", art:`<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="16" fill="#ffb6c1"/></svg>`, cost:12, costType:"stars", rarity:"Rare"},
+  {id:"nft9", name:"Michelin Star", art:`<svg viewBox="0 0 64 64" width="48" height="48"><polygon points="32,4 40,24 60,24 44,36 50,56 32,44 14,56 20,36 4,24 24,24" fill="#ffd700"/></svg>`, cost:15, costType:"stars", rarity:"Rare"},
+  {id:"nft10", name:"Golden Whisk", art:`<svg viewBox="0 0 64 64" width="48" height="48"><path d="M28 8h8v24c0 4-4 8-4 8s-4-4-4-8V8z" fill="#ffd700"/></svg>`, cost:20, costType:"stars", rarity:"Epic"},
+  {id:"nft11", name:"Platinum Fork", art:`<svg viewBox="0 0 64 64" width="48" height="48"><rect x="30" y="10" width="4" height="44" fill="#e5e4e2"/></svg>`, cost:25, costType:"stars", rarity:"Epic"},
+  {id:"nft12", name:"Diamond Knife", art:`<svg viewBox="0 0 64 64" width="48" height="48"><polygon points="32,4 60,32 32,60 4,32" fill="#b9f2ff"/></svg>`, cost:35, costType:"stars", rarity:"Epic"},
+  {id:"nft13", name:"Royal Crown", art:`<svg viewBox="0 0 64 64" width="48" height="48"><polygon points="12,44 52,44 44,20 32,32 20,20" fill="#ffd700"/></svg>`, cost:50, costType:"stars", rarity:"Legendary"},
+  {id:"nft14", name:"Infinity Stone", art:`<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="20" fill="#9400d3"/></svg>`, cost:75, costType:"stars", rarity:"Legendary"},
+  {id:"nft15", name:"Phoenix Feather", art:`<svg viewBox="0 0 64 64" width="48" height="48"><path d="M32 4c16 16 16 32 0 56C16 36 16 20 32 4z" fill="#ff4500"/></svg>`, cost:100, costType:"stars", rarity:"Legendary"},
+  {id:"nft16", name:"Dragon Scale", art:`<svg viewBox="0 0 64 64" width="48" height="48"><polygon points="32,8 56,32 32,56 8,32" fill="#228b22"/></svg>`, cost:150, costType:"stars", rarity:"Mythic"},
+  {id:"nft17", name:"Unicorn Horn", art:`<svg viewBox="0 0 64 64" width="48" height="48"><polygon points="32,4 40,60 24,60" fill="#ffb6c1"/></svg>`, cost:200, costType:"stars", rarity:"Mythic"},
+  {id:"nft18", name:"Celestial Orb", art:`<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="24" fill="#00ffff"/></svg>`, cost:300, costType:"stars", rarity:"Mythic"},
+  {id:"nft19", name:"Void Essence", art:`<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="24" fill="#4b0082"/></svg>`, cost:400, costType:"stars", rarity:"Mythic"},
+  {id:"nft20", name:"Chef's Legacy", art:`<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="26" fill="#ffd700"/></svg>`, cost:500, costType:"stars", rarity:"Mythic"}
 ];
 
 // DAILY QUESTS
@@ -1249,7 +1263,7 @@ function renderNFTs(){
     card.className = "nft-card" + (gameState.ownedNFTs.includes(nft.id) ? " owned" : "");
     
     card.innerHTML = `
-      <div class="nft-icon">${nft.emoji}</div>
+      <div class="nft-icon">${nft.art}</div>
       <div class="nft-name">${nft.name}</div>
       <div class="nft-price stars">⭐${nft.cost}</div>
     `;
