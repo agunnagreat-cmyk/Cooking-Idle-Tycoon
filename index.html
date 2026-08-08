@@ -215,7 +215,7 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 .dish b{font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dish span{font-size:10px;color:#7a5b45}
 
-/* NFT Grid - Styled like unique collectible cards matching app aesthetics */
+/* NFT Grid */
 .nft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:10px}
 .nft-card{
   background:linear-gradient(135deg,#3a1c13,#2a1510);border:2px solid #c99425;border-radius:14px;
@@ -315,7 +315,7 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 .milestone-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--gold));transition:width .3s}
 .milestone-status{font-size:10px;color:#c39a6d;margin-top:4px}
 
-/* Daily Login */
+/* Daily Login & Check-in Widget */
 .daily-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
 .day-box{background:rgba(59,31,22,.1);border:1px solid #d8bd92;border-radius:10px;padding:8px 4px;text-align:center;font-size:11px}
 .day-box.claimed{opacity:0.5;background:#5fa855;color:#fff}
@@ -416,14 +416,18 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 
   <!-- QUESTS -->
   <div class="panel" id="tab-quests">
+    <!-- Daily Check-In Feature Section -->
+    <div class="card dark" style="border: 2px solid var(--gold);">
+      <h3>📅 Daily Check-In Reward</h3>
+      <p class="muted">Check in daily to claim free bonuses and rewards!</p>
+      <button class="btn goldbtn" id="dailyCheckInBtn" style="margin-bottom:12px;">🎁 Claim Daily Check-In Reward</button>
+      <div class="daily-grid" id="dailyGrid"></div>
+    </div>
+
     <div class="card dark">
       <h3>📋 Daily Quests</h3>
       <p class="muted">Complete quests to earn coins & rewards!</p>
       <div class="quest-grid" id="questList"></div>
-    </div>
-    <div class="card dark">
-      <h3>🎁 Daily Login Bonus</h3>
-      <div class="daily-grid" id="dailyGrid"></div>
     </div>
   </div>
 
@@ -752,7 +756,6 @@ const THEMES = [
   {id:"neon", name:"💜 Neon", emoji:"⚡", cost:60, costType:"stars"}
 ];
 
-/* Theme-matched Unique NFTs using rich custom SVGs */
 const NFTS = [
   {
     id: "nft1", name: "Golden Pizza Slice", rarity: "Common", cost: 3,
@@ -776,7 +779,6 @@ const NFTS = [
   }
 ];
 
-// DAILY QUESTS
 const DAILY_QUESTS = [
   {id:"tap100", name:"Active Kitchen Hand", desc:"Tap 100 times", icon:"👆", reward:1000, check:s=>s.dailyTaps>=100, prog:s=>[Math.min(s.dailyTaps,100),100]},
   {id:"level5", name:"Climb the Ranks", desc:"Reach Level 5", icon:"📈", reward:2500, check:s=>s.level>=5, prog:s=>[Math.min(s.level,5),5]},
@@ -784,7 +786,6 @@ const DAILY_QUESTS = [
   {id:"earn50k", name:"Golden Chef", desc:"Earn 50K gold", icon:"🪙", reward:3000, check:s=>s.dailyEarned>=50000, prog:s=>[Math.min(s.dailyEarned,50000),50000]}
 ];
 
-// AIRDROP TASKS
 const AIRDROP_TASKS = [
   {id:"join_tg", name:"Join Telegram Channel", desc:"Join our official channel", icon:"📢", reward:100, link:"https://t.me/bellaitaliatycoon", check:s=>true},
   {id:"follow_twitter", name:"Follow on Twitter", desc:"Follow @BellaItaliaTycoon", icon:"𝕏", reward:150, link:"https://twitter.com/bellaitaliatycoon", check:s=>true},
@@ -808,7 +809,7 @@ let gameState = {
   dailyTaps: 0,
   dailyEarned: 0,
   season: 0,
-  unlockedSeasons: [0], // Tracks which seasons are unlocked
+  unlockedSeasons: [0],
   staff: {prep:0, sous:0, exec:0, oven:0},
   energyUpgrades: 0,
   multiUpgrades: 0,
@@ -820,6 +821,7 @@ let gameState = {
   invitedPlayers: [],
   completedQuests: [],
   lastDailyLogin: 0,
+  lastCheckInDate: "",
   leaderboardScore: 0,
   airdropPoints: 0,
   completedAirdropTasks: [],
@@ -933,7 +935,6 @@ document.getElementById("cookBtn").addEventListener("click", ()=>{
       Audio8.fanfare();
       showToast("🎉 Level Up!");
     } else {
-      // Season Finished! Unlock next season if available
       if(gameState.season + 1 < SEASONS.length && !gameState.unlockedSeasons.includes(gameState.season + 1)){
         gameState.unlockedSeasons.push(gameState.season + 1);
         Audio8.fanfare();
@@ -1226,23 +1227,30 @@ function renderDailyLogin(){
     const isClaimed = gameState.lastDailyLogin >= i;
     if(isClaimed) box.classList.add("claimed");
     box.innerHTML = `<b>Day ${i}</b><span>${reward} 🪙</span>`;
-    
-    if(!isClaimed){
-      box.style.cursor = "pointer";
-      box.addEventListener("click", ()=>{
-        gameState.gold += reward;
-        gameState.totalGold += reward;
-        gameState.lastDailyLogin = i;
-        Audio8.chime();
-        showToast(`🎁 +${reward} Gold!`);
-        renderDailyLogin();
-        updateUI();
-        saveGame();
-      });
-    }
     container.appendChild(box);
   }
 }
+
+// Daily Check-In Interaction
+document.getElementById("dailyCheckInBtn").addEventListener("click", ()=>{
+  const today = new Date().toDateString();
+  if(gameState.lastCheckInDate === today){
+    showToast("⚠️ Already checked in today!");
+    return;
+  }
+  
+  gameState.lastDailyLogin = (gameState.lastDailyLogin % 7) + 1;
+  const reward = 100 * gameState.lastDailyLogin;
+  gameState.gold += reward;
+  gameState.totalGold += reward;
+  gameState.lastCheckInDate = today;
+  
+  Audio8.chime();
+  showToast(`🎁 Daily Check-In Success! +${reward} Gold`);
+  renderDailyLogin();
+  updateUI();
+  saveGame();
+});
 
 function renderThemes(){
   const container = document.getElementById("themeSelector");
