@@ -179,9 +179,6 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 .btn.starbtn:active{box-shadow:0 2px 0 #daa520}
 .btn:disabled{filter:grayscale(.7) brightness(.8);cursor:not-allowed;box-shadow:none;transform:none}
 
-.boostbar{margin-top:8px;text-align:center;font-weight:800;color:var(--gold);font-size:13px;display:none}
-.boostbar.on{display:block;animation:pulse 1s infinite}
-
 /* ---------- UPGRADES & SHOP ---------- */
 .upgrade-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 .up-card{background:rgba(59,31,22,.08);border:1px solid #dcc39b;border-radius:12px;padding:10px;text-align:center}
@@ -207,31 +204,30 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 .buy:active{transform:translateY(3px);box-shadow:0 1px 0 #2c5827}
 .buy:disabled{background:linear-gradient(180deg,#9c9c9c,#6f6f6f);box-shadow:0 4px 0 #4d4d4d;opacity:.75}
 .locked{opacity:.45;filter:grayscale(.8)}
-.badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:99px;background:var(--gold);color:#3b1f16}
-.badge.done{background:var(--green);color:#fff}
-.badge.nft{background:#ff00ff;color:#fff}
-.badge.star{background:#ffd700;color:#3b1f16}
+
+/* Seasons & Chips */
 .seasons{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .chip{padding:7px 10px;border-radius:99px;font-size:11px;font-weight:800;border:1px solid #52301f;background:#3a1c13;color:#d8b98f;cursor:pointer}
 .chip.active{background:var(--gold);color:#3b1f16;border-color:var(--gold)}
+.chip.locked-season{opacity:0.5;cursor:not-allowed;background:#2a1510;border-color:#4a2a1d;color:#7a5b45}
 .grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
 .dish{padding:9px;border-radius:12px;border:1px solid #dcc39b;background:rgba(59,31,22,.05);display:flex;gap:8px;align-items:center;min-width:0}
 .dish b{font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dish span{font-size:10px;color:#7a5b45}
 
-/* NFT Grid */
+/* NFT Grid - Styled like unique collectible cards matching app aesthetics */
 .nft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:10px}
 .nft-card{
-  background:linear-gradient(135deg,#1a0033,#330066);border:2px solid #ff00ff;border-radius:12px;
-  padding:10px;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s;
+  background:linear-gradient(135deg,#3a1c13,#2a1510);border:2px solid #c99425;border-radius:14px;
+  padding:10px;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s;position:relative;
 }
-.nft-card:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,0,255,.5)}
-.nft-card.owned{border-color:#00ff00;background:linear-gradient(135deg,#001a00,#003300)}
-.nft-icon{font-size:32px;margin-bottom:6px;display:flex;align-items:center;justify-content:center}
-.nft-name{font-size:11px;font-weight:800;color:#ff00ff;margin-bottom:4px}
-.nft-card.owned .nft-name{color:#00ff00}
-.nft-price{font-size:10px;color:#c9a76a}
-.nft-price.stars{color:#ffd700}
+.nft-card:hover{transform:scale(1.04);box-shadow:0 0 16px rgba(243,200,91,.4)}
+.nft-card.owned{border-color:var(--green);background:linear-gradient(135deg,#1f381c,#112210)}
+.nft-icon{height:46px;margin-bottom:6px;display:flex;align-items:center;justify-content:center}
+.nft-name{font-size:11px;font-weight:800;color:var(--gold);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nft-card.owned .nft-name{color:#85e87d}
+.nft-rarity{font-size:9px;color:#c39a6d;text-transform:uppercase;margin-bottom:4px}
+.nft-price{font-size:10px;color:var(--gold);font-weight:800}
 
 /* Theme selector */
 .theme-selector{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
@@ -255,6 +251,17 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
 .quest-reward{font-size:11px;font-weight:800;color:var(--gold);text-align:right}
 .quest-progress{width:100%;height:6px;background:#1d0f0a;border-radius:99px;margin-top:4px;overflow:hidden}
 .quest-progress i{display:block;height:100%;background:var(--green);transition:width .3s}
+
+/* Roadmap Styling */
+.roadmap-container{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.roadmap-step{
+  background:rgba(59,31,22,.1);border:1px solid #52301f;border-radius:10px;padding:10px 12px;
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;
+}
+.roadmap-step.done{border-color:var(--green);background:rgba(95,168,85,.08)}
+.roadmap-badge{font-size:16px;width:28px;text-align:center}
+.roadmap-content b{font-size:12px;display:block;color:var(--gold)}
+.roadmap-content span{font-size:10px;color:#c39a6d}
 
 /* Leaderboard */
 .leaderboard-list{display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:10px}
@@ -444,6 +451,7 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
   <div class="panel" id="tab-menu">
     <div class="card dark">
       <h3>🍽️ Restaurant Seasons</h3>
+      <p class="muted">Complete all dishes in a season to unlock the next world!</p>
       <div class="seasons" id="seasonChips"></div>
     </div>
     <div id="dishList"></div>
@@ -492,7 +500,7 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
     </div>
     <div class="card dark">
       <h3>🖼️ Exclusive NFTs</h3>
-      <p class="muted">Collect limited edition NFTs (⭐ Stars)</p>
+      <p class="muted">Collect limited edition theme-matched NFTs</p>
       <div class="nft-grid" id="nftGrid"></div>
     </div>
   </div>
@@ -508,6 +516,42 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
       </div>
       <div class="quest-grid" id="airdropTaskList"></div>
     </div>
+    
+    <div class="card dark">
+      <h3>🗺️ Project Roadmap</h3>
+      <p class="muted">Our journey to mainnet token generation event (TGE)</p>
+      <div class="roadmap-container">
+        <div class="roadmap-step done">
+          <div class="roadmap-badge">✅</div>
+          <div class="roadmap-content">
+            <b>Phase 1: Concept & Closed Alpha</b>
+            <span>Core idle cooking loop, basic Telegram WebApp integration.</span>
+          </div>
+        </div>
+        <div class="roadmap-step done">
+          <div class="roadmap-badge">✅</div>
+          <div class="roadmap-content">
+            <b>Phase 2: Public Beta & Seasons</b>
+            <span>Multi-season expansion, daily login bonuses & NFT cosmetics.</span>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="roadmap-badge">⏳</div>
+          <div class="roadmap-content">
+            <b>Phase 3: TON Wallet & Community Airdrop</b>
+            <span>Integration with TON Connect, point snapshot & reward distribution.</span>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="roadmap-badge">🔒</div>
+          <div class="roadmap-content">
+            <b>Phase 4: Token Generation Event (TGE)</b>
+            <span>Listing on major exchanges & decentralized governance launch.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="card dark">
       <h3>🔗 TON Wallet Connection</h3>
       <p class="muted">Connect wallet to claim airdrop rewards</p>
@@ -537,21 +581,11 @@ h1,h2,h3,.serif{font-family:Cinzel,Georgia,serif;letter-spacing:.5px}
    INTERNATIONALIZATION
    ============================================================ */
 const I18N = {
-  en: {
-    goldLbl: "Gold", perSecLbl: "Per sec", perTapLbl: "Per tap", energyCapLbl: "⚡ Energy Cap",
-  },
-  fr: {
-    goldLbl: "Or", perSecLbl: "Par sec", perTapLbl: "Par tap", energyCapLbl: "⚡ Énergie Max",
-  },
-  ru: {
-    goldLbl: "Золото", perSecLbl: "В сек", perTapLbl: "За тап", energyCapLbl: "⚡ Энергия Макс",
-  },
-  es: {
-    goldLbl: "Oro", perSecLbl: "Por seg", perTapLbl: "Por toque", energyCapLbl: "⚡ Energía Máx",
-  },
-  zh: {
-    goldLbl: "金币", perSecLbl: "每秒", perTapLbl: "每次点击", energyCapLbl: "⚡ 能量上限",
-  }
+  en: { goldLbl: "Gold", perSecLbl: "Per sec", perTapLbl: "Per tap", energyCapLbl: "⚡ Energy Cap" },
+  fr: { goldLbl: "Or", perSecLbl: "Par sec", perTapLbl: "Par tap", energyCapLbl: "⚡ Énergie Max" },
+  ru: { goldLbl: "Золото", perSecLbl: "В сек", perTapLbl: "За тап", energyCapLbl: "⚡ Энергия Макс" },
+  es: { goldLbl: "Oro", perSecLbl: "Por seg", perTapLbl: "Por toque", energyCapLbl: "⚡ Energía Máx" },
+  zh: { goldLbl: "金币", perSecLbl: "每秒", perTapLbl: "每次点击", energyCapLbl: "⚡ 能量上限" }
 };
 
 let currentLang = "en";
@@ -596,7 +630,7 @@ document.getElementById("slideNextBtn").addEventListener("click", ()=>{
 });
 
 /* ============================================================
-   TELEGRAM & TON INITIALIZATION
+   TELEGRAM INITIALIZATION
    ============================================================ */
 const tg = window.Telegram?.WebApp;
 let tgUser = { id: 'guest', username: 'ChefUser', first_name: 'Chef' };
@@ -612,7 +646,7 @@ const usernameDisplay = tgUser.username ? `@${tgUser.username}` : (tgUser.first_
 document.getElementById('userBadge').textContent = `👤 ${usernameDisplay}`;
 
 /* ============================================================
-   ENHANCED AUDIO ENGINE — Web Audio API with Piano Music
+   AUDIO ENGINE
    ============================================================ */
 const Audio8 = (() => {
   let ctx=null, master=null, musicGain=null, muted=false, loopTimer=null, playing=false, step=0;
@@ -656,9 +690,7 @@ const Audio8 = (() => {
   
   const ITALIAN_PIANO = [
     {f:261.63,d:0.4}, {f:329.63,d:0.4}, {f:392.00,d:0.4}, {f:523.25,d:0.8},
-    {f:523.25,d:0.4}, {f:493.88,d:0.4}, {f:440.00,d:0.4}, {f:392.00,d:0.8},
-    {f:392.00,d:0.4}, {f:349.23,d:0.4}, {f:329.63,d:0.4}, {f:293.66,d:0.8},
-    {f:293.66,d:0.4}, {f:329.63,d:0.4}, {f:392.00,d:0.4}, {f:523.25,d:0.8}
+    {f:523.25,d:0.4}, {f:493.88,d:0.4}, {f:440.00,d:0.4}, {f:392.00,d:0.8}
   ];
 
   function tick(){
@@ -686,19 +718,23 @@ const ITALIAN_DISHES=[
   ["Prosciutto e Melone","🍈",41],["Calzone Napoletano","🥟",50],["Fettuccine Alfredo","🍜",61],
   ["Spaghetti Carbonara","🥓",74],["Gnocchi al Pesto","🥔",89],["Ravioli di Ricotta","🥧",107],
   ["Lasagna alla Bolognese","🍱",128],["Risotto ai Funghi","🍚",153],["Melanzane Parmigiana","🍆",182],
-  ["Pollo alla Cacciatora","🍗",216],["Saltimbocca alla Romana","🥩",256],["Vitello Tonnato","🍖",303],
-  ["Frutti di Mare Linguine","🦐",358],["Cacio e Pepe","🧀",423],["Orecchiette Pugliesi","🌿",499],
-  ["Tortellini in Brodo","🥣",588],["Panzanella Toscana","🥬",692]
+  ["Pollo alla Cacciatora","🍗",216],["Saltimbocca alla Romana","🥩",256]
 ];
 
 const SEASONS=[
-  {name:"Bella Italia",emoji:"🇮🇹",desc:"A cozy trattoria in Trastevere.",dishes:ITALIAN_DISHES},
-  {name:"Sakura Sushi-Ya",emoji:"🇯🇵",desc:"An eight-seat counter in Ginza.",
-   dishes:[["Edamame","🫛",48000],["Miso Soup","🍜",55000],["Salmon Nigiri","🍣",63000],["Tuna Sashimi","🐟",72000],["California Roll","🍥",82000]]},
-  {name:"Le Petit Paris",emoji:"🇫🇷",desc:"A Michelin bistro on Rue Cler.",
-   dishes:[["Croissant Beurre","🥐",375000],["French Onion Soup","🧅",430000],["Escargots","🐌",494000],["Quiche Lorraine","🥧",568000],["Coq au Vin","🍗",653000]]},
-  {name:"Nova Skyline",emoji:"🌆",desc:"Rooftop molecular fine dining.",
-   dishes:[["Nitro Olive Sphere","⚪",3040000],["Smoke Bubble Broth","💨",3500000],["Caviar Pearls","⚫",4025000],["Gold Leaf Scallop","🥇",4630000],["Levitation Toast","🥪",5325000]]}
+  {name:"Bella Italia", emoji:"🇮🇹", desc:"A cozy trattoria in Trastevere.", dishes:ITALIAN_DISHES},
+  {name:"Sakura Sushi-Ya", emoji:"🇯🇵", desc:"An eight-seat counter in Ginza.", dishes:[
+    ["Edamame","🫛",320],["Miso Soup","🍜",380],["Salmon Nigiri","🍣",450],["Tuna Sashimi","🐟",520],["California Roll","🍥",600],
+    ["Tempura Udon","🍤",700],["Matcha Mochi","🍡",810],["Wagyu Skewer","🍢",930],["Eel Donburi","🍱",1060],["Omakase Set","👑",1200]
+  ]},
+  {name:"Le Petit Paris", emoji:"🇫🇷", desc:"A Michelin bistro on Rue Cler.", dishes:[
+    ["Croissant Beurre","🥐",1500],["French Onion Soup","🧅",1750],["Escargots","🐌",2000],["Quiche Lorraine","🥧",2300],["Coq au Vin","🍗",2650],
+    ["Beef Bourguignon","🥘",3050],["Crème Brûlée","🍮",3500],["Duck Confit","🦆",4000],["Foie Gras","🧈",4600],["Grand Cru Feast","🍷",5300]
+  ]},
+  {name:"Nova Skyline", emoji:"🌆", desc:"Rooftop molecular fine dining.", dishes:[
+    ["Nitro Olive Sphere","⚪",6000],["Smoke Bubble Broth","💨",6800],["Caviar Pearls","⚫",7700],["Gold Leaf Scallop","🥇",8700],["Levitation Toast","🥪",9800],
+    ["Astral Truffle","🍄",11000],["Nebula Sorbet","🍧",12500],["Starlight Essence","✨",14200],["Quantum Soufflé","🌌",16000],["Cosmic Banquet","🪐",18500]
+  ]}
 ];
 
 const STAFF=[
@@ -716,41 +752,28 @@ const THEMES = [
   {id:"neon", name:"💜 Neon", emoji:"⚡", cost:60, costType:"stars"}
 ];
 
+/* Theme-matched Unique NFTs using rich custom SVGs */
 const NFTS = [
   {
-    id: "nft1", 
-    name: "Golden Spatula", 
-    art: `<svg viewBox="0 0 64 64" width="48" height="48"><path d="M20 12h24v12c0 6.6-5.4 12-12 12s-12-5.4-12-12V12z" fill="#ffd700"/><rect x="28" y="36" width="8" height="20" fill="#c99425"/><circle cx="32" cy="18" r="3" fill="#fff5e0"/></svg>`, 
-    cost: 1, 
-    costType: "stars", 
-    rarity: "Common"
+    id: "nft1", name: "Golden Pizza Slice", rarity: "Common", cost: 3,
+    art: `<svg viewBox="0 0 64 64" width="42" height="42"><path d="M32 6L8 52h48L32 6z" fill="#f3c85b"/><circle cx="28" cy="28" r="4" fill="#8f3a24"/><circle cx="38" cy="40" r="4" fill="#8f3a24"/><circle cx="24" cy="44" r="3" fill="#8f3a24"/><path d="M32 6v46" stroke="#c1573a" stroke-width="2"/></svg>`
   },
   {
-    id: "nft2", 
-    name: "Copper Pot", 
-    art: `<svg viewBox="0 0 64 64" width="48" height="48"><ellipse cx="32" cy="24" rx="22" ry="6" fill="#d97736"/><path d="M10 24l4 28c1 6 6 10 12 10h12c6 0 11-4 12-10l4-28H10z" fill="#c1573a"/><ellipse cx="32" cy="22" rx="18" ry="4" fill="#a84326"/></svg>`, 
-    cost: 3, 
-    costType: "stars", 
-    rarity: "Common"
+    id: "nft2", name: "Chef's Crown", rarity: "Uncommon", cost: 8,
+    art: `<svg viewBox="0 0 64 64" width="42" height="42"><path d="M12 44h40v8H12z" fill="#f3c85b"/><path d="M16 44V24l8 12 8-16 8 16 8-12v20H16z" fill="#f6e9d2"/><circle cx="32" cy="18" r="3" fill="#c1573a"/></svg>`
   },
-  {id:"nft3", name:"Bronze Pan", art:`<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="18" fill="#cd7f32"/><rect x="46" y="30" width="16" height="4" fill="#8b4513"/></svg>`, cost:3, costType:"stars", rarity:"Common"},
-  {id:"nft4", name:"Chef's Hat", art:`<svg viewBox="0 0 64 64" width="48" height="48"><path d="M20 36h24v16H20z" fill="#fff"/><circle cx="32" cy="24" r="12" fill="#fff"/></svg>`, cost:5, costType:"stars", rarity:"Uncommon"},
-  {id:"nft5", name:"Wooden Spoon", art:`<svg viewBox="0 0 64 64" width="48" height="48"><ellipse cx="32" cy="20" rx="8" ry="12" fill="#deb887"/><rect x="30" y="28" width="4" height="30" fill="#deb887"/></svg>`, cost:6, costType:"stars", rarity:"Uncommon"},
-  {id:"nft6", name:"Copper Pot", art:`<svg viewBox="0 0 64 64" width="48" height="48"><ellipse cx="32" cy="24" rx="22" ry="6" fill="#d97736"/><path d="M10 24l4 28c1 6 6 10 12 10h12c6 0 11-4 12-10l4-28H10z" fill="#c1573a"/></svg>`, cost:8, costType:"stars", rarity:"Uncommon"},
-  {id:"nft7", name:"Marble Mortar", art:`<svg viewBox="0 0 64 64" width="48" height="48"><path d="M16 24h32l-4 28H20z" fill="#e0e0e0"/></svg>`, cost:10, costType:"stars", rarity:"Rare"},
-  {id:"nft8", name:"Truffle Pig", art:`<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="16" fill="#ffb6c1"/></svg>`, cost:12, costType:"stars", rarity:"Rare"},
-  {id:"nft9", name:"Michelin Star", art:`<svg viewBox="0 0 64 64" width="48" height="48"><polygon points="32,4 40,24 60,24 44,36 50,56 32,44 14,56 20,36 4,24 24,24" fill="#ffd700"/></svg>`, cost:15, costType:"stars", rarity:"Rare"},
-  {id:"nft10", name:"Golden Whisk", art:`<svg viewBox="0 0 64 64" width="48" height="48"><path d="M28 8h8v24c0 4-4 8-4 8s-4-4-4-8V8z" fill="#ffd700"/></svg>`, cost:20, costType:"stars", rarity:"Epic"},
-  {id:"nft11", name:"Platinum Fork", art:`<svg viewBox="0 0 64 64" width="48" height="48"><rect x="30" y="10" width="4" height="44" fill="#e5e4e2"/></svg>`, cost:25, costType:"stars", rarity:"Epic"},
-  {id:"nft12", name:"Diamond Knife", art:`<svg viewBox="0 0 64 64" width="48" height="48"><polygon points="32,4 60,32 32,60 4,32" fill="#b9f2ff"/></svg>`, cost:35, costType:"stars", rarity:"Epic"},
-  {id:"nft13", name:"Royal Crown", art:`<svg viewBox="0 0 64 64" width="48" height="48"><polygon points="12,44 52,44 44,20 32,32 20,20" fill="#ffd700"/></svg>`, cost:50, costType:"stars", rarity:"Legendary"},
-  {id:"nft14", name:"Infinity Stone", art:`<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="20" fill="#9400d3"/></svg>`, cost:75, costType:"stars", rarity:"Legendary"},
-  {id:"nft15", name:"Phoenix Feather", art:`<svg viewBox="0 0 64 64" width="48" height="48"><path d="M32 4c16 16 16 32 0 56C16 36 16 20 32 4z" fill="#ff4500"/></svg>`, cost:100, costType:"stars", rarity:"Legendary"},
-  {id:"nft16", name:"Dragon Scale", art:`<svg viewBox="0 0 64 64" width="48" height="48"><polygon points="32,8 56,32 32,56 8,32" fill="#228b22"/></svg>`, cost:150, costType:"stars", rarity:"Mythic"},
-  {id:"nft17", name:"Unicorn Horn", art:`<svg viewBox="0 0 64 64" width="48" height="48"><polygon points="32,4 40,60 24,60" fill="#ffb6c1"/></svg>`, cost:200, costType:"stars", rarity:"Mythic"},
-  {id:"nft18", name:"Celestial Orb", art:`<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="24" fill="#00ffff"/></svg>`, cost:300, costType:"stars", rarity:"Mythic"},
-  {id:"nft19", name:"Void Essence", art:`<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="24" fill="#4b0082"/></svg>`, cost:400, costType:"stars", rarity:"Mythic"},
-  {id:"nft20", name:"Chef's Legacy", art:`<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="26" fill="#ffd700"/></svg>`, cost:500, costType:"stars", rarity:"Mythic"}
+  {
+    id: "nft3", name: "Truffle Cleaver", rarity: "Rare", cost: 15,
+    art: `<svg viewBox="0 0 64 64" width="42" height="42"><rect x="12" y="16" width="30" height="24" rx="4" fill="#e5e4e2"/><rect x="36" y="28" width="16" height="6" rx="2" fill="#8b4513"/><circle cx="18" cy="22" r="2" fill="#3b1f16"/></svg>`
+  },
+  {
+    id: "nft4", name: "Trattoria Flame", rarity: "Epic", cost: 30,
+    art: `<svg viewBox="0 0 64 64" width="42" height="42"><path d="M32 6c0 16-16 22-16 36a16 16 0 0032 0C48 28 32 22 32 6z" fill="#c1573a"/><path d="M32 20c0 8-8 12-8 20a8 8 0 0016 0c0-8-8-12-8-20z" fill="#f3c85b"/></svg>`
+  },
+  {
+    id: "nft5", name: "Master's Whisk", rarity: "Legendary", cost: 75,
+    art: `<svg viewBox="0 0 64 64" width="42" height="42"><rect x="30" y="6" width="4" height="20" fill="#f3c85b"/><path d="M26 26c0 12 12 16 12 28M38 26c0 12-12 16-12 28M22 32c12 0 20 8 20 20" stroke="#f3c85b" stroke-width="2" fill="none"/></svg>`
+  }
 ];
 
 // DAILY QUESTS
@@ -785,19 +808,18 @@ let gameState = {
   dailyTaps: 0,
   dailyEarned: 0,
   season: 0,
+  unlockedSeasons: [0], // Tracks which seasons are unlocked
   staff: {prep:0, sous:0, exec:0, oven:0},
   energyUpgrades: 0,
   multiUpgrades: 0,
   currentTheme: "default",
   ownedNFTs: [],
   ownedThemes: ["default"],
-  lastEnergyRefill: Date.now(),
   userId: "user_" + Math.random().toString(36).substr(2,9),
   referralCode: "",
   invitedPlayers: [],
   completedQuests: [],
   lastDailyLogin: 0,
-  prestigeLevel: 0,
   leaderboardScore: 0,
   airdropPoints: 0,
   completedAirdropTasks: [],
@@ -815,6 +837,7 @@ function loadGame(){
     } catch(e) {}
   }
   if(!gameState.referralCode) gameState.referralCode = generateReferralCode();
+  if(!gameState.unlockedSeasons) gameState.unlockedSeasons = [0];
 }
 
 function saveGame(){
@@ -826,7 +849,7 @@ function generateReferralCode(){
 }
 
 function getLevelRequirement(level){
-  return Math.floor(100 * Math.pow(1.5, level - 1));
+  return Math.floor(100 * Math.pow(1.4, level - 1));
 }
 
 function totalStaff(s){
@@ -846,8 +869,10 @@ function updateUI(){
   document.getElementById("perclick").textContent = gameState.perClick;
   document.getElementById("gps").textContent = formatNumber(calculateGPS()) + "/s";
   
+  const currentDishes = SEASONS[gameState.season].dishes;
   const req = getLevelRequirement(gameState.level);
   const prog = gameState.clicks % req;
+  
   document.getElementById("lvlProg").textContent = `${prog} / ${req}`;
   document.getElementById("lvlFill").style.width = (prog / req * 100) + "%";
   document.getElementById("lvlLabel").textContent = `Level ${gameState.level} · ${SEASONS[gameState.season].name}`;
@@ -856,15 +881,14 @@ function updateUI(){
   document.getElementById("energyFill").style.width = energyPct + "%";
   document.getElementById("energyText").textContent = `${Math.floor(gameState.energy)} / ${gameState.maxEnergy}`;
   
-  const dish = SEASONS[gameState.season].dishes[gameState.level - 1] || SEASONS[gameState.season].dishes[0];
+  const dish = currentDishes[gameState.level - 1] || currentDishes[currentDishes.length - 1];
   document.getElementById("dishName").textContent = dish[0];
   document.getElementById("dishVal").textContent = `+${dish[2]} 🪙`;
   document.getElementById("pan").textContent = dish[1];
   
   const cookBtn = document.getElementById("cookBtn");
   cookBtn.disabled = gameState.energy < 1;
-  if(gameState.energy < 1) cookBtn.textContent = "⚡ No Energy";
-  else cookBtn.textContent = "TAP TO COOK";
+  cookBtn.textContent = gameState.energy < 1 ? "⚡ No Energy" : "TAP TO COOK";
 }
 
 function formatNumber(n){
@@ -878,7 +902,8 @@ function formatNumber(n){
 document.getElementById("cookBtn").addEventListener("click", ()=>{
   if(gameState.energy < 1) return;
   
-  const dish = SEASONS[gameState.season].dishes[gameState.level - 1] || SEASONS[gameState.season].dishes[0];
+  const currentDishes = SEASONS[gameState.season].dishes;
+  const dish = currentDishes[gameState.level - 1] || currentDishes[currentDishes.length - 1];
   const reward = dish[2] * gameState.perClick;
   
   gameState.gold += reward;
@@ -901,11 +926,20 @@ document.getElementById("cookBtn").addEventListener("click", ()=>{
   setTimeout(()=>float.remove(), 1000);
   
   const req = getLevelRequirement(gameState.level);
-  if(gameState.clicks >= req && gameState.level < SEASONS[gameState.season].dishes.length){
-    gameState.level++;
-    gameState.clicks = 0;
-    Audio8.fanfare();
-    showToast("🎉 Level Up!");
+  if(gameState.clicks >= req){
+    if(gameState.level < currentDishes.length){
+      gameState.level++;
+      gameState.clicks = 0;
+      Audio8.fanfare();
+      showToast("🎉 Level Up!");
+    } else {
+      // Season Finished! Unlock next season if available
+      if(gameState.season + 1 < SEASONS.length && !gameState.unlockedSeasons.includes(gameState.season + 1)){
+        gameState.unlockedSeasons.push(gameState.season + 1);
+        Audio8.fanfare();
+        showToast(`🏆 ${SEASONS[gameState.season].name} Completed! Next Season Unlocked!`);
+      }
+    }
   }
   
   station.classList.add("cooking");
@@ -915,7 +949,15 @@ document.getElementById("cookBtn").addEventListener("click", ()=>{
   saveGame();
 });
 
-// Energy refill
+document.getElementById("refillBtn").addEventListener("click", ()=>{
+  gameState.energy = gameState.maxEnergy;
+  Audio8.chime();
+  showToast("⚡ Energy fully refilled!");
+  updateUI();
+  saveGame();
+});
+
+// Energy refill ticker
 setInterval(()=>{
   if(gameState.energy < gameState.maxEnergy){
     gameState.energy = Math.min(gameState.maxEnergy, gameState.energy + gameState.energyRefillRate);
@@ -923,7 +965,7 @@ setInterval(()=>{
   }
 }, 1000);
 
-// Passive income
+// Passive income ticker
 setInterval(()=>{
   const gps = calculateGPS();
   if(gps > 0){
@@ -936,12 +978,7 @@ setInterval(()=>{
   }
 }, 100);
 
-// Language
-document.getElementById("langSelect").addEventListener("change", (e)=>{
-  setLanguage(e.target.value);
-});
-
-// Mute
+document.getElementById("langSelect").addEventListener("change", (e)=>{ setLanguage(e.target.value); });
 document.getElementById("muteBtn").addEventListener("click", ()=>{
   Audio8.resume();
   const isMuted = Audio8.isMuted();
@@ -961,9 +998,7 @@ document.getElementById("energyUpBtn").addEventListener("click", ()=>{
     showToast("⚡ Energy Upgraded!");
     updateUI();
     saveGame();
-  } else {
-    showToast("Not enough gold!");
-  }
+  } else { showToast("Not enough gold!"); }
 });
 
 document.getElementById("multiUpBtn").addEventListener("click", ()=>{
@@ -976,9 +1011,7 @@ document.getElementById("multiUpBtn").addEventListener("click", ()=>{
     showToast("💪 Multi-Tap Upgraded!");
     updateUI();
     saveGame();
-  } else {
-    showToast("Not enough gold!");
-  }
+  } else { showToast("Not enough gold!"); }
 });
 
 setInterval(()=>{
@@ -988,15 +1021,21 @@ setInterval(()=>{
   document.getElementById("multiUpCost").textContent = `Cost: ${formatNumber(multiCost)}`;
 }, 500);
 
-// Render seasons
+// Render seasons with locking mechanism
 function renderSeasons(){
   const container = document.getElementById("seasonChips");
   container.innerHTML = "";
   SEASONS.forEach((s, i)=>{
+    const isUnlocked = gameState.unlockedSeasons.includes(i);
     const chip = document.createElement("div");
-    chip.className = "chip" + (gameState.season === i ? " active" : "");
-    chip.textContent = s.emoji + " " + s.name;
+    chip.className = "chip" + (gameState.season === i ? " active" : (isUnlocked ? "" : " locked-season"));
+    chip.textContent = (isUnlocked ? s.emoji : "🔒") + " " + s.name;
+    
     chip.addEventListener("click", ()=>{
+      if(!isUnlocked){
+        showToast("🔒 Finish the previous season to unlock!");
+        return;
+      }
       gameState.season = i;
       gameState.level = 1;
       gameState.clicks = 0;
@@ -1009,7 +1048,6 @@ function renderSeasons(){
   });
 }
 
-// Render dishes
 function renderDishes(){
   const container = document.getElementById("dishList");
   container.innerHTML = "";
@@ -1031,7 +1069,6 @@ function renderDishes(){
   container.appendChild(card);
 }
 
-// Render staff
 function renderStaff(){
   const container = document.getElementById("staffList");
   container.innerHTML = "";
@@ -1039,7 +1076,6 @@ function renderStaff(){
   STAFF.forEach(s=>{
     const item = document.createElement("div");
     item.className = "item";
-    
     const count = gameState.staff[s.id] || 0;
     const hourlyIncome = count * s.gps * 3600;
     
@@ -1066,12 +1102,10 @@ function renderStaff(){
         saveGame();
       }
     });
-    
     container.appendChild(item);
   });
 }
 
-// Render airdrop tasks
 function renderAirdropTasks(){
   const container = document.getElementById("airdropTaskList");
   container.innerHTML = "";
@@ -1082,7 +1116,6 @@ function renderAirdropTasks(){
     
     const item = document.createElement("div");
     item.className = "quest-item";
-    
     item.innerHTML = `
       <div class="quest-icon">${task.icon}</div>
       <div class="quest-info">
@@ -1099,9 +1132,7 @@ function renderAirdropTasks(){
     const btn = item.querySelector(".buy");
     if(!completed && canComplete){
       btn.addEventListener("click", ()=>{
-        if(task.link){
-          window.open(task.link, '_blank');
-        }
+        if(task.link) window.open(task.link, '_blank');
         gameState.completedAirdropTasks.push(task.id);
         gameState.airdropPoints += task.reward;
         Audio8.fanfare();
@@ -1111,33 +1142,26 @@ function renderAirdropTasks(){
         saveGame();
       });
     }
-    
     container.appendChild(item);
   });
-  
   document.getElementById("airdropPoints").textContent = formatNumber(gameState.airdropPoints);
 }
 
-// Render airdrop progress
 function renderAirdropProgress(){
   const container = document.getElementById("airdropProgress");
   container.innerHTML = "";
-  
   const milestones = [
     {name:"Bronze Chef", points:1000, reward:"100 Tokens"},
     {name:"Silver Chef", points:5000, reward:"500 Tokens"},
     {name:"Gold Chef", points:10000, reward:"1,000 Tokens"},
-    {name:"Platinum Chef", points:25000, reward:"2,500 Tokens"},
-    {name:"Legend Chef", points:50000, reward:"5,000 Tokens"}
+    {name:"Platinum Chef", points:25000, reward:"2,500 Tokens"}
   ];
   
   milestones.forEach(m=>{
     const progress = Math.min(gameState.airdropPoints / m.points, 1);
     const unlocked = progress >= 1;
-    
     const milestone = document.createElement("div");
     milestone.className = "airdrop-milestone";
-    
     milestone.innerHTML = `
       <div class="milestone-header">
         <span class="milestone-name">${unlocked ? "✓" : "🔒"} ${m.name}</span>
@@ -1146,12 +1170,10 @@ function renderAirdropProgress(){
       <div class="milestone-bar"><i style="width:${progress*100}%"></i></div>
       <div class="milestone-status">${formatNumber(gameState.airdropPoints)} / ${formatNumber(m.points)} points</div>
     `;
-    
     container.appendChild(milestone);
   });
 }
 
-// Render quests
 function renderQuests(){
   const container = document.getElementById("questList");
   container.innerHTML = "";
@@ -1163,7 +1185,6 @@ function renderQuests(){
     
     const item = document.createElement("div");
     item.className = "quest-item";
-    
     item.innerHTML = `
       <div class="quest-icon">${q.icon}</div>
       <div class="quest-info">
@@ -1191,16 +1212,13 @@ function renderQuests(){
         saveGame();
       });
     }
-    
     container.appendChild(item);
   });
 }
 
-// Render daily login
 function renderDailyLogin(){
   const container = document.getElementById("dailyGrid");
   container.innerHTML = "";
-  
   for(let i = 1; i <= 7; i++){
     const box = document.createElement("div");
     box.className = "day-box";
@@ -1222,16 +1240,13 @@ function renderDailyLogin(){
         saveGame();
       });
     }
-    
     container.appendChild(box);
   }
 }
 
-// Render themes
 function renderThemes(){
   const container = document.getElementById("themeSelector");
   container.innerHTML = "";
-  
   THEMES.forEach(t=>{
     const btn = document.createElement("button");
     btn.className = "theme-btn" + (gameState.currentTheme === t.id ? " active" : "");
@@ -1248,28 +1263,24 @@ function renderThemes(){
         showToast("⭐ Requires " + t.cost + " Telegram Stars");
       }
     });
-    
     container.appendChild(btn);
   });
 }
 
-// Render NFTs
 function renderNFTs(){
   const container = document.getElementById("nftGrid");
   container.innerHTML = "";
-  
   NFTS.forEach(nft=>{
     const card = document.createElement("div");
     card.className = "nft-card" + (gameState.ownedNFTs.includes(nft.id) ? " owned" : "");
-    
     card.innerHTML = `
       <div class="nft-icon">${nft.art}</div>
       <div class="nft-name">${nft.name}</div>
-      <div class="nft-price stars">⭐${nft.cost}</div>
+      <div class="nft-rarity">${nft.rarity}</div>
+      <div class="nft-price">⭐${nft.cost}</div>
     `;
     
     if(!gameState.ownedNFTs.includes(nft.id)){
-      card.style.cursor = "pointer";
       card.addEventListener("click", ()=>{
         if(confirm(`Purchase ${nft.name} for ⭐${nft.cost}?`)){
           gameState.ownedNFTs.push(nft.id);
@@ -1280,60 +1291,44 @@ function renderNFTs(){
         }
       });
     }
-    
     container.appendChild(card);
   });
 }
 
-// Render referral
 function renderReferral(){
   document.getElementById("refCode").textContent = gameState.referralCode;
   document.getElementById("invitedCount").textContent = gameState.invitedPlayers.length;
-  
   const activeCount = gameState.invitedPlayers.filter(p=>p.active).length;
   document.getElementById("activeCount").textContent = activeCount;
   
   const container = document.getElementById("invitedList");
   container.innerHTML = "";
-  
   if(gameState.invitedPlayers.length === 0){
     container.innerHTML = '<p style="text-align:center;color:#c39a6d;font-size:12px;">No invited players yet. Share your code!</p>';
     return;
   }
-  
   gameState.invitedPlayers.forEach((p, idx)=>{
     const item = document.createElement("div");
     item.className = "invited-item";
-    
-    const starReward = p.active ? "⭐5" : "🪙500";
-    const status = p.active ? "✓ Active" : "⏳ Pending";
-    
     item.innerHTML = `
       <div class="invited-avatar">👤</div>
       <div>
         <div class="invited-name">${p.name || "Friend " + (idx+1)}</div>
-        <div class="invited-status">${status}</div>
+        <div class="invited-status">${p.active ? "✓ Active" : "⏳ Pending"}</div>
       </div>
-      <div class="invited-reward">${starReward}</div>
+      <div class="invited-reward">${p.active ? "⭐5" : "🪙500"}</div>
     `;
-    
     container.appendChild(item);
   });
 }
 
-// Copy referral code
 document.getElementById("copyRefBtn").addEventListener("click", ()=>{
-  navigator.clipboard.writeText(gameState.referralCode).then(()=>{
-    showToast("📋 Code Copied!");
-  });
+  navigator.clipboard.writeText(gameState.referralCode).then(()=>{ showToast("📋 Code Copied!"); });
 });
 
-// Render leaderboard
 function renderLeaderboard(){
   const container = document.getElementById("leaderboardList");
   container.innerHTML = "";
-  
-  // Simulate leaderboard (in production, fetch from server)
   const leaderboard = [
     {rank: 1, name: "You", score: gameState.leaderboardScore},
     {rank: 2, name: "Chef Marco", score: gameState.leaderboardScore * 0.8},
@@ -1345,22 +1340,16 @@ function renderLeaderboard(){
   leaderboard.forEach(entry=>{
     const item = document.createElement("div");
     item.className = "leaderboard-item";
-    
-    const rankClass = entry.rank <= 3 ? "top" : "";
-    const medal = entry.rank === 1 ? "🥇" : entry.rank === 2 ? "🥈" : entry.rank === 3 ? "🥉" : "";
-    
     item.innerHTML = `
-      <div class="rank ${rankClass}">${medal}#${entry.rank}</div>
+      <div class="rank ${entry.rank <= 3 ? "top" : ""}">${entry.rank === 1 ? "🥇" : entry.rank === 2 ? "🥈" : entry.rank === 3 ? "🥉" : ""}#${entry.rank}</div>
       <div class="rank">${entry.rank <= 3 ? "👑" : "👤"}</div>
       <div class="player-name">${entry.name}</div>
       <div class="player-score">${formatNumber(entry.score)}</div>
     `;
-    
     container.appendChild(item);
   });
 }
 
-// Toast
 function showToast(msg){
   const toast = document.getElementById("toast");
   toast.textContent = msg;
@@ -1368,7 +1357,6 @@ function showToast(msg){
   setTimeout(()=>toast.classList.remove("show"), 2000);
 }
 
-// Tabs
 document.querySelectorAll(".tab").forEach(tab=>{
   tab.addEventListener("click", ()=>{
     const tabName = tab.getAttribute("data-tab");
@@ -1377,18 +1365,13 @@ document.querySelectorAll(".tab").forEach(tab=>{
     tab.classList.add("active");
     document.getElementById("tab-" + tabName).classList.add("active");
     
-    // Render specific content when tab is opened
     if(tabName === "referral") renderReferral();
     if(tabName === "leaderboard") renderLeaderboard();
     if(tabName === "quests") renderQuests();
-    if(tabName === "airdrop"){
-      renderAirdropTasks();
-      renderAirdropProgress();
-    }
+    if(tabName === "airdrop"){ renderAirdropTasks(); renderAirdropProgress(); }
   });
 });
 
-// Connect wallet
 document.getElementById("connectWalletBtn").addEventListener("click", ()=>{
   if(!gameState.walletConnected){
     const walletAddress = "0x" + Math.random().toString(16).substr(2, 40);
@@ -1407,16 +1390,11 @@ document.getElementById("connectWalletBtn").addEventListener("click", ()=>{
   }
 });
 
-// Initialize
 window.addEventListener("load", ()=>{
   loadGame();
-  
-  if(gameState.currentTheme !== "default"){
-    document.body.classList.add("theme-" + gameState.currentTheme);
-  }
+  if(gameState.currentTheme !== "default"){ document.body.classList.add("theme-" + gameState.currentTheme); }
   
   renderSlide();
-  
   renderSeasons();
   renderDishes();
   renderStaff();
@@ -1427,14 +1405,12 @@ window.addEventListener("load", ()=>{
   renderAirdropTasks();
   renderAirdropProgress();
   
-  // Check daily login streak
   const today = new Date().toDateString();
   if(gameState.lastLoginDate !== today){
     gameState.consecutiveDays++;
     gameState.lastLoginDate = today;
   }
   
-  // Update wallet status display
   if(gameState.walletConnected){
     document.getElementById("walletStatus").innerHTML = `✓ Connected<br><code style="font-size:10px;word-break:break-all;">${gameState.walletAddress}</code>`;
   }
